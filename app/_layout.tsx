@@ -1,26 +1,31 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import { UserProvider } from '@/context/UserContext';
-
-SplashScreen.preventAutoHideAsync();
+import { Stack } from 'expo-router';
 
 export default function RootLayout() {
   return (
     <UserProvider>
-       <Stack>
+      <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="selection/selection"  options={{ headerShown: false }} />
-        <Stack.Screen name="grade2/introduction"  options={{ headerShown: false }} />
-        {/* PAGE NOT FOUND */}
+        <Stack.Screen name="selection/selection" options={{ headerShown: false }} />
+        {/* COUNTING NUMBERS */}
+        <Stack.Screen name="count/count" options={{ headerShown: false }} />
+        {/* LESSONS */}
+        {/* ADDITION */}
+        <Stack.Screen name="lessons/addition/addition" options={{ headerShown: false }} />
+        <Stack.Screen name="lessons/addition/introduction/introduction" options={{ headerShown: false }} />
+        <Stack.Screen name="lessons/addition/parts/parts" options={{ headerShown: false }} />
+        <Stack.Screen name="lessons/addition/examples/examples" options={{ headerShown: false }} />
+        <Stack.Screen name="lessons/addition/methods/methods" options={{ headerShown: false }} />
+        {/* GRADE 2 */}
+        <Stack.Screen name="grade2/content/content" options={{ headerShown: false }} />
+        <Stack.Screen name="grade2/pretest/pretest" options={{ headerShown: false }} />
+        <Stack.Screen name="grade2/introduction" options={{ headerShown: false }} />
+        <Stack.Screen name="grade2/lesson1/objectives" options={{ headerShown: false }} />
+        <Stack.Screen name="grade2/lesson2/objectives" options={{ headerShown: false }} />
+        <Stack.Screen name="grade2/posttest/posttest" options={{ headerShown: false }} />
+        {/* not found */}
         <Stack.Screen name="+not-found" />
       </Stack>
     </UserProvider>
-      
   );
 }

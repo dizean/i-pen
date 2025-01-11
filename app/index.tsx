@@ -7,7 +7,7 @@ export default function App() {
   const route = useRouter()
   return (
     <ImageBackground
-      source={require("../assets/images/bg.png")}
+      source={require("../assets/images/bgstart.png")}
       style={styles.background}
     >
       <SafeAreaView style={styles.safeArea}>

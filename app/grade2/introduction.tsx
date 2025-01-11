@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert, TextInput, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Alert, TextInput, StyleSheet, ImageBackground, Image } from "react-native";
 import { useUser } from "@/context/UserContext";
-
+import styles from "./styles";
+import { useRouter } from "expo-router";
+import { useRoute } from "@react-navigation/native";
+interface RouteParams {
+  grade?: string; 
+}
 export default function PreTest() {
+  const router = useRouter()
+  const route = useRoute() 
+  const {grade} = route.params as RouteParams || {}
   const { setUser } = useUser();
   const [nameInput, setNameInput] = useState("");
 
@@ -11,67 +19,26 @@ export default function PreTest() {
       Alert.alert("Error", "Please enter your name.");
       return;
     }
-    setUser(nameInput.trim());
-    Alert.alert("Success", `Welcome, ${nameInput.trim()}!`);
+    setUser(nameInput.trim(), grade ?? null);
+    router.push('/grade2/content/content')
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Before we get started</Text>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Enter Your Name First:</Text>
+    <ImageBackground style={styles.container} source={require('../../assets/images/bgstart.png')}>
+      <View style={styles.wrapper}>
+        <Image style={styles.image} source={require('../../assets/images/calculator.png')}/>
+        <Text style={styles.title}> Before we get started,</Text>
+        <Text style={styles.subtitle}> Enter your name.</Text>
         <TextInput
           style={styles.input}
           placeholder="Type your name"
           value={nameInput}
           onChangeText={(text) => setNameInput(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={handleSetUsername}>
-          <Text style={styles.buttonText}>Set Username</Text>
+        <TouchableOpacity style={styles.button} onPress={handleSetUsername} disabled={!nameInput}>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       </View>
-    </View>
+  </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 16,
-    backgroundColor: "#f5f5f5",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  inputContainer: {
-    width: "100%",
-    paddingHorizontal: 20,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 20,
-    backgroundColor: "#fff",
-  },
-  button: {
-    backgroundColor: "#007BFF",
-    padding: 15,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
