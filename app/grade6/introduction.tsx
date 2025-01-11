@@ -11,7 +11,7 @@ export default function Introduction() {
   const router = useRouter()
   const route = useRoute() 
   const {grade} = route.params as RouteParams || {}
-  const { setUser } = useUser();
+  const { setUser, setPostTestScore, setPreTestScore } = useUser();
   const [nameInput, setNameInput] = useState("");
 
   const handleSetUsername = () => {
@@ -20,6 +20,8 @@ export default function Introduction() {
       return;
     }
     setUser(nameInput.trim(), grade ?? null);
+    setPreTestScore(0);
+    setPostTestScore(0)
     router.push('/grade6/content/content')
   };
 

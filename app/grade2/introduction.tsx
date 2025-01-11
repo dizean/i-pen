@@ -11,7 +11,7 @@ export default function PreTest() {
   const router = useRouter()
   const route = useRoute() 
   const {grade} = route.params as RouteParams || {}
-  const { setUser } = useUser();
+  const { setUser, setPostTestScore, setPreTestScore } = useUser();
   const [nameInput, setNameInput] = useState("");
 
   const handleSetUsername = () => {
@@ -20,6 +20,8 @@ export default function PreTest() {
       return;
     }
     setUser(nameInput.trim(), grade ?? null);
+    setPostTestScore(0)
+    setPreTestScore(0)
     router.push('/grade2/content/content')
   };
 
