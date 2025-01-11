@@ -26,15 +26,16 @@
         {/* Grid Layout for Buttons */}
         <View style={styles.gridContainer}>
           <TouchableOpacity
-            style={styles.gridItem}
-            onPress={() => router.push("/grade2/pretest/pretest")}
+            style={[styles.gridItem, preTestScore !== 0 && preTestScore !== null && styles.disabledButton]} 
+            onPress={() => router.push("/grade3/pretest/pretest")}
+            disabled={preTestScore !== 0 && preTestScore !== null} 
           >
             <Text style={styles.buttonText}>Pre Test</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push("/grade2/lesson1/objectives")}
+            onPress={() => router.push("/lessons/addition/addition")}
             disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Lesson 1</Text>
@@ -42,7 +43,7 @@
 
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push("/grade2/lesson2/objectives")}
+            onPress={() => router.push("/lessons/subtraction/subtraction")}
             disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Lesson 2</Text>
@@ -50,7 +51,7 @@
 
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push("/grade2/lesson2/objectives")}
+            onPress={() => router.push("/lessons/multiplication/multiplication")}
             disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Lesson 3</Text>
@@ -58,7 +59,7 @@
 
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push("/grade2/posttest/posttest")}
+            onPress={() => router.push("/grade3/posttest/posttest")}
             disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Post Test</Text>

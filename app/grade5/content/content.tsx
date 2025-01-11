@@ -10,7 +10,7 @@
     return (
       <ImageBackground style={styles.container} source={require('../../../assets/images/bgstart.png')}>
         <View style={styles.headerSection}>
-          <Text style={styles.headerText}>Grade: 2</Text>
+          <Text style={styles.headerText}>Grade: 5</Text>
           <Text style={styles.headerTextName}>{username}</Text>
         </View>
         <View style={styles.scoreSection}>
@@ -27,7 +27,7 @@
         <View style={styles.gridContainer}>
         <TouchableOpacity
             style={[styles.gridItem, preTestScore !== 0 && preTestScore !== null && styles.disabledButton]} 
-            onPress={() => router.push("/grade2/pretest/pretest")}
+            onPress={() => router.push("/grade5/pretest/pretest")}
             disabled={preTestScore !== 0 && preTestScore !== null} 
           >
             <Text style={styles.buttonText}>Pre Test</Text>
@@ -51,7 +51,23 @@
 
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push("/grade2/posttest/posttest")}
+            onPress={() => router.push("/lessons/multiplication/multiplication")}
+            disabled={!preTestScore}
+          >
+            <Text style={styles.buttonText}>Lesson 3</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push("/lessons/division/division")}
+            disabled={!preTestScore}
+          >
+            <Text style={styles.buttonText}>Lesson 4</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push("/grade3/posttest/posttest")}
             disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Post Test</Text>

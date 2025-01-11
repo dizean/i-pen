@@ -9,7 +9,7 @@ interface Question {
   options: number[];
 }
 
-export default function PostTest() {
+export default function PreTest() {
   const { username } = useUser();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -18,22 +18,33 @@ export default function PostTest() {
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
     for (let i = 0; i < count; i++) {
-      const num1 = Math.floor(Math.random() * 10) + 1; 
-      const num2 = Math.floor(Math.random() * 10) + 1; 
-      const operations = ["+", "-", "*", "*", "*"]; 
+      let num1 = Math.floor(Math.random() * 90) + 10; 
+      let num2 = Math.floor(Math.random() * 90) + 10; 
+      const operations = ["+", "-", "*", "/", "*", "/", "/", "/"];
       const operation = operations[Math.floor(Math.random() * operations.length)];
-      
       let correctAnswer: number;
+
       if (operation === "+") {
         correctAnswer = num1 + num2;
       } else if (operation === "-") {
         correctAnswer = Math.max(num1, num2) - Math.min(num1, num2);
+      } else if (operation === "*") {
+        const multiplier1 = Math.floor(Math.random() * 15) + 1; 
+        const multiplier2 = Math.floor(Math.random() * 15) + 1; 
+        correctAnswer = multiplier1 * multiplier2;
+        num1 = multiplier1;
+        num2 = multiplier2;
       } else {
-        correctAnswer = num1 * num2;
+        let divisor;
+        do {
+          divisor = Math.floor(Math.random() * (num1 - 1)) + 1;
+        } while (num1 % divisor !== 0); 
+        correctAnswer = num1 / divisor;
+        num2 = divisor; 
       }
-      
+
       const options = new Set<number>();
-      options.add(correctAnswer); 
+      options.add(correctAnswer);
       while (options.size < 4) {
         const randomOption = Math.floor(Math.random() * 101); 
         options.add(randomOption);
@@ -42,7 +53,7 @@ export default function PostTest() {
       questions.push({
         question: `What is ${num1} ${operation} ${num2}?`,
         correctAnswer,
-        options: Array.from(options).sort(() => Math.random() - 0.5), 
+        options: Array.from(options).sort(() => Math.random() - 0.5),
       });
     }
     return questions;

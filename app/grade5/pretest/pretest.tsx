@@ -9,7 +9,7 @@ interface Question {
   options: number[];
 }
 
-export default function PostTest() {
+export default function PreTest() {
   const { username } = useUser();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -20,18 +20,16 @@ export default function PostTest() {
     for (let i = 0; i < count; i++) {
       const num1 = Math.floor(Math.random() * 10) + 1; 
       const num2 = Math.floor(Math.random() * 10) + 1; 
-      const operations = ["+", "-", "*", "*", "*"]; 
+      const operations = ["+", "-", "*"];
       const operation = operations[Math.floor(Math.random() * operations.length)];
-      
       let correctAnswer: number;
       if (operation === "+") {
         correctAnswer = num1 + num2;
       } else if (operation === "-") {
-        correctAnswer = Math.max(num1, num2) - Math.min(num1, num2);
+        correctAnswer = num1 - num2;
       } else {
         correctAnswer = num1 * num2;
       }
-      
       const options = new Set<number>();
       options.add(correctAnswer); 
       while (options.size < 4) {

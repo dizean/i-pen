@@ -2,19 +2,15 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
-import AdditionPractice from "./examples/examples";
-import Methods from "./methods/methods";
-import Introduction from "./introduction/introduction";
-import Parts from "./parts/parts";
 import Objectives from "./objectives/objectives";
 
-export default function Addition() {
+export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
   const [isPracticeComplete, setIsPracticeComplete] = useState(false); 
   const router = useRouter();
 
   const handleNext = () => {
-    if (currentSection < 5) {
+    if (currentSection < 4) {
       setCurrentSection(currentSection + 1);
     }
   };
@@ -32,25 +28,9 @@ export default function Addition() {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>ADDITION of Numbers</Text>
+      <Text style={styles.title}>Subtraction of Numbers</Text>
       {currentSection === 1 && (
         <Objectives/>
-      )}
-      {currentSection === 2 && (
-        <Introduction/>
-      )}
-      {currentSection === 3 && (
-        <Parts/>
-      )}
-      {currentSection === 4 && (
-        <>
-          <AdditionPractice onComplete={handlePracticeComplete} />
-        </>
-      )}
-      {currentSection === 5 && (
-        <>
-          <Methods />
-        </>
       )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={handlePrev} disabled={currentSection === 1}>

@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollContainer: {
+    flexGrow: 1,
     padding: 20,
-    backgroundColor: "#fff8e1", // Soft yellow background
+    backgroundColor: "#fff8e1",
   },
   title: {
     fontSize: 26,
     fontWeight: "700",
     textAlign: "center",
-    marginBottom: 20,
-    color: "#1a237e", // Darker navy blue text for formal feel
+    marginBottom: 25,
+    color: "#1a237e", // Darker shade for formal feel
   },
   subtitle: {
     fontSize: 22,

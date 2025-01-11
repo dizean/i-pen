@@ -6,11 +6,10 @@
   export default function ContentPage() {
     const router = useRouter();
     const { username, preTestScore, postTestScore } = useUser();
-
     return (
       <ImageBackground style={styles.container} source={require('../../../assets/images/bgstart.png')}>
         <View style={styles.headerSection}>
-          <Text style={styles.headerText}>Grade: 2</Text>
+          <Text style={styles.headerText}>Grade: 4</Text>
           <Text style={styles.headerTextName}>{username}</Text>
         </View>
         <View style={styles.scoreSection}>
@@ -25,9 +24,9 @@
         </View>
         {/* Grid Layout for Buttons */}
         <View style={styles.gridContainer}>
-        <TouchableOpacity
+          <TouchableOpacity
             style={[styles.gridItem, preTestScore !== 0 && preTestScore !== null && styles.disabledButton]} 
-            onPress={() => router.push("/grade2/pretest/pretest")}
+            onPress={() => router.push("/grade4/pretest/pretest")}
             disabled={preTestScore !== 0 && preTestScore !== null} 
           >
             <Text style={styles.buttonText}>Pre Test</Text>
@@ -51,7 +50,23 @@
 
           <TouchableOpacity
             style={styles.gridItem}
-            onPress={() => router.push("/grade2/posttest/posttest")}
+            onPress={() => router.push("/lessons/multiplication/multiplication")}
+            disabled={!preTestScore}
+          >
+            <Text style={styles.buttonText}>Lesson 3</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push("/lessons/division/division")}
+            disabled={!preTestScore}
+          >
+            <Text style={styles.buttonText}>Lesson 4</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.gridItem}
+            onPress={() => router.push("/grade4/posttest/posttest")}
             disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Post Test</Text>

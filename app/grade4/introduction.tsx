@@ -20,7 +20,7 @@ export default function Introduction() {
       return;
     }
     setUser(nameInput.trim(), grade ?? null);
-    router.push('/grade3/content/content')
+    router.push('/grade4/content/content')
   };
 
   return (

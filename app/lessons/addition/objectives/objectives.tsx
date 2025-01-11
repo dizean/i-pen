@@ -8,16 +8,16 @@ import CountNumbers from "@/app/count/count";
 interface RouteParams {
   grade?: string; 
 }
-export default function Lesson3() {
+export default function Objectives() {
   const router = useRouter()
   const route = useRoute() 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Lesson 3 : Multiplication</Text>
+      <Text style={styles.title}>Lesson 1 : Addition</Text>
       <Text style={styles.title}>Objectives</Text>
       <Text>
       At the end of this lesson, you should be able to:
-      Develop skills to perform multiplication of numbers
+      Develop skills to perform addition of numbers
       using various methods and strategies with the
       aid of computer-assisted tools.
       </Text>
