@@ -23,6 +23,14 @@ export default function RootLayout() {
         <Stack.Screen name="grade2/lesson1/objectives" options={{ headerShown: false }} />
         <Stack.Screen name="grade2/lesson2/objectives" options={{ headerShown: false }} />
         <Stack.Screen name="grade2/posttest/posttest" options={{ headerShown: false }} />
+        {/* GRADE 3 */}
+        <Stack.Screen name="grade3/content/content" options={{ headerShown: false }} />
+        <Stack.Screen name="grade3/pretest/pretest" options={{ headerShown: false }} />
+        <Stack.Screen name="grade3/introduction" options={{ headerShown: false }} />
+        <Stack.Screen name="grade3/lesson1/objectives" options={{ headerShown: false }} />
+        <Stack.Screen name="grade3/lesson2/objectives" options={{ headerShown: false }} />
+        <Stack.Screen name="grade3/lesson3/objectives" options={{ headerShown: false }} />
+        <Stack.Screen name="grade3/posttest/posttest" options={{ headerShown: false }} />
         {/* not found */}
         <Stack.Screen name="+not-found" />
       </Stack>
