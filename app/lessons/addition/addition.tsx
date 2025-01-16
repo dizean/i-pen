@@ -38,8 +38,16 @@ export default function Addition() {
     <View style={{ flex: 1, backgroundColor: "#fff8e1" }}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {currentSection === 1 && <Objectives />}
+        {currentSection != 1 &&
+         <Text  style={styles.title}>Addition {'\n'}of Numbers</Text>
+        }
+       
         {currentSection === 2 && <Introduction />}
         {currentSection === 3 && <Parts />}
+        {currentSection === 4 &&
+        <Text style={styles.subtitle}>Addition Practice</Text>
+        }
+        
         {currentSection === 4 && (
           <AdditionPractice onComplete={handlePracticeComplete} />
         )}
@@ -48,6 +56,9 @@ export default function Addition() {
         {currentSection === 7 && <LineAdd />}
         {currentSection === 8 && <Properties />}
         {currentSection === 9 && <WordProblem />}
+        {currentSection === 10 &&
+        <Text style={styles.subtitle}>Addition Practice</Text>
+        }
         {currentSection === 10 && <LineAdditionPractice />}
       </ScrollView>
       <View style={styles.fixedButtonContainer}>

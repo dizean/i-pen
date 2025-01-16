@@ -17,9 +17,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     position: "absolute",
-    bottom: 20, 
+    bottom: 0, 
     left: 20, 
-    right: 20
+    right: 20,
+    backgroundColor: "#fff8e1",
+    paddingVertical: 20
   },
   
   button: {
@@ -37,28 +39,24 @@ const styles = StyleSheet.create({
   container: {
   },
   title: {
-    fontSize: 24,
+    fontSize: 50,
     fontWeight: "bold",
-    marginBottom: 20,
+    paddingVertical: 0
   },
   subtitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 10,
+    fontSize: 40,
+    fontWeight: "600",
+    paddingVertical: 10
+  },
+  sectiontititle: {
+    fontSize: 25,
+    fontWeight: "500",
+    paddingVertical: 10
   },
   text: {
-    fontSize: 16,
-    marginTop: 5,
-    lineHeight: 25
-  },
-  highlightwrap: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 10,
-  },
-  highlight: {
-    fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 20,
+    lineHeight: 30,
+    paddingVertical: 5
   },
   image: {
     width: '100%',
@@ -66,9 +64,18 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginVertical: 10,
   },
+  textcenter: {
+    textAlign: 'center',
+    fontWeight: 'bold'
+  },
   textbold: {
     fontWeight: 'bold'
-  }
+  },
+  highlight: {
+    fontWeight: "bold",
+    fontSize: 20,
+    backgroundColor: 'yellow'
+  },
 });
 
 export default styles;

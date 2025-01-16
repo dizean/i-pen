@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
+import { useRouter } from "expo-router";
 
 interface Question {
   question: string;
@@ -14,7 +15,7 @@ export default function PreTest() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const { setPreTestScore } = useUser();
-
+  const router = useRouter()
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
     for (let i = 0; i < count; i++) {
@@ -47,7 +48,6 @@ export default function PreTest() {
   };
 
   const questions = generateQuestions(20);
-
   const handleAnswer = (selectedAnswer: number): void => {
     const isCorrect = selectedAnswer === questions[currentQuestion].correctAnswer;
     if (isCorrect) {
@@ -61,15 +61,9 @@ export default function PreTest() {
         `Your final score is ${score + (isCorrect ? 1 : 0)}/${questions.length}`
       );
       setPreTestScore(score + (isCorrect ? 1 : 0));
-      resetQuiz();
+      router.push('/grade2/content/content')
     }
   };
-
-  const resetQuiz = (): void => {
-    setScore(0);
-    setCurrentQuestion(0);
-  };
-
   const currentQuestionData = questions[currentQuestion];
 
   return (

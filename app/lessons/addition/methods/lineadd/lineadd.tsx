@@ -6,8 +6,8 @@ const LineAdd = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Title */}
-      <Text style={styles.title}>Methods in Solving Addition Problem</Text>
-      <Text style={styles.subtitle}>Number Line Addition</Text>
+      <Text style={styles.subtitle}>Methods in Solving Addition Problem</Text>
+      <Text style={styles.sectiontititle}>Number Line Addition</Text>
 
       {/* Section 1 */}
       <Text style={styles.text}>
@@ -16,21 +16,26 @@ const LineAdd = () => {
       <Text style={styles.text}>
       Let us understand the addition on a number line with the help of an example and the number line given below.
       </Text>
+      <Text style={styles.text}><Text style={styles.textbold}>Example:</Text></Text>
       <Text style={styles.text}>
-        Example: Add 10 + 3 using a number line
-      </Text>
-
-      {/* Section 2 */}
+        Add
+        <Text style={styles.textbold}> 10</Text> and 
+        <Text style={styles.textbold}> 3</Text></Text>
+        <Text style={styles.text}><Text style={styles.textbold}>Solution:</Text></Text>
       <Text style={styles.text}>
-      Solution: We start by marking the number 10 on the number line. 
+      We start by marking the number 10 on the number line. 
       When we add using a number line, we count by moving 
-      </Text>
-      <Text style={styles.text}>
       one number at a time to the right of the number. 
-      Since we are adding 10 and 3, we will move 3 steps to the right. This 
       </Text>
       <Text style={styles.text}>
-      brings us to 13. Hence, 10 + 3 = 13.
+      Since we are adding 10 and 3, we will move 3 steps to the right. This 
+      brings us to 13.
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.textbold}>Hence</Text>, 
+        <Text style={styles.textbold}>10</Text> + 
+        <Text style={styles.textbold}> 3</Text> = 
+        <Text style={styles.textbold}>13</Text>.
       </Text>
       <Image source={require('../../../../../assets/images/lineadd.png')} style={styles.image} />
     </ScrollView>

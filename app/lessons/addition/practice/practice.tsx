@@ -42,7 +42,6 @@ const LineAdditionPractice = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Line Addition Practice</Text>
       <Text style={styles.problem}>
         Solve: {problem.startNumber} + {problem.steps}
       </Text>

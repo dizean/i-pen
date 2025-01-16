@@ -70,7 +70,7 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Text style={styles.title}>Addition Practice</Text>
+      
 
       <View style={styles.problem}>
         <Text style={styles.problemText}>
