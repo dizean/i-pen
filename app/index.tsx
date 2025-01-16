@@ -17,11 +17,9 @@ export default function App() {
           <Text style={styles.text}>Enhancing Numeracy</Text>
           <Image style={styles.image} source={require('../assets/images/books.png')}/>
         </View>
-        <View style={styles.view}>
-          <TouchableOpacity onPress={()=>route.push('/selection/selection')}>
+          <TouchableOpacity style={styles.button} onPress={()=>route.push('/selection/selection')}>
           <Text style={styles.text}>Start Learning</Text>
           </TouchableOpacity>
-        </View>
       </SafeAreaView>
     </ImageBackground>
   );

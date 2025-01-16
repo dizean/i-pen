@@ -1,30 +1,11 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     padding: 20,
     backgroundColor: "#fff8e1",
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 25,
-    color: "#1a237e", // Darker shade for formal feel
-  },
-  subtitle: {
-    fontSize: 22,
-    fontWeight: "600",
-    marginVertical: 12,
-    textAlign: "center",
-    color: "#f57f17", // Dark yellow shade for subtitles
-  },
-  text: {
-    fontSize: 18,
-    marginVertical: 12,
-    textAlign: "center",
-    color: "#5d4037", // Brownish color for a formal tone
+    paddingBottom: 100
   },
   buttonContainer: {
     flexDirection: "row",
@@ -32,38 +13,62 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingHorizontal: 10,
   },
+  fixedButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    position: "absolute",
+    bottom: 20, 
+    left: 20, 
+    right: 20
+  },
+  
   button: {
-    backgroundColor: "#fbc02d", // Golden yellow for buttons
+    backgroundColor: "#fbc02d",
     padding: 15,
     borderRadius: 8,
     width: "45%",
-    alignItems: "center", // Ensures text is centered within the button
+    alignItems: "center",
   },
   buttonText: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#1a237e", // Navy blue text for buttons
+    color: "#1a237e",
+  },
+  container: {
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+  text: {
+    fontSize: 16,
+    marginTop: 5,
+    lineHeight: 25
   },
   highlightwrap: {
-    display: 'flex',
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    width: '100%', 
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
   },
   highlight: {
-    backgroundColor: "#ffeb3b", // Bright yellow for highlight
-    borderColor: '#f57f17', // Dark yellow for border
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    textAlign: "center",
-    textAlignVertical: "center",
     fontWeight: "bold",
-    fontSize: 32,
-    color: "#1a237e", // Dark navy blue for contrast
-    marginHorizontal: 6, // Slightly larger gap for spacing
+    fontSize: 16,
   },
+  image: {
+    width: '100%',
+    height: 200,
+    resizeMode: 'contain',
+    marginVertical: 10,
+  },
+  textbold: {
+    fontWeight: 'bold'
+  }
 });
 
 export default styles;

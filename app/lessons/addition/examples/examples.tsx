@@ -4,20 +4,22 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "rea
 export default function AdditionPractice({ onComplete }: { onComplete: () => void }) {
   const generateRandomNumber = () => Math.floor(Math.random() * 9) + 1;
 
-  const problems = [
+  const generateProblems = () => [
     { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/dog.png'), image2: require('../../../../assets/images/dog.png') },
     { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/house.png'), image2: require('../../../../assets/images/house.png') },
-    // { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/star.png'), image2: require('../../../../assets/images/star.png') },
+    { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/star.png'), image2: require('../../../../assets/images/star.png') },
   ];
 
+  const [problems] = useState(generateProblems());
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [choices, setChoices] = useState<number[]>([]); // Store choices for the current problem
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [resultMessage, setResultMessage] = useState("");
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
 
-  const calculateAnswer = (num1: any, num2: any) => num1 + num2;
+  const calculateAnswer = (num1: number, num2: number) => num1 + num2;
 
-  const generateChoices = (correctAnswer: any) => {
+  const generateChoices = (correctAnswer: number) => {
     let wrongAnswers: number[] = [];
     while (wrongAnswers.length < 2) {
       let wrongAnswer = generateRandomNumber() + generateRandomNumber();
@@ -26,38 +28,43 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
       }
     }
     let choices = [...wrongAnswers, correctAnswer];
-    choices = choices.sort(() => Math.random() - 0.5);
-    return choices;
+    return choices.sort(() => Math.random() - 0.5);
   };
 
-  const handleChoiceSelection = (choice: any) => {
-    const correctAnswer = calculateAnswer(problems[currentProblemIndex].num1, problems[currentProblemIndex].num2);
+  useEffect(() => {
+    const currentProblem = problems[currentProblemIndex];
+    const correctAnswer = calculateAnswer(currentProblem.num1, currentProblem.num2);
+    setChoices(generateChoices(correctAnswer));
+  }, [currentProblemIndex]);
+
+  const handleChoiceSelection = (choice: number) => {
+    const currentProblem = problems[currentProblemIndex];
+    const correctAnswer = calculateAnswer(currentProblem.num1, currentProblem.num2);
     setSelectedAnswer(choice);
     if (choice === correctAnswer) {
       setResultMessage("Correct! Well done.");
     } else {
-      setResultMessage("Oops! Try again.");
+      setResultMessage(`Oops! The correct answer is  ${correctAnswer}`);
     }
+
     setTimeout(() => {
       if (currentProblemIndex < problems.length - 1) {
         setCurrentProblemIndex(currentProblemIndex + 1);
         setSelectedAnswer(null);
         setResultMessage("");
       } else {
-        setResultMessage("Great job! You've finished all the problems.");
+        setResultMessage("Great job! You've finished all the problems. Press Next to Proceed");
         setIsPracticeComplete(true);
-        onComplete();  // Notify parent that practice is complete
+        onComplete();
       }
     }, 2000);
   };
 
   const currentProblem = problems[currentProblemIndex];
-  const correctAnswer = calculateAnswer(currentProblem.num1, currentProblem.num2);
-  const choices = generateChoices(correctAnswer);
 
   useEffect(() => {
     if (isPracticeComplete) {
-      onComplete();  // Call the parent onComplete function when practice is done
+      onComplete();
     }
   }, [isPracticeComplete]);
 
@@ -79,10 +86,14 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
         {choices.map((choice, index) => (
           <TouchableOpacity
             key={index}
-            style={[styles.choiceButton, 
-                    selectedAnswer === choice 
-                    ? (choice === correctAnswer ? styles.correct : styles.incorrect) 
-                    : null]}
+            style={[
+              styles.choiceButton,
+              selectedAnswer === choice
+                ? choice === calculateAnswer(currentProblem.num1, currentProblem.num2)
+                  ? styles.correct
+                  : styles.incorrect
+                : null,
+            ]}
             onPress={() => handleChoiceSelection(choice)}
           >
             <Text style={styles.choiceText}>{choice}</Text>
@@ -94,7 +105,7 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
     </ScrollView>
   );
 
-  function renderNumberImage(number: any, image: any) {
+  function renderNumberImage(number: number, image: any) {
     return (
       <View style={styles.numberContainer}>
         {[...Array(number)].map((_, i) => (
@@ -104,8 +115,6 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
     );
   }
 }
-
-
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,

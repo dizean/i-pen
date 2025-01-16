@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
+import { View, Text, TouchableOpacity, ImageBackground, Image } from "react-native";
 import styles from "./styles";
 import { useRouter } from "expo-router";
 
@@ -13,15 +13,9 @@ export default function Selection() {
 
   return (
     <ImageBackground style={styles.container} source={require('../../assets/images/bgstart.png')}>
-      <View style={{ 
-        width: '95%', 
-        backgroundColor: "rgba(114, 114, 110, 0.3)", 
-        borderRadius: 10,
-        paddingVertical: 20,
-        alignSelf: 'center',
-      }}>
-        <Text style={styles.title}>What Grade Are You?</Text>
+      <View style={styles.wrapper}>
         <View style={styles.optionsContainer}>
+        <Text style={styles.title}>What Grade Are You?</Text>
           <TouchableOpacity
             style={styles.optionButton}
             onPress={navigateToGrade2}
@@ -56,6 +50,16 @@ export default function Selection() {
           >
             <Text style={styles.optionText}>Grade 6</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
+            
+          >
+             <Image
+              source={require('../../assets/images/Picture1.png')}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+           
         </View>
       </View>
     </ImageBackground>

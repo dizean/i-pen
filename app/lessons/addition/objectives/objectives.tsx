@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert, TextInput, StyleSheet } from "react-native";
 import { useUser } from "@/context/UserContext";
-import styles from "./styles";
+import styles from "../styles";
 import { useRouter } from "expo-router";
 import { useRoute } from "@react-navigation/native";
 import CountNumbers from "@/app/count/count";

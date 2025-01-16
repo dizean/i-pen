@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-
+import styles from '../styles';
 const Introduction = () => {
   return (
     <View style={styles.container}>
@@ -23,12 +23,5 @@ const Introduction = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  subtitle: { fontSize: 18, fontWeight: 'bold', marginTop: 10 },
-  text: { fontSize: 16, marginTop: 5 },
-});
 
 export default Introduction;

@@ -16,7 +16,6 @@ export default function RootLayout() {
         <Stack.Screen name="lessons/addition/introduction/introduction" options={{ headerShown: false }} />
         <Stack.Screen name="lessons/addition/parts/parts" options={{ headerShown: false }} />
         <Stack.Screen name="lessons/addition/examples/examples" options={{ headerShown: false }} />
-        <Stack.Screen name="lessons/addition/methods/methods" options={{ headerShown: false }} />
         {/* SUBTRACTION */}
         <Stack.Screen name="lessons/subtraction/subtraction" options={{ headerShown: false }} />
         <Stack.Screen name="lessons/subtraction/objectives/objectives" options={{ headerShown: false }} />

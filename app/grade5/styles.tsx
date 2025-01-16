@@ -11,26 +11,24 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         width: '100%', 
-        backgroundColor: "rgba(114, 114, 110, 0.3)", 
+        backgroundColor: 'rgb(255, 242, 0)', 
         borderRadius: 10,
-        paddingVertical: 20,
-        paddingHorizontal: 10,
         alignSelf: 'center'
     },
     title: {
-      fontSize: 24,
+      fontSize: 40,
       fontWeight: "bold",
       textAlign: 'center',
       color: 'white'
     },
     subtitle: {
-      fontSize: 24,
+      fontSize: 40,
       fontWeight: "bold",
       textAlign: 'center',
       color: 'white'
     },
     input: {
-      width: '75%',
+      width: '90%',
       height: '15%',
       borderWidth: 1,
       borderColor: "#ccc",
@@ -40,16 +38,16 @@ const styles = StyleSheet.create({
       margin: 'auto'
     },
     button: {
-      width: '75%',
+      width: '90%',
       backgroundColor: "#fbc02d",
-      padding: 15,
+      padding: 20,
       borderRadius: 8,
       alignItems: "center",
       margin: 'auto'
     },
     buttonText: {
       color: "#fff",
-      fontSize: 16,
+      fontSize: 30,
       fontWeight: "bold",
     },
     image:{
@@ -58,7 +56,13 @@ const styles = StyleSheet.create({
       objectFit:'contain',
       margin: 0,
       alignSelf: 'center'
-    }
+    },
+    disabledButton: {
+      backgroundColor: "#d3d3d3", 
+    },
+    disabledButtonText: {
+      color: "#a9a9a9", 
+    },
   });
 
 export default styles

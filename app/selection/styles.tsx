@@ -8,34 +8,37 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height
   },
   wrapper: {
-    width: '80%', 
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: '100%', 
+    height: '100%',
+    backgroundColor: 'rgb(255, 242, 0)',
     borderRadius: 10,
-    padding: 20, 
     alignSelf: 'center',
+    
+    padding: 20
+    
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
+    paddingVertical: 10,
     fontWeight: "bold",
-    paddingHorizontal: 20,
     color: 'rgb(255, 255, 255)'
   },
   optionsContainer: {
-    padding:20,
     width: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: 'space-between',
-    gap: 10,
+    rowGap: 20
   },
   optionButton: {
-    backgroundColor: "#fbc02d",
+    backgroundColor: "yellow",
     paddingHorizontal: 5,
-    paddingVertical:40,
+    paddingVertical:30,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
     width: "45%",
+    height: '30%',
     elevation: 2,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -43,10 +46,15 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   optionText: {
-    color: "#1a237e", // Navy blue text
-    fontSize: 18,
+    color: "#1a237e",
+    fontSize: 20,
     fontWeight: "600",
   },
+  image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  }
 });
 
 export default styles;

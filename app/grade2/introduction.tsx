@@ -29,17 +29,20 @@ export default function PreTest() {
     <ImageBackground style={styles.container} source={require('../../assets/images/bgstart.png')}>
       <View style={styles.wrapper}>
         <Image style={styles.image} source={require('../../assets/images/calculator.png')}/>
-        <Text style={styles.title}> Before we get started,</Text>
-        <Text style={styles.subtitle}> Enter your name.</Text>
+        <Text style={styles.subtitle}> Enter your name</Text>
         <TextInput
           style={styles.input}
           placeholder="Type your name"
           value={nameInput}
           onChangeText={(text) => setNameInput(text)}
         />
-        <TouchableOpacity style={styles.button} onPress={handleSetUsername} disabled={!nameInput}>
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+        style={[styles.button, !nameInput && styles.disabledButton]}
+        onPress={handleSetUsername}
+        disabled={!nameInput}
+      >
+        <Text style={[styles.buttonText, !nameInput && styles.disabledButtonText]}>Next</Text>
+      </TouchableOpacity>
       </View>
   </ImageBackground>
   );
