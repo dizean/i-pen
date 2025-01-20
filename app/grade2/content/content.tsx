@@ -36,7 +36,7 @@
           <TouchableOpacity
             style={styles.gridItem}
             onPress={() => router.push("/lessons/addition/addition")}
-            disabled={!preTestScore}
+            // disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Lesson 1</Text>
           </TouchableOpacity>
@@ -44,7 +44,7 @@
           <TouchableOpacity
             style={styles.gridItem}
             onPress={() => router.push("/lessons/subtraction/subtraction")}
-            disabled={!preTestScore}
+            // disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Lesson 2</Text>
           </TouchableOpacity>
@@ -52,7 +52,7 @@
           <TouchableOpacity
             style={styles.gridItem}
             onPress={() => router.push("/grade2/posttest/posttest")}
-            disabled={!preTestScore}
+            // disabled={!preTestScore}
           >
             <Text style={styles.buttonText}>Post Test</Text>
           </TouchableOpacity>

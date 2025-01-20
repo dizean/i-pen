@@ -6,7 +6,7 @@ const WordProblem = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
         {/* Title */}
-        <Text style={styles.subtitle}>Addition Word Problem</Text>
+        <Text style={styles.subtitle}>Word Problems in Addition</Text>
         {/* Section 1 */}
         <Text style={styles.text}>
         The concept of the addition operation is used in our day-to-day activities.

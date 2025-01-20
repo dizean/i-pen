@@ -1,12 +1,23 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: "#FFF9C4", // Light yellow background
-      justifyContent: "center",
-    },
+  container: {
+    flex: 1,
+    padding: 10,
+    justifyContent: "center",
+  },
+  wrapper: {
+    width: '100%',
+    backgroundColor: "rgba(255, 255, 255, 0.2)", 
+    borderRadius: 10,                    
+    shadowColor: "#000",                     
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,            
+    backdropFilter: "blur(10px)",
+    borderWidth: 1,    
+    borderColor: "rgba(255, 255, 255, 0.3)", 
+  },
     title: {
       fontSize: 24,
       fontWeight: "bold",

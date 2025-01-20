@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert, TextInput, StyleSheet } from "react-native";
 import { useUser } from "@/context/UserContext";
-import styles from "./styles";
+import styles from "../styles";
 import { useRouter } from "expo-router";
 import { useRoute } from "@react-navigation/native";
 import CountNumbers from "@/app/count/count";
@@ -14,9 +14,11 @@ export default function Objectives() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Lesson 2 : Subtraction</Text>
-      <Text style={styles.title}>Objectives</Text>
-      <Text>
+      <Text style={styles.subtitle}>Objectives</Text>
+      <Text style={styles.text}>
       At the end of this lesson, you should be able to:
+      </Text>
+      <Text style={styles.text}>
       Develop skills to perform subtraction of numbers
       using various methods and strategies with the
       aid of computer-assisted tools.

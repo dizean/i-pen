@@ -3,22 +3,32 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
-      backgroundColor: "#FFF9C4", // Light yellow background
+      padding: 10,
       justifyContent: "center",
+    },
+    wrapper: {
+      width: '100%',
+      backgroundColor: "rgba(255, 255, 255, 0.2)", 
+      borderRadius: 10,                    
+      shadowColor: "#000",                     
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.2,
+      shadowRadius: 10,            
+      backdropFilter: "blur(10px)",
+      borderWidth: 1,    
+      borderColor: "rgba(255, 255, 255, 0.3)", 
     },
     title: {
       fontSize: 24,
       fontWeight: "bold",
       marginBottom: 20,
       textAlign: "center",
-      color: "#F57F17", // Deep orange-yellow for emphasis
     },
     question: {
       fontSize: 20,
       marginBottom: 20,
       textAlign: "center",
-      color: "#5D4037", // Warm brown for readability
+      color: "black", // Warm brown for readability
       fontWeight: "600",
     },
     optionsContainer: {
@@ -54,6 +64,15 @@ const styles = StyleSheet.create({
       textAlign: "center",
       marginTop: 20,
       color: "#F57F17",
+    },
+    selectedOption:{
+      backgroundColor: 'blue'
+    },
+    correctOption:{
+      backgroundColor: 'green'
+    },
+    wrongOption:{
+      backgroundColor: 'red'
     },
   });
   

@@ -6,7 +6,7 @@ const Properties = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Title */}
-      <Text style={styles.subtitle}>Addition Properties</Text>
+      <Text style={styles.subtitle}>Properties of Addition</Text>
       <Text style={styles.sectiontititle}>Commutative Property</Text>
 
       {/* Section 1 */}

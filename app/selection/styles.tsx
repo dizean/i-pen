@@ -13,27 +13,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255, 242, 0)',
     borderRadius: 10,
     alignSelf: 'center',
-    
-    padding: 20
+    padding: 10
     
   },
   title: {
     fontSize: 30,
     paddingVertical: 10,
     fontWeight: "bold",
-    color: 'rgb(255, 255, 255)'
+      
   },
   optionsContainer: {
     width: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: 'space-between',
-    rowGap: 20
+    rowGap: 10
   },
   optionButton: {
     backgroundColor: "yellow",
-    paddingHorizontal: 5,
-    paddingVertical:30,
     borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
@@ -47,8 +44,9 @@ const styles = StyleSheet.create({
   },
   optionText: {
     color: "#1a237e",
-    fontSize: 20,
+    fontSize: 50,
     fontWeight: "600",
+    textAlign: 'center'
   },
   image: {
     width: '100%',

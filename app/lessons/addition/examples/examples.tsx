@@ -1,19 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+} from "react-native";
 
 export default function AdditionPractice({ onComplete }: { onComplete: () => void }) {
   const generateRandomNumber = () => Math.floor(Math.random() * 9) + 1;
 
   const generateProblems = () => [
-    { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/dog.png'), image2: require('../../../../assets/images/dog.png') },
-    { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/house.png'), image2: require('../../../../assets/images/house.png') },
-    { num1: generateRandomNumber(), num2: generateRandomNumber(), image1: require('../../../../assets/images/star.png'), image2: require('../../../../assets/images/star.png') },
+    {
+      num1: generateRandomNumber(),
+      num2: generateRandomNumber(),
+      image1: require("../../../../assets/images/dog.png"),
+      image2: require("../../../../assets/images/dog.png"),
+    },
+    {
+      num1: generateRandomNumber(),
+      num2: generateRandomNumber(),
+      image1: require("../../../../assets/images/house.png"),
+      image2: require("../../../../assets/images/house.png"),
+    },
+    {
+      num1: generateRandomNumber(),
+      num2: generateRandomNumber(),
+      image1: require("../../../../assets/images/star.png"),
+      image2: require("../../../../assets/images/star.png"),
+    },
   ];
 
   const [problems] = useState(generateProblems());
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
-  const [choices, setChoices] = useState<number[]>([]); // Store choices for the current problem
+  const [choices, setChoices] = useState<number[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [correctAnswer, setCorrectAnswer] = useState<number | null>(null); // Add correct answer state
   const [resultMessage, setResultMessage] = useState("");
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
 
@@ -35,25 +58,30 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
     const currentProblem = problems[currentProblemIndex];
     const correctAnswer = calculateAnswer(currentProblem.num1, currentProblem.num2);
     setChoices(generateChoices(correctAnswer));
+    setCorrectAnswer(correctAnswer); // Update correct answer state
   }, [currentProblemIndex]);
 
   const handleChoiceSelection = (choice: number) => {
     const currentProblem = problems[currentProblemIndex];
     const correctAnswer = calculateAnswer(currentProblem.num1, currentProblem.num2);
     setSelectedAnswer(choice);
+
     if (choice === correctAnswer) {
       setResultMessage("Correct! Well done.");
     } else {
-      setResultMessage(`Oops! The correct answer is  ${correctAnswer}`);
+      setResultMessage(`Oops! The correct answer is ${correctAnswer}`);
     }
 
     setTimeout(() => {
       if (currentProblemIndex < problems.length - 1) {
         setCurrentProblemIndex(currentProblemIndex + 1);
         setSelectedAnswer(null);
+        setCorrectAnswer(null); // Reset correct answer
         setResultMessage("");
       } else {
-        setResultMessage("Great job! You've finished all the problems. Press Next to Proceed");
+        setResultMessage(
+          "Great job! You've finished all the problems. Press Next to Proceed"
+        );
         setIsPracticeComplete(true);
         onComplete();
       }
@@ -70,18 +98,15 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      
-
       <View style={styles.problem}>
-        <Text style={styles.problemText}>
+        <View style={styles.problem}>
           {renderNumberImage(currentProblem.num1, currentProblem.image1)}
-        </Text>
+        </View>
         <Text style={styles.problemText}>+</Text>
-        <Text style={styles.problemText}>
+        <View style={styles.problem}>
           {renderNumberImage(currentProblem.num2, currentProblem.image2)}
-        </Text>
+        </View>
       </View>
-
       <View style={styles.choices}>
         {choices.map((choice, index) => (
           <TouchableOpacity
@@ -89,32 +114,44 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
             style={[
               styles.choiceButton,
               selectedAnswer === choice
-                ? choice === calculateAnswer(currentProblem.num1, currentProblem.num2)
+                ? choice === correctAnswer
                   ? styles.correct
                   : styles.incorrect
                 : null,
+              selectedAnswer !== null && choice === correctAnswer && styles.correctAnswer,
             ]}
             onPress={() => handleChoiceSelection(choice)}
+            disabled={selectedAnswer !== null} // Disable buttons after a selection
           >
             <Text style={styles.choiceText}>{choice}</Text>
           </TouchableOpacity>
         ))}
       </View>
-
-      {resultMessage && <Text style={styles.resultMessage}>{resultMessage}</Text>}
+      {/* {resultMessage && <Text style={styles.resultMessage}>{resultMessage}</Text>} */}
     </ScrollView>
   );
 
   function renderNumberImage(number: number, image: any) {
+    const imagesArray = [...Array(number)];
+    const rows = [];
+    for (let i = 0; i < imagesArray.length; i += 4) {
+      rows.push(imagesArray.slice(i, i + 4));
+    }
+
     return (
-      <View style={styles.numberContainer}>
-        {[...Array(number)].map((_, i) => (
-          <Image key={i} source={image} style={styles.numberImage} />
+      <View>
+        {rows.map((row, rowIndex) => (
+          <View key={rowIndex} style={styles.numberRow}>
+            {row.map((_, i) => (
+              <Image key={i} source={image} style={styles.numberImage} />
+            ))}
+          </View>
         ))}
       </View>
     );
   }
 }
+
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
@@ -122,44 +159,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-    color: "#1a237e",
-    marginBottom: 20,
-  },
-  problem: {
-    marginBottom: 20,
-    alignItems: "center",
-  },
+  problem: {},
   problemText: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: "500",
     textAlign: "center",
     color: "#5d4037",
+    padding: 10,
   },
-  numberContainer: {
+  numberRow: {
     flexDirection: "row",
     marginVertical: 5,
-    flexWrap: "wrap", // Ensures images don't overflow
-    justifyContent: "center", // Center the images horizontally
   },
   numberImage: {
     width: 40,
     height: 40,
-    margin: 5,
+    marginHorizontal: 5,
   },
   choices: {
-    flexDirection: "row", // This makes the choices appear in a single row
-    justifyContent: "space-evenly", // Evenly space the choices
-    width: "100%", // Ensure it takes up the full width
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: "100%",
     marginVertical: 20,
   },
   choiceButton: {
     backgroundColor: "#fbc02d",
     padding: 15,
     borderRadius: 8,
-    width: "30%", // You can adjust this to control the width of each button
+    width: "30%",
     alignItems: "center",
     marginHorizontal: 5,
   },
@@ -169,10 +196,13 @@ const styles = StyleSheet.create({
     color: "#1a237e",
   },
   correct: {
-    backgroundColor: "#388e3c", // Green for correct answer
+    backgroundColor: "#388e3c",
   },
   incorrect: {
-    backgroundColor: "#d32f2f", // Red for incorrect answer
+    backgroundColor: "#d32f2f",
+  },
+  correctAnswer: {
+    backgroundColor: "#4caf50",
   },
   resultMessage: {
     fontSize: 18,

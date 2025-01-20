@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
       fontSize: 40,
       fontWeight: "bold",
       textAlign: 'center',
-      color: 'white'
+      color: 'rgb(11, 28, 83)'
     },
     input: {
       width: '90%',

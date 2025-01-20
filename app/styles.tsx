@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    fontWeight: "light",
+    fontWeight: "bold",
     textAlign: "center",
   },
   image:{

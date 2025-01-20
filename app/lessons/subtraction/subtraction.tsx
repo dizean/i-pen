@@ -1,50 +1,112 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground, Image } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
 import Objectives from "./objectives/objectives";
-
+import AntDesign from '@expo/vector-icons/AntDesign';
+import SpeechComponent from "./speech/speech";
+import VideoPlayer from "./video/video";
+import Introduction from "./introduction/introduction";
+import Parts from "./parts/parts";
+import Practice from "./examples/examples";
+import WoRegroup from "./methods/woregroup/woregroup";
+import WRegroup from "./methods/wregroup/wregroup";
+import Line from "./methods/line/line";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
-  const [isPracticeComplete, setIsPracticeComplete] = useState(false); 
-  const router = useRouter();
-
-  const handleNext = () => {
-    if (currentSection < 4) {
-      setCurrentSection(currentSection + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentSection > 1) {
-      setCurrentSection(currentSection - 1);
-    }
-  };
-
-  const handlePracticeComplete = () => {
-    setIsPracticeComplete(true); 
-    setCurrentSection(4); 
-  };
+    const [isPracticeComplete, setIsPracticeComplete] = useState(false);
+    const router = useRouter();
+    const speechRef = useRef<{ stopSpeech: () => void } | null>(null);
+  
+    const handleNext = () => {
+      if (speechRef.current) {
+        speechRef.current.stopSpeech();
+      }
+      if (currentSection < 11) {
+        setCurrentSection(currentSection + 1);
+      }
+    };
+  
+    const handlePrev = () => {
+      if (speechRef.current) {
+        speechRef.current.stopSpeech();
+      }
+      if (currentSection > 1) {
+        setCurrentSection(currentSection - 1);
+      }
+    };
+  
+    const handlePracticeComplete = () => {
+      setIsPracticeComplete(true);
+      setCurrentSection(6);
+    };
+  
+    const handleReturnHome = () => {
+      if (speechRef.current) {
+        speechRef.current.stopSpeech(); 
+      }
+      router.push('/grade2/content/content');
+    };
 
   return (
+    <>
+     <ImageBackground source={require('../../../assets/images/greenbgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>Subtraction of Numbers</Text>
-      {currentSection === 1 && (
-        <Objectives/>
-      )}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={handlePrev} disabled={currentSection === 1}>
-          <Text style={styles.buttonText}>Prev</Text>
-        </TouchableOpacity>
+      {currentSection === 1 && <Objectives />} 
+        {currentSection === 2 && (
+          <>
+            <Text style={styles.subtitle}>Watch and Sing the Subtraction Song</Text>
+            <VideoPlayer />
+          </>
+        )}
+      {currentSection === 3 && <Introduction />} 
+      {currentSection === 4 && <Parts />} 
+      {currentSection === 5 && (
+          <>
+            <Text style={styles.subtitle}>Practice</Text>
+            <Practice onComplete={handlePracticeComplete} />
+          </>
+        )}
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleNext}
-          disabled={currentSection === 4 || (currentSection === 3 && !isPracticeComplete)}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      {currentSection === 6 && <WoRegroup />} 
+      {currentSection === 7 && <WRegroup />} 
+      {currentSection === 8 && <Line />} 
+      </ScrollView>
+      
+    </ImageBackground>
+    <ImageBackground source={require('../../../assets/images/greenbgcutbt.png')} style={styles.fixedButtonContainer}>
+        {currentSection !== 1 ? (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handlePrev}
+            disabled={currentSection === 1}
+          >
+            <AntDesign name="doubleleft" size={30} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
+            <AntDesign name="home" size={30} color="black" />
+          </TouchableOpacity>
+        )}
+        <SpeechComponent
+          currentSection={currentSection}
+          ref={speechRef} 
+        />
+        {currentSection !== 11 ? (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleNext}
+            disabled={currentSection === 5 && !isPracticeComplete}
+          >
+            <AntDesign name="doubleright" size={30} color="black" />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
+            <AntDesign name="home" size={30} color="black" />
+          </TouchableOpacity>
+        )}
+      </ImageBackground>
+    </>
+   
   );
 }

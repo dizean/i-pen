@@ -4,8 +4,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: "#fff8e1",
-    paddingBottom: 100
+    paddingBottom: 100,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -14,21 +13,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   fixedButtonContainer: {
+    width: '100%',
     flexDirection: "row",
     justifyContent: "space-between",
     position: "absolute",
     bottom: 0, 
-    left: 20, 
-    right: 20,
-    backgroundColor: "#fff8e1",
-    paddingVertical: 20
+    paddingVertical: 10,
+    borderTopWidth: 1, 
+    borderColor: "#000", 
   },
-  
   button: {
-    backgroundColor: "#fbc02d",
     padding: 15,
-    borderRadius: 8,
-    width: "45%",
+    borderRadius: 15,
+    width: "30%",
     alignItems: "center",
   },
   buttonText: {
@@ -41,12 +38,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 50,
     fontWeight: "bold",
-    paddingVertical: 0
+    paddingVertical: 5
   },
   subtitle: {
     fontSize: 40,
     fontWeight: "600",
-    paddingVertical: 10
+    paddingVertical: 5
   },
   sectiontititle: {
     fontSize: 25,
@@ -73,8 +70,50 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: "bold",
+    backgroundColor: 'yellow',
+    borderRadius: 100,
+    borderWidth: 10,
+  },
+  question: {
     fontSize: 20,
-    backgroundColor: 'yellow'
+    marginBottom: 20,
+    textAlign: "center",
+    color: "#5D4037", // Warm brown for readability
+    fontWeight: "600",
+  },
+  optionsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  optionButton: {
+    backgroundColor: "#FFEB3B", // Bright yellow for buttons
+    width: "48%",
+    aspectRatio: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    marginVertical: 10,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    borderWidth: 2,
+    borderColor: "#F57F17", // Border matches title color
+  },
+  optionText: {
+    fontSize: 18,
+    color: "#212121", // Dark gray for better contrast
+    textAlign: "center",
+    fontWeight: "bold",
+  },
+  score: {
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 20,
+    color: "#F57F17",
   },
 });
 

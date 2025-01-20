@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, ImageBackground } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 
@@ -73,9 +73,16 @@ export default function PostTest() {
   const currentQuestionData = questions[currentQuestion];
 
   return (
-    <View style={styles.container}>
+    <ImageBackground source={require('../../../assets/images/bg.png')} style={styles.container}>
+      <View style={styles.wrapper}>
       <Text style={styles.title}>
-        Hello, {username}! Let's take the Pre-Test.
+       Post - Test
+      </Text>
+      <Text style={styles.title}>
+        Hello, {username}!
+      </Text>
+      <Text style={styles.title}>
+       Let us test what you have learned.
       </Text>
       <Text style={styles.question}>{currentQuestionData.question}</Text>
       <View style={styles.optionsContainer}>
@@ -91,5 +98,6 @@ export default function PostTest() {
       </View>
       <Text style={styles.score}>Current Score: {score}</Text>
     </View>
+  </ImageBackground>
   );
 }
