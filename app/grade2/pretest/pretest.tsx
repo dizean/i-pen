@@ -83,8 +83,7 @@ export default function PreTest() {
           `Your final score is ${score + (isCorrect ? 1 : 0)}/${questions.length}`
         );
         setPreTestScore(score + (isCorrect ? 1 : 0));
-        
-        router.push('/grade2/content/content');
+        router.push('/content/content');
       }
     }, 2000);
   };

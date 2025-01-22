@@ -13,35 +13,55 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    rowGap: 20
+    rowGap: 20,
   },
   view: {
-    backgroundColor: "rgba(255, 255, 255, 0.59)", 
-    borderRadius: 10,
-    padding: 16,
+    backgroundColor: "rgba(255, 255, 255, 0.8)", 
+    borderRadius: 20,
+    padding: 24,
     borderWidth: 2,
-    borderColor: "rgba(0, 0, 0, 0.2)",
+    borderColor: "rgba(0, 0, 0, 0.1)",
   },
   title: {
     fontSize: 100,
-    fontWeight: "bold",
+    fontWeight: "900",
     textAlign: "center",
+    color: "#38bfe7", 
+    textShadowColor: "rgba(0, 0, 0, 0.3)",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+  },
+  titleHighlight:{
+    color: '#FDDA0D'
   },
   text: {
-    fontSize: 25,
+    fontSize: 28,
     fontWeight: "bold",
     textAlign: "center",
+    color: "#333",
   },
-  image:{
-    width: 300,
-    height: 300
+  image: {
+    width: 330,
+    height: 300,
+    marginVertical: 20,
   },
   button: {
     width: '90%',
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 20,
-    backgroundColor: 'rgb(255, 242, 0)',
-  }
+    backgroundColor: '#FDDA0D',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 8,
+  },
+  buttonText: {
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#fff",
+  },
 });
 
 export default styles;

@@ -3,25 +3,21 @@ import { Dimensions, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff8e1", // Soft yellow background
-    paddingHorizontal: 10,
-    justifyContent: 'center',
+    padding: 10,
   },
   headerSection: {
     padding: 15,
     backgroundColor: "#fdd835",
     borderRadius: 15,
     marginBottom: 20,
-    alignItems: "center",
   },
   headerText: {
-    color: "#1a237e", // Navy blue text
+    color: "#1a237e",
     fontSize: 28,
     fontWeight: "700",
-    textAlign: "center",
   },
   headerTextName: {
-    color: "#1a237e", // Navy blue text
+    color: "#1a237e",
     fontSize: 20,
     fontWeight: "500",
     marginTop: 5,
@@ -34,11 +30,11 @@ const styles = StyleSheet.create({
   },
   scoreCard: {
     flex: 1,
-    backgroundColor: "#ffecb3", // Soft yellow card
+    backgroundColor: "#ffecb3",
     padding: 15,
     borderRadius: 15,
-    elevation: 5, // Shadow for Android
-    shadowColor: "#000", // Shadow for iOS
+    elevation: 5,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
@@ -48,13 +44,13 @@ const styles = StyleSheet.create({
   scoreTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#5d4037", // Brown text for a formal tone
+    color: "#5d4037",
     marginBottom: 8,
   },
   scoreValue: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#1a237e", // Navy blue
+    color: "#1a237e",
   },
   gridContainer: {
     flexDirection: "row",
@@ -64,7 +60,7 @@ const styles = StyleSheet.create({
   },
   
   gridItem: {
-    backgroundColor: "#fbc02d", // Yellow for buttons
+    backgroundColor: "#fbc02d",
     width: "48%",
     justifyContent: "center",
     alignItems: "center",
@@ -77,7 +73,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
   buttonText: {
-    color: "#1a237e", // Navy blue text
+    color: "#1a237e",
     fontSize: 18,
     fontWeight: "600",
     textAlign: "center",

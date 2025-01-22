@@ -15,16 +15,19 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo-google-fonts/fredoka-one": "^0.2.3",
     "@expo/vector-icons": "^14.0.2",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "expo": "~52.0.26",
+    "expo-av": "~15.0.2",
     "expo-blur": "~14.0.2",
     "expo-constants": "~17.0.3",
     "expo-font": "~13.0.2",
     "expo-haptics": "~14.0.1",
     "expo-linking": "~7.0.4",
     "expo-router": "~4.0.17",
+    "expo-screen-orientation": "~8.0.4",
     "expo-speech": "^13.0.1",
     "expo-splash-screen": "~0.29.21",
     "expo-status-bar": "~2.0.1",
@@ -41,9 +44,7 @@
     "react-native-video": "^6.9.1",
     "react-native-video-controls": "^2.8.1",
     "react-native-web": "~0.19.13",
-    "react-native-webview": "13.12.5",
-    "expo-av": "~15.0.2",
-    "expo-screen-orientation": "~8.0.4"
+    "react-native-webview": "13.12.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
