@@ -13,9 +13,10 @@ import Properties from "./properties/properties";
 import WordProblem from "./wordproblems/wordproblems";
 import SpeechComponent from "./speech/speech";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import AdditionPractie from "./practice/additionpractice";
 import VideoPlayer from "./video/video";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Practice from "./practice/practice";
+import Test from "./practice/practice";
 
 export default function Addition() {
   const [currentSection, setCurrentSection] = useState(1);
@@ -50,7 +51,7 @@ export default function Addition() {
     if (speechRef.current) {
       speechRef.current.stopSpeech(); 
     }
-    router.push('/grade2/content/content');
+    router.push('/content/content');
   };
   return (
     <>
@@ -79,7 +80,7 @@ export default function Addition() {
         {currentSection === 11 && (
           <>
             <Text style={styles.subtitle}>Practice What You Have Learned</Text>
-            <AdditionPractie />
+            <Test />
           </>
         )}
       </ScrollView>

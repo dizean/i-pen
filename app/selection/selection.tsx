@@ -44,17 +44,18 @@ export default function Selection() {
   }, [scaleValue]);
 
   const grades = [
-    require("../../assets/images/2.png"),
-    require("../../assets/images/3.png"),
-    require("../../assets/images/4.png"),
-    require("../../assets/images/5.png"),
-    require("../../assets/images/6.png"),
+    "2","3","4","5","6",
   ];
-
+  // const grades = [
+  //   require("../../assets/images/2.png"),
+  //   require("../../assets/images/3.png"),
+  //   require("../../assets/images/4.png"),
+  //   require("../../assets/images/5.png"),
+  //   require("../../assets/images/6.png"),
+  // ];
   return (
     <ImageBackground
       style={styles.container}
-      source={require("../../assets/images/bgyellowbt.png")}
     >
       <View style={styles.wrapper}>
         <View style={styles.optionsContainer}>
@@ -64,7 +65,7 @@ export default function Selection() {
           <TouchableOpacity style={styles.optionButton}>
             <Image
               source={require("../../assets/images/tutor.png")}
-              style={{width: '100%', height: '100%', resizeMode: 'cover'}}
+              style={{width: '100%', height: '100%', resizeMode: 'contain'}}
             />
           </TouchableOpacity>
           {grades.map((grade, index) => (
@@ -73,7 +74,8 @@ export default function Selection() {
               style={styles.optionButton}
               onPress={() => navigateToGrade(`${index + 2}`)}
             >
-              <Animated.Image
+              <Text style={styles.optionText}>{grade}</Text>
+              {/* <Animated.Image
                 source={grade}
                 style={[
                   styles.image,
@@ -81,7 +83,7 @@ export default function Selection() {
                     transform: [{ scale: scaleValue }],
                   },
                 ]}
-              />
+              /> */}
             </TouchableOpacity>
           ))}
         </View>

@@ -29,7 +29,7 @@ export default function PreTest() {
     setPreTestScore(0);
     switch (grade) {
           case "2":
-            router.push("/grade2/pretest/pretest");
+            router.push("/content/content");
             break;
           case "3":
             router.push("/grade3/pretest/pretest");
@@ -67,7 +67,7 @@ export default function PreTest() {
   return (
     <ImageBackground
       style={styles.container}
-      source={require("../../assets/images/bgyellowcut.png")}
+      // source={require("../../assets/images/bgyellowcut.png")}
     >
       <View style={styles.wrapper}>
         <Animated.Image

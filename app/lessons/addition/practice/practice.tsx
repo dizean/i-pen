@@ -16,7 +16,7 @@ interface Question {
   correctAnswer: number;
   options: number[];
 }
-export default function AdditionPractice() {
+export default function Test() {
   const [currentPractice, setCurrentPractice] = useState<"addition" | "line">(
     "addition"
   );

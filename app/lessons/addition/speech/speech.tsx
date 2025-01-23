@@ -14,8 +14,9 @@ const SpeechComponent = forwardRef(({ currentSection }: SpeechComponentProps, re
 
   const speakWithKidTone = (text: string, callback?: () => void) => {
     Speech.speak(text, {
-      voice: "en-US-language",
-      rate: 0.8,
+      pitch: 1.5,
+      rate: 0.7,
+      volume: 1.0,
       onDone: callback,
     });
   };

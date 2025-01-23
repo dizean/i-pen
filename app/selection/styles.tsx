@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+    backgroundColor: '#38bfe7'
   },
   wrapper: {
     width: "100%",
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
   titlebg: {
     width: '100%',
     borderRadius: 20, 
-    backgroundColor: 'rgb(56,191,231)',                        
+    backgroundColor: '#FDDA0D',                        
     shadowColor: "#000",                      
     shadowOffset: { width: 0, height: 4 },     
     shadowOpacity: 0.3,                        
@@ -42,23 +43,26 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    rowGap: 30,
+    rowGap: 20,
   },
   optionButton: {
-    borderRadius: 100,
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    width: 180,
-    height: 180,
-    backgroundColor: "rgba(255, 255, 255, 0.8)", 
+    width: '48%',
+    height: '25%',
+    backgroundColor: "#FDDA0D", 
     padding: 24,
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.06)",
-    overflow: 'hidden'
+    shadowColor: "#000",
+    shadowOpacity: 0.6,
+    shadowRadius: 254,
+    elevation: 8,
   },
   optionText: {
     color: "#fff",
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: "900",
     textAlign: "center",
     fontFamily: "FredokaOne-Regular",
@@ -70,5 +74,7 @@ const styles = StyleSheet.create({
   },
   
 });
-
+// #AEEEEE
+// #2C3E50
+// #F1C40F
 export default styles;

@@ -12,6 +12,8 @@ import Practice from "./examples/examples";
 import WoRegroup from "./methods/woregroup/woregroup";
 import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
+import WordProblem from "./wordproblems/wordproblems";
+import Test from "./practice/practice";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -22,7 +24,7 @@ export default function Subtraction() {
       if (speechRef.current) {
         speechRef.current.stopSpeech();
       }
-      if (currentSection < 11) {
+      if (currentSection < 10) {
         setCurrentSection(currentSection + 1);
       }
     };
@@ -45,7 +47,7 @@ export default function Subtraction() {
       if (speechRef.current) {
         speechRef.current.stopSpeech(); 
       }
-      router.push('/grade2/content/content');
+      router.push('/content/content');
     };
 
   return (
@@ -71,6 +73,13 @@ export default function Subtraction() {
       {currentSection === 6 && <WoRegroup />} 
       {currentSection === 7 && <WRegroup />} 
       {currentSection === 8 && <Line />} 
+      {currentSection === 9 && <WordProblem />} 
+      {currentSection === 10 && (
+          <>
+            <Text style={styles.subtitle}>Practice What You Have Learned</Text>
+            <Test />
+          </>
+        )}
       </ScrollView>
       
     </ImageBackground>
@@ -92,7 +101,7 @@ export default function Subtraction() {
           currentSection={currentSection}
           ref={speechRef} 
         />
-        {currentSection !== 11 ? (
+        {currentSection !== 10 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handleNext}

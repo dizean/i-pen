@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
       justifyContent: "center",
       alignItems: "center",
       padding: 16,
-      backgroundColor: "#f5f5f5",
+      backgroundColor: '#38bfe7'
     },
     wrapper: {
         width: '100%', 
@@ -16,17 +16,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         padding: 5
     },
-    title: {
-      fontSize: 30,
-      fontWeight: "bold",
-      textAlign: 'center',
-      color: 'white'
-    },
     subtitle: {
       fontSize: 30,
       fontWeight: "bold",
       textAlign: 'center',
-      color: 'rgb(11, 28, 83)'
+      color: '#38bfe7'
     },
     input: {
       width: '90%',
