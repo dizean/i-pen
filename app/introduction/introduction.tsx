@@ -29,7 +29,7 @@ export default function PreTest() {
     setPreTestScore(0);
     switch (grade) {
           case "2":
-            router.push("/content/content");
+            router.push("/grade2/pretest/pretest");
             break;
           case "3":
             router.push("/grade3/pretest/pretest");

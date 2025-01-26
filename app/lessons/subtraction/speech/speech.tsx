@@ -13,9 +13,11 @@ const SpeechComponent = forwardRef(({ currentSection }: SpeechComponentProps, re
   const textList = getTextListForSection(currentSection);
 
   const speakWithKidTone = (text: string, callback?: () => void) => {
+    console.log(text)
     Speech.speak(text, {
-      voice: "en-US-language",
-      rate: 0.8,
+      pitch: 1.8,
+      rate: 0.7,
+      volume: 1.0,
       onDone: callback,
     });
   };
@@ -78,8 +80,7 @@ const getTextListForSection = (currentSection: number) => {
        "Introduction to Subtraction",
       "What is Subtraction?",
       `Subtraction is the process of taking away a number from another. 
-      It is a primary arithmetic operation that is denoted by a subtraction symbol
-      and is the method of calculating the difference between two numbers.
+      It is a primary arithmetic operation that is denoted by a subtraction symbol and is the method of calculating the difference between two numbers.
       `,
       "Subtraction symbol",
       `In mathematics, we have different symbols. 
@@ -96,113 +97,84 @@ const getTextListForSection = (currentSection: number) => {
         `Difference`,
         `The final result after subtracting the subtrahend from the minuend.`,
         `The subtraction formula is written as: `,
-        `Minuend - Subtrahend = Difference`,
+        `Minuend minus Subtrahend = Difference`,
         
       ];
     case 5:
-      return ["Let us Practice Adding",
+      return ["Let us Practice Subtracting",
         'Choose the correct answer'
       ];
     case 6:
         return [
-            "Methods in Solving Addition Problem",
-            "Addition Without Regrouping",
-            "The addition in which the sum of the digits is less than or equal to 9 in each column is called addition without regrouping.",
-            "Let us understand how to add two or more numbers without regrouping with the help of an example.",
+            "Methods in Solving Subtraction Problem",
+            "Subtraction Without Regrouping",
             "Example:",
-            "Add 11234 and 21123",
+            "subtract 25632 from 48756",
             "Solution:",
-            "We will use the following given steps and try to relate them with the following figure.",
-            "Step 1: Start with the digits in the ones (O) column. (4 + 3 = 7)",
-            "Step 2: Move to the digits in the tens (T) column. (3 + 2 = 5)",
-            "Step 3: Now add the digits in the hundreds (H) column. (2 + 1 = 3)",
-            "Step 4: After this, add the digits in the thousands (Th) column. (1 + 1 = 2)",
-            "Step 5: Finally, add the digits in the ten thousands (T-th) column. (1 + 2 = 3)",
-            "Step 6: Hence, 11234 + 21123 = 32357"];
+            "Follow the given steps and try to relate them with the following figure.",
+            "Step 1: Start with the digits in the ones (O) column.(6 minus 2 = 4)",
+            "Step 2: Move to the digits in the tens (T) column.(5 minus 3 = 2)",
+            "Step 3: Now subtract the digits in the hundreds (H) column.(7 minus 6 = 1)",
+            "Step 4: After this, subtract the digits in the thousands (Th) column. (8 minus 5 = 3)",
+            "Step 5: Finally, subtract the digits in the ten thousands (T-th) column. (4 minus 2 = 2)",
+            "Step 6: Therefore, the difference between the two given numbers is 23124."];
     case 7:
         return [
-            "Addition With Regrouping",
-            "While adding numbers, if the sum of the addends is greater than 9 in any of the columns, we regroup this sum into tens and ones. Then we carry over the tens digit of the sum to the preceding column and write the ones digit of the sum in that particular column.",
-            "Let us understand how to add two or more numbers by regrouping with the help of an example.",
+            "Subtraction With Regrouping",
             "Example:",
-            "Add 3475 and 2865",
+            "Subtract 3678 from 8162",
             "Solution:",
-            "We will use the following given steps and try to relate them with the following figure.",
+            "Follow the given steps and try to relate them with the following figure.",
             "Step 1:",
-            "Start with the digits in the ones (O) place.",
-            "(5 + 5 = 10).",
-            "Here the sum is 10. The tens digit of the sum, that is, 1, will be carried to the preceding column.",
+            `Start subtracting the digits at ones (O) place. We can see that 8 is greater than 2. 
+            So, we will borrow 1 from the tens (T) column which will make it 12. Now,`,
+            "(12 minus 8 = 4 ).",
             "Step 2:",
-            "Add the digits in the tens (T) column along with the carryover 1.",
-            "1 (carry-over) + 7 + 6 = 14.",
-            "Here the sum is 14. The tens digit of the sum, that is, 1, will be carried to the hundreds column.",
+            `After giving 1 to the ones column (O) in the previous step, 6 becomes 5.
+            Now, let us subtract the digits at the tens place (T) (5 minus 7). 
+            Here, 7 is greater than 5, so we will borrow 1 from the hundreds column (H).
+            This will make it 15. So,`,
+            "(15 minus 7 = 8 ).",
             "Step 3:",
-            "Now, add the digits in the hundreds (H) place along with the carryover digit 1.",
-            "1 (carry-over) + 4 + 8 = 13.",
-            "Here the sum is 13. The tens digit of the sum, that is, 1, will be carried to the thousands column.",
+            `In step 2 we had given 1 to the tens column (T), so we are left with 0 at the hundreds place (H). 
+            To subtract the digits on the hundreds place (H), i.e., (0 minus 6) we will borrow 1 from the thousands column (Th). 
+            This will make it 10.`,
+            "(10 minus 6 = 4 )",
             "Step 4:",
-            "Now, add the digits in the thousands place (Th) along with the carryover digit 1.",
-            "1 (carry-over) + 3 + 2 = 6.",
+            ` Now, let us subtract the digits at the thousands place. 
+            After giving 1 to the hundreds column, we have 7.`,
+            " (7 minus 3 = 4)",
             "Step 5:",
-            "Therefore, the sum of 3475 + 2865 is 6340."];
+            "Therefore, the difference between the two given numbers 8162 minus 3678 is 4484."];
     case 8:
         return [
-          "Number Line Addition",
-            "Another way to add numbers is with the help of number lines.",
-            "Let us understand the addition on a number line with the help of an example and the number line given below.",
+          "Number Line Subtraction",
+            `A number lines is a visual aid that helps us understand subtraction because it allows us to jump backward and forward on each number.`,
+            "To understand how this works, let us explore subtraction using a number line. ",
             "Example:",
-            "Add 10 and 3",
+            "Subtract 4 from 9",
             "Solution:",
-            "We start by marking the number 10 on the number line. When we add using a number line, we count by moving one number at a time to the right of the number.",
-            "Since we are adding 10 and 3, we will move 3 steps to the right. This brings us to 13.",
-            "Hence, 10 + 3 = 13."  
+            `We will start by marking the number 9 on the number line.
+            When we subtract using a number line, we count by moving one number at a time towards the left-hand side. `,
+            `Since we are subtracting 4 from 9, we will move 4 times to the left. 
+            The number on which you land after 4 backward jumps, is the answer. `,
+            "Hence, 9 minus 4 = 5."  
         ];
     case 9:
         return [
-            "Properties of Addition",
-            "Commutative Property",
-            "According to this property, the sum of two or more addends remains the same irrespective of the order of the addends.",
+            "Word Problems in Subtraction",
+            " The concept of subtraction is often used in our day-to-day activities. ",
+            `
+            Let us understand how to solve real-life subtraction word problems with the help of an interesting example.`,
             "Example :",
-            "8 + 7 = 7 + 8 = 15.",
-            "Associative Property",
-            "According to this property, the sum of three or more addends remains the same irrespective of the grouping of the addends.",
-            "Example :",
-            "5 + (7 + 3) = (5 + 7) + 3 = 15.",
-            "Additive Identity Property",
-            "According to this property of addition, if we add 0 to any number, the resultant sum is always the actual number.",
-            "Example :",
-            "0 + 7 = 7."
-        ];
-    case 10:
-        return [
-            "Word Problems in Addition",
-            "The concept of the addition operation is used in our day-to-day activities. We should carefully observe the situation and identify the solution using the tips and tricks that follows addition.",
-            "Let us understand how to solve addition word problems with the help of an interesting example.",
-            "Example :",
-            "A soccer match had 4535 spectators in the first row and 2332 spectators in the second row. Using the concept of addition find the total number of spectators present in the match.",
+            "A soccer match had a total of 4535 spectators. After the first innings, 2332 spectators left the stadium. Find the number of remaining spectators.",
             "Solution :",
-            "The number of spectators in the first row is 4545.",
-            "The number of spectators in the second row is 2332.",
-            "We can get the total number of spectators if we add the given number of spectators in the two rows.",
-            "Here 4545 and 2332 are the addends.",
-            "Let us find the total number of spectators by adding these two numbers using the following steps.",
-            "Step 1:",
-            "Add the digits in the ones (O) place.",
-            "(5 + 2 = 7)",
-            "Step 2:",
-            "Add the digits in the tens (T) place.",
-            "(3 + 3 = 6)",
-            "Step 3:",
-            "Add the digits in the hundreds (H) place.",
-            "(5 + 3 = 8)",
-            "Step 4:",
-            "Add the digits in the thousands (Th) place.",
-            "(4 + 2 = 6)",
-            "Step 5:",
-            "4535 + 2332 = 6867",
-            "Therefore, the total number of spectators present in the match is 6867."
+            "The total number of spectators present in the first innings = 4535",
+            "The number of spectators who left the stadium after the first innings = 2332",
+            "Here, 4535 is the minuend and 2332 is the subtrahend.",  
+            "Therefore, the number of remaining spectators = 2203.",
             ];
-    case 11:
+    case 10:
       return [
           "Let us Practice What You have LEarned.",
           ];

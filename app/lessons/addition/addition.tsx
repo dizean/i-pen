@@ -83,6 +83,7 @@ export default function Addition() {
             <Test />
           </>
         )}
+        {/* <Test/> */}
       </ScrollView>
     </ImageBackground>
     <ImageBackground source={require('../../../assets/images/bgyellowbt.png')} style={styles.fixedButtonContainer}>
