@@ -14,7 +14,6 @@ import WordProblem from "./wordproblems/wordproblems";
 import SpeechComponent from "./speech/speech";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import VideoPlayer from "./video/video";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import Practice from "./practice/practice";
 import Test from "./practice/practice";
 

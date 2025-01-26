@@ -34,7 +34,6 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "react-native-video"
     ],
     "experiments": {
       "typedRoutes": true

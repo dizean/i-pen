@@ -1,6 +1,9 @@
 eas init --id b4392293-86f4-4001-9cc3-9bc950acdc1e
 eas build -p android --profile preview
 
+react-native-fast-image
+react-native-gesture-handler 
+react-native-reanimated 
 // import React, { useState } from "react";
 // import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 // import { useRouter } from "expo-router";
