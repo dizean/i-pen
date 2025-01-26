@@ -25,6 +25,7 @@
     "expo-constants": "~17.0.3",
     "expo-font": "~13.0.2",
     "expo-haptics": "~14.0.1",
+    "expo-image": "~2.0.4",
     "expo-linking": "~7.0.4",
     "expo-router": "~4.0.17",
     "expo-screen-orientation": "~8.0.4",
@@ -45,8 +46,7 @@
     "react-native-video": "^6.9.1",
     "react-native-video-controls": "^2.8.1",
     "react-native-web": "~0.19.13",
-    "react-native-webview": "13.12.5",
-    "expo-image": "~2.0.4"
+    "react-native-webview": "13.12.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
