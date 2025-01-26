@@ -10,8 +10,6 @@ import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import * as Speech from "expo-speech";
 import styles from "./styles";
-import { useUser } from "@/context/UserContext";
-
 export default function App() {
   const route = useRouter();
   const [done, setDone] = useState(true);
@@ -31,11 +29,8 @@ export default function App() {
     Speech.stop();
     setDone(true);
   };
-const { setUser} =
-    useUser();
-  
   useEffect(() => {
-    // speak();
+    speak();
   }, []);
 
   return (
@@ -76,9 +71,8 @@ const { setUser} =
             ]}
             disabled={!done} 
             onPress={() => {
-              route.push("/content/content");
+              route.push("/selection/selection");
               stopSpeaking();
-              setUser('Charles Denver Ean Torres', '3')
             }}
           >
             <Text style={styles.buttonText}>Start Learning</Text>
