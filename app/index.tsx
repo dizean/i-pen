@@ -35,7 +35,7 @@ const { setUser} =
     useUser();
   
   useEffect(() => {
-    speak();
+    // speak();
   }, []);
 
   return (
@@ -76,8 +76,9 @@ const { setUser} =
             ]}
             disabled={!done} 
             onPress={() => {
-              route.push("/selection/selection");
+              route.push("/content/content");
               stopSpeaking();
+              setUser('Charles Denver Ean Torres', '3')
             }}
           >
             <Text style={styles.buttonText}>Start Learning</Text>

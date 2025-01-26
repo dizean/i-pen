@@ -18,24 +18,32 @@ export default function ContentPage() {
     username,
     grade,
     preTestScore,
-    postTestScore
+    postTestScore,
+    setPostTestScore,
+    setPreTestScore,
   } = useUser();
+  setPreTestScore(1);
 
   const takePostTest = () => {
     switch (grade) {
       case "2":
+        setPostTestScore(0);
         router.push("/grade2/posttest/posttest");
         break;
       case "3":
+        setPostTestScore(0);
         router.push("/grade3/posttest/posttest");
         break;
       case "4":
+        setPostTestScore(0);
         router.push("/grade4/posttest/posttest");
         break;
       case "5":
+        setPostTestScore(0);
         router.push("/grade5/posttest/posttest");
         break;
       case "6":
+        setPostTestScore(0);
         router.push("/grade6/posttest/posttest");
         break;
       default:

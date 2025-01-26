@@ -16,7 +16,7 @@ const Parts = () => {
         </Text>
       </Text>
       <Text style={styles.text}>
-        The number from which the other number is subtracted.
+        TThe number from which the other number is subtracted.
       </Text>
       <Text style={styles.sectiontititle}>Subtrahend</Text>
       <Text style={styles.textcenter}>
