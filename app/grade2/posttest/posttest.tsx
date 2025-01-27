@@ -55,8 +55,8 @@ export default function PostTest() {
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
     for (let i = 0; i < count; i++) {
-      let num1 = Math.floor(Math.random() * 10);
-      let num2 = Math.floor(Math.random() * 10);
+      let num1 = Math.floor(Math.random() * (10 - 1 + 1)) + 1; 
+        let num2 = Math.floor(Math.random() * (10 - 1 + 1)) + 1; 
       const operations = ["+", "-"];
         const operation = operations[Math.floor(Math.random() * operations.length)];
       let correctAnswer: number;
@@ -88,7 +88,6 @@ export default function PostTest() {
     }
     return questions;
   };
-  
   const playBeepSound = async () => {
     const { sound } = await Audio.Sound.createAsync(beepSound);
     await sound.playAsync();
