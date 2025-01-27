@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   Modal,
   ImageBackground,
@@ -12,7 +11,7 @@ import { useRouter } from "expo-router";
 import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
-
+import { TextNormal, TextBold, TextMedium } from "@/context/FontContent";
 interface Question {
   question: string;
   correctAnswer: number;
@@ -56,38 +55,40 @@ export default function PostTest() {
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
     for (let i = 0; i < count; i++) {
-      const num1 = Math.floor(Math.random() * 10);
-      const num2 = Math.floor(Math.random() * 10);
-      const operation = Math.random() < 0.5 ? "+" : "-";
+      let num1 = Math.floor(Math.random() * 10);
+      let num2 = Math.floor(Math.random() * 10);
+      const operations = ["+", "-"];
+        const operation = operations[Math.floor(Math.random() * operations.length)];
       let correctAnswer: number;
-      let greater = num1;
-      let lesser = num2;
       if (operation === "-") {
         if (num2 > num1) {
-          greater = num2;
-          lesser = num1;
+          [num1, num2] = [num2, num1];
         }
-        correctAnswer = greater - lesser;
+        correctAnswer = num1 - num2;
       } else {
         correctAnswer = num1 + num2;
       }
+  
       const options = new Set<number>();
       options.add(correctAnswer);
       while (options.size < 4) {
-        const randomOption = Math.floor(Math.random() * 20);
-        options.add(randomOption);
+        const randomOffset = Math.floor(Math.random() * 5) + 1;
+        const randomSign = Math.random() < 0.5 ? -1 : 1;
+        const randomOption = correctAnswer + randomOffset * randomSign;
+  
+        if (randomOption >= 0) {
+          options.add(randomOption);
+        }
       }
       questions.push({
-        question: `What is ${operation === "+" ? num1 : greater} ${operation} ${
-          operation === "+" ? num2 : lesser
-        }?`,
+        question: `What is ${num1} ${operation} ${num2}?`,
         correctAnswer,
         options: Array.from(options).sort(() => Math.random() - 0.5),
       });
     }
     return questions;
   };
-
+  
   const playBeepSound = async () => {
     const { sound } = await Audio.Sound.createAsync(beepSound);
     await sound.playAsync();
@@ -111,7 +112,6 @@ export default function PostTest() {
         resetStateForNextQuestion();
       } else {
         setShowResultsModal(true);
-        cheer();
       }
       setIsProcessing(false);
     }, 2600);
@@ -121,12 +121,18 @@ export default function PostTest() {
     if (answerSelected !== null || isProcessing) return;
     setIsProcessing(true);
     setAnswerSelected(selectedAnswer);
-    setIsTimerPaused(true);
+    setIsTimerPaused(true); 
     const currentQuestionData = questions[currentQuestion];
     const isCorrect = selectedAnswer === currentQuestionData.correctAnswer;
 
     if (isCorrect) {
-      setScore((prev) => prev + 1);
+      setScore((prev) => {
+        const newScore = prev + 1;
+        if (currentQuestion === questions.length - 1) {
+          cheer(newScore);
+        }
+        return newScore;
+      });
       setCorrectAnswer(selectedAnswer);
       playCorrectSound();
     } else {
@@ -141,7 +147,6 @@ export default function PostTest() {
         resetStateForNextQuestion();
       } else {
         setShowResultsModal(true);
-        cheer();
       }
       setIsProcessing(false);
     }, 2600);
@@ -175,23 +180,19 @@ export default function PostTest() {
     speak(message);
   };
 
-  const cheer = async () => {
+  const cheer = async (finalScore:number) => {
     setIsTimerPaused(true);
     setIsProcessing(true);
+    setPostTestScore(finalScore)
     const { sound } = await Audio.Sound.createAsync(
       require("../../../assets/audio/cheer.mp3")
     );
     await sound.playAsync();
     speak(
-      `Congratulations for finishing the post test and
-      for tackling Lesson 1 Addition and Lesson 2 Subtraction.
-       Your final score is ${score} out of ${questions.length}.
-      `
+      `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`
     );
-  };  
-
+  };
   const handleCloseModal = () => {
-    setPostTestScore(score);
     router.push("/content/content");
   };
 
@@ -200,16 +201,16 @@ export default function PostTest() {
   const currentQuestionData = questions[currentQuestion];
 
   return (
-    <ImageBackground style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.wrapper}>
-        <Text style={[styles.title, { fontSize: 50, fontWeight: "900" }]}>
+        <TextBold style={[styles.title, { fontSize: 50 }]}>
           Post - Test
-        </Text>
-        <Text style={[styles.title, { fontSize: 20 }]}>
+        </TextBold>
+        <TextNormal style={[styles.title, { fontSize: 20 }]}>
           Let us test what you have learned.
-        </Text>
-        <Text style={styles.question}>{currentQuestionData.question}</Text>
-        <Text style={styles.timer}>Time Remaining: {timer}s</Text>
+        </TextNormal>
+        <TextBold style={styles.question}>{currentQuestionData.question}</TextBold>
+        <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
         <View style={styles.optionsContainer}>
           {currentQuestionData.options.map((option) => (
             <TouchableOpacity
@@ -223,19 +224,23 @@ export default function PostTest() {
               onPress={() => handleAnswer(option)}
               disabled={answerSelected !== null}
             >
-              <Text style={styles.optionText}>{option}</Text>
+              <TextNormal style={styles.optionText}>{option}</TextNormal>
             </TouchableOpacity>
           ))}
         </View>
-        <Text style={styles.score}>Current Score: {score}</Text>
+        <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
       </View>
-      <Modal visible={showResultsModal} transparent={true} animationType="fade">
+      <Modal
+        visible={showResultsModal}
+        transparent={true}
+        animationType='fade'
+      >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Congratulations!</Text>
-            <Text style={styles.modalText}>
+            <TextBold style={styles.modalTitle}>Congratulations!</TextBold>
+            <TextNormal style={styles.modalText}>
               Your final score is {score}/{questions.length}.
-            </Text>
+            </TextNormal>
             <View style={styles.images}>
               <Image
                 source={require("../../../assets/images/3fr.gif")}
@@ -248,11 +253,11 @@ export default function PostTest() {
               style={styles.modalButton}
               onPress={handleCloseModal}
             >
-              <Text style={styles.modalButtonText}>Proceed</Text>
+              <TextBold style={styles.modalButtonText}>Proceed</TextBold>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-    </ImageBackground>
+    </View>
   );
 }

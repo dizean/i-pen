@@ -55,19 +55,16 @@ export default function PreTest() {
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
     for (let i = 0; i < count; i++) {
-      const num1 = Math.floor(Math.random() * 10);
-      const num2 = Math.floor(Math.random() * 10);
-      const operation = Math.random() < 0.5 ? "+" : "-";
+      let num1 = Math.floor(Math.random() * (10 - 1 + 1)) + 1; 
+        let num2 = Math.floor(Math.random() * (10 - 1 + 1)) + 1; 
+      const operations = ["+", "-"];
+        const operation = operations[Math.floor(Math.random() * operations.length)];
       let correctAnswer: number;
-      let greater = num1;
-      let lesser = num2;
-  
       if (operation === "-") {
         if (num2 > num1) {
-          greater = num2;
-          lesser = num1;
+          [num1, num2] = [num2, num1];
         }
-        correctAnswer = greater - lesser;
+        correctAnswer = num1 - num2;
       } else {
         correctAnswer = num1 + num2;
       }
@@ -75,14 +72,16 @@ export default function PreTest() {
       const options = new Set<number>();
       options.add(correctAnswer);
       while (options.size < 4) {
-        const randomOption = Math.floor(Math.random() * 20);
-        options.add(randomOption);
-      }
+        const randomOffset = Math.floor(Math.random() * 5) + 1;
+        const randomSign = Math.random() < 0.5 ? -1 : 1;
+        const randomOption = correctAnswer + randomOffset * randomSign;
   
+        if (randomOption >= 0) {
+          options.add(randomOption);
+        }
+      }
       questions.push({
-        question: `What is ${
-          operation === "+" ? num1 : greater
-        } ${operation} ${operation === "+" ? num2 : lesser}?`,
+        question: `What is ${num1} ${operation} ${num2}?`,
         correctAnswer,
         options: Array.from(options).sort(() => Math.random() - 0.5),
       });
@@ -113,7 +112,6 @@ export default function PreTest() {
         resetStateForNextQuestion();
       } else {
         setShowResultsModal(true);
-        cheer();
       }
       setIsProcessing(false);
     }, 2600);
@@ -128,7 +126,13 @@ export default function PreTest() {
     const isCorrect = selectedAnswer === currentQuestionData.correctAnswer;
 
     if (isCorrect) {
-      setScore((prev) => prev + 1);
+      setScore((prev) => {
+        const newScore = prev + 1;
+        if (currentQuestion === questions.length - 1) {
+          cheer(newScore);
+        }
+        return newScore;
+      });
       setCorrectAnswer(selectedAnswer);
       playCorrectSound();
     } else {
@@ -143,7 +147,6 @@ export default function PreTest() {
         resetStateForNextQuestion();
       } else {
         setShowResultsModal(true);
-        cheer();
       }
       setIsProcessing(false);
     }, 2600);
@@ -177,19 +180,19 @@ export default function PreTest() {
     speak(message);
   };
 
-  const cheer = async () => {
+  const cheer = async (finalScore:number) => {
     setIsTimerPaused(true);
     setIsProcessing(true);
+    setPreTestScore(finalScore);
     const { sound } = await Audio.Sound.createAsync(
       require("../../../assets/audio/cheer.mp3")
     );
     await sound.playAsync();
     speak(
-      `Congratulations! Your final score is ${score} out of ${questions.length}.`
+      `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`
     );
   };
   const handleCloseModal = () => {
-    setPreTestScore(score);
     router.push("/content/content");
   };
 
@@ -198,7 +201,7 @@ export default function PreTest() {
   const currentQuestionData = questions[currentQuestion];
 
   return (
-    <ImageBackground style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.wrapper}>
         <TextBold style={[styles.title, { fontSize: 50 }]}>
           Pre - Test
@@ -255,6 +258,6 @@ export default function PreTest() {
           </View>
         </View>
       </Modal>
-    </ImageBackground>
+    </View>
   );
 }

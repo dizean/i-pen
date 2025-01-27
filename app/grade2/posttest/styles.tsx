@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
     color: "black",
-    fontWeight: "600",
   },
   optionsContainer: {
     width: "100%",
@@ -40,7 +39,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   optionButton: {
-    backgroundColor: "#FDDA0D", // Bright yellow for buttons
+    backgroundColor: "#FDDA0D",
     width: "48%",
     aspectRatio: 1,
     justifyContent: "center",
@@ -56,14 +55,12 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   optionText: {
-    fontSize: 24,
+    fontSize: 30,
     color: "#212121",
     textAlign: "center",
-    fontWeight: "bold",
   },
   score: {
     fontSize: 20,
-    fontWeight: "bold",
     textAlign: "center",
     color: "#F57F17",
   },
@@ -72,11 +69,9 @@ const styles = StyleSheet.create({
   },
   correctOption: {
     backgroundColor: "green",
-    color: 'white'
   },
   wrongOption: {
     backgroundColor: "red",
-    color: 'white'
   },
   modalOverlay: {
     flex: 1,
@@ -95,7 +90,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 24,
-    fontWeight: "bold",
     marginBottom: 10,
   },
   modalText: {
@@ -113,7 +107,6 @@ const styles = StyleSheet.create({
   modalButtonText: {
     fontSize: 16,
     color: "#fff",
-    fontWeight: "bold",
     textAlign: 'center'
   },
   images: {
@@ -128,7 +121,6 @@ const styles = StyleSheet.create({
   },
   timer: {
     fontSize: 24,
-    fontWeight: "bold",
     color: "#ff5555",
     backgroundColor: "#ffe5e5",
     borderWidth: 2,
