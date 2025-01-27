@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground, Image } from "react-native";
+import {ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
 import Objectives from "./objectives/objectives";
@@ -14,6 +14,7 @@ import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
 import WordProblem from "./wordproblems/wordproblems";
 import Test from "./practice/practice";
+import * as Text from "@/context/FontContent";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -57,7 +58,7 @@ export default function Subtraction() {
       {currentSection === 1 && <Objectives />} 
         {currentSection === 2 && (
           <>
-            <Text style={styles.subtitle}>Watch and Sing the Subtraction Song</Text>
+            <Text.TextBold style={styles.subtitle}>Watch and Sing the Subtraction Song</Text.TextBold>
             <VideoPlayer />
           </>
         )}
@@ -65,7 +66,7 @@ export default function Subtraction() {
       {currentSection === 4 && <Parts />} 
       {currentSection === 5 && (
           <>
-            <Text style={styles.subtitle}>Practice</Text>
+            <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
             <Practice onComplete={handlePracticeComplete} />
           </>
         )}
@@ -76,7 +77,6 @@ export default function Subtraction() {
       {currentSection === 9 && <WordProblem />} 
       {currentSection === 10 && (
           <>
-            <Text style={styles.subtitle}>Practice What You Have Learned</Text>
             <Test />
           </>
         )}

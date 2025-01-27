@@ -5,8 +5,14 @@ import {
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
+  Modal,
 } from "react-native";
-
+import styles from "./styles";
+import { Audio } from "expo-av";
+import * as Speech from "expo-speech";
+import { useRouter } from "expo-router";
+import { Image } from "expo-image";
+import { TextBold, TextMedium, TextNormal } from "@/context/FontContent";
 interface Problem {
   startNumber: number;
   steps: number;
@@ -42,9 +48,6 @@ export default function Test() {
     }
     return questions;
   };
-
-
-
   const generateProblems = () => {
     const problems = [];
     for (let i = 0; i < 3; i++) {
@@ -54,75 +57,181 @@ export default function Test() {
     }
     return problems;
   };
-
   const [problems] = useState(generateProblems());
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [currentSelection, setCurrentSelection] = useState<number | null>(null);
-  const [currentSecondSelection, setCurrentSecondSelection] = useState<number | null>(null);
+  const [currentSecondSelection, setCurrentSecondSelection] = useState<
+    number | null
+  >(null);
   const [feedback, setFeedback] = useState("");
   const [isAnswering, setIsAnswering] = useState(false);
-  const [secondSelectionCorrect, setSecondSelectionCorrect] = useState<boolean | null>(null); 
-  const [correctAnswer, setCorrectAnswer] = useState<number | null>(null); 
+  const [secondSelectionCorrect, setSecondSelectionCorrect] = useState<
+    boolean | null
+  >(null);
+  const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
   const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
   const [answerSelected, setAnswerSelected] = useState<number | null>(null);
   const numberLine = Array.from({ length: 20 }, (_, i) => i + 1);
   const [questionss, setQuestions] = useState<Question[]>([]);
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [timer, setTimer] = useState(15);
+  const [isTimerPaused, setIsTimerPaused] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
+  const beepSound = require("../../../../assets/audio/beep.mp3");
   useEffect(() => {
     const questions = generateQuestions(7);
     setQuestions(questions);
   }, []);
+  useEffect(() => {
+    if (isTimerPaused || timer === 0) {
+      if (timer === 0 && !isProcessing) {
+        handleTimeout();
+      }
+      return;
+    }
+
+    const countdown = setTimeout(() => {
+      setTimer((prev) => prev - 1);
+      playBeepSound();
+    }, 1000);
+
+    return () => clearTimeout(countdown);
+  }, [timer, isTimerPaused, isProcessing, score]);
+  const handleTimeout = () => {
+    if (isProcessing) return;
+    setIsProcessing(true);
+    if (currentPractice === "addition") {
+      const currentQuestionData = questionss[currentQuestion];
+      setCorrectAnswer(currentQuestionData.correctAnswer);
+      playWrongSound(String(currentQuestionData.correctAnswer), 0);
+
+      setTimeout(() => {
+        if (currentQuestion < questionss.length - 1) {
+          setCurrentQuestion((prev) => prev + 1);
+          resetStateForNextQuestion();
+        } else {
+          setCurrentPractice("line");
+          resetStateForNextQuestion();
+        }
+        setIsProcessing(false);
+      }, 2600);
+    } else if (currentPractice === "line") {
+      moveToNextNumberLineQuestion();
+      setIsProcessing(false);
+    }
+  };
+
+  const playBeepSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(beepSound);
+    await sound.playAsync();
+  };
+
+  const speak = (message: string) => {
+    Speech.speak(message, { pitch: 1.8, rate: 0.7, volume: 0.9 });
+  };
+  const resetStateForNextQuestion = () => {
+    setAnswerSelected(null);
+    setCorrectAnswer(null);
+    setWrongAnswer(null);
+    setTimer(15);
+    setIsTimerPaused(false);
+  };
+
+  const playCorrectSound = async () => {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../../../assets/audio/correct.mp3")
+    );
+    await sound.playAsync();
+    speak("Correct!");
+  };
+
+  const playWrongSound = async (answer: string, selected: any) => {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../../../assets/audio/wrong.mp3")
+    );
+    await sound.playAsync();
+    const message =
+      selected === 0
+        ? `Time's up! The correct answer is ${answer}.`
+        : `Incorrect! The correct answer is ${answer}.`;
+    speak(message);
+  };
+
+  const cheer = async (finalScore: number) => {
+    setIsTimerPaused(true);
+    setIsProcessing(true);
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../../../assets/audio/cheer.mp3")
+    );
+    await sound.playAsync();
+    speak(`Congratulations! Your final score is ${finalScore} out of 10.`);
+  };
+
+  const handleCloseModal = () => {
+    router.push("/content/content");
+  };
   const handleAdditionAnswer = (selectedAnswer: number) => {
-    const isCorrect =
-      selectedAnswer === questionss[currentQuestion].correctAnswer;
+    if (answerSelected !== null || isProcessing) return;
+    setIsProcessing(true);
+    setAnswerSelected(selectedAnswer);
+    setIsTimerPaused(true);
+    const currentQuestionData = questionss[currentQuestion];
+    const isCorrect = selectedAnswer === currentQuestionData.correctAnswer;
 
     if (isCorrect) {
       setScore((prev) => prev + 1);
-      setCorrectAnswer(selectedAnswer); 
-      setWrongAnswer(null);
+      setCorrectAnswer(selectedAnswer);
+      playCorrectSound();
+    } else {
+      setCorrectAnswer(currentQuestionData.correctAnswer);
+      setWrongAnswer(selectedAnswer);
+      playWrongSound(String(currentQuestionData.correctAnswer), selectedAnswer);
     }
-    else {
-      setCorrectAnswer( questionss[currentQuestion].correctAnswer); 
-      setWrongAnswer(selectedAnswer); 
-    }
-    setAnswerSelected(selectedAnswer)
+
     setTimeout(() => {
       if (currentQuestion < questionss.length - 1) {
         setCurrentQuestion((prev) => prev + 1);
-        setAnswerSelected(null); 
-        setCorrectAnswer(null);
-        setWrongAnswer(null);
+        resetStateForNextQuestion();
       } else {
         setCurrentPractice("line");
-        setAnswerSelected(null); 
-        setCorrectAnswer(null);
-        setWrongAnswer(null);
+        resetStateForNextQuestion();
       }
-    },2000)
-    
+      setIsProcessing(false);
+    }, 2600);
   };
 
   const handleNumberLineSelection = (number: number) => {
-    if (isAnswering) return;
+    if (isProcessing) return;
     const { startNumber, steps } = problems[currentProblemIndex];
 
     if (currentSelection === null) {
       if (number === startNumber) {
         setCurrentSelection(startNumber);
-        // setFeedback("Great! Now count the steps and select the correct answer.");
       } else {
-        // setFeedback(`Please start with the number ${startNumber}.`);
       }
     } else {
       const expectedAnswer = startNumber + steps;
       setIsAnswering(true);
+      setIsTimerPaused(false);
       setCurrentSecondSelection(number);
-      setCorrectAnswer(expectedAnswer); 
-      setSecondSelectionCorrect(number === expectedAnswer); 
+      setCorrectAnswer(expectedAnswer);
+      setSecondSelectionCorrect(number === expectedAnswer);
+
       if (number === expectedAnswer) {
-        setScore((prev) => prev + 1);
-        setFeedback("Correct! Well done.");
+        setScore((prev) => {
+          const newScore = prev + 1;
+          if (currentProblemIndex === problems.length - 1) {
+            cheer(newScore);
+          }
+          return newScore;
+        });
+        playCorrectSound();
+        setIsTimerPaused(true);
       } else {
-        setFeedback(`Incorrect. The correct answer is ${expectedAnswer}.`);
+        setWrongAnswer(currentSecondSelection);
+        playWrongSound(String(expectedAnswer), currentSecondSelection);
+        setIsTimerPaused(true);
       }
       setTimeout(() => {
         moveToNextNumberLineQuestion();
@@ -134,13 +243,16 @@ export default function Test() {
     if (currentProblemIndex < problems.length - 1) {
       setCurrentProblemIndex((prev) => prev + 1);
       setCurrentSelection(null);
-      setCurrentSecondSelection(null); 
+      setCurrentSecondSelection(null);
       setCorrectAnswer(null);
-      setSecondSelectionCorrect(null); 
+      setSecondSelectionCorrect(null);
       setFeedback("");
       setIsAnswering(false);
+      resetStateForNextQuestion();
     } else {
       setFeedback("You've completed all the questions!");
+      setIsTimerPaused(true);
+      setShowResultsModal(true);
     }
   };
 
@@ -149,17 +261,26 @@ export default function Test() {
     if (!currentQuestionData) {
       return (
         <View style={styles.container}>
-          <Text>Loading questions...</Text>
+          <TextNormal>Loading questions...</TextNormal>
         </View>
       );
     }
     return (
-      <ImageBackground source={require('../../../../assets/images/bgyellowcut.png')} style={styles.container}>
-        <Text style={styles.question}>{currentQuestionData.question}</Text>
+      <View style={styles.container}>
+        <TextBold style={[styles.title, { fontSize: 40 }]}>
+          Let`s Practice!
+        </TextBold>
+        <TextNormal style={[styles.title, { fontSize: 20 }]}>
+          Let us test what you have learned
+        </TextNormal>
+        <TextBold style={styles.question}>
+          {currentQuestionData.question}
+        </TextBold>
+        <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
         <View style={styles.optionsContainer}>
-          {currentQuestionData.options.map((option, index) => (
+          {currentQuestionData.options.map((option) => (
             <TouchableOpacity
-              key={index}
+              key={option}
               style={[
                 styles.optionButton,
                 answerSelected === option && styles.selectedOption,
@@ -167,25 +288,33 @@ export default function Test() {
                 wrongAnswer === option && styles.wrongOption,
               ]}
               onPress={() => handleAdditionAnswer(option)}
+              disabled={answerSelected !== null}
             >
-              <Text style={styles.optionText}>{option}</Text>
+              <TextNormal style={styles.optionText}>{option}</TextNormal>
             </TouchableOpacity>
           ))}
         </View>
-        <Text style={styles.score}>Current Score: {score}</Text>
-      </ImageBackground>
+        <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
+      </View>
     );
   }
 
   const { startNumber, steps } = problems[currentProblemIndex];
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
+      <TextBold style={[styles.title, { fontSize: 40 }]}>
+        Let`s Practice!
+      </TextBold>
+      <TextNormal style={[styles.title, { fontSize: 20 }]}>
+        Let us test what you have learned
+      </TextNormal>
+      <TextNormal style={styles.text}>
         Select the first addend then count the steps for the correct answer.
-      </Text>
-      <Text style={styles.problem}>
+      </TextNormal>
+      <TextNormal style={styles.problem}>
         Solve: {startNumber} + {steps}
-      </Text>
+      </TextNormal>
+      <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
       <View style={styles.numberLineContainer}>
         {numberLine.map((num) => (
           <TouchableOpacity
@@ -195,133 +324,46 @@ export default function Test() {
               num === currentSelection ? styles.selectedOption : null,
               num === currentSecondSelection
                 ? secondSelectionCorrect
-                  ? styles.correctOption 
-                  : styles.wrongOption 
+                  ? styles.correctOption
+                  : styles.wrongOption
                 : num === correctAnswer
-                ? styles.correctOption 
+                ? styles.correctOption
                 : null,
             ]}
             onPress={() => handleNumberLineSelection(num)}
             disabled={isAnswering}
           >
-            <Text style={styles.numberText}>{num}</Text>
+            <TextNormal style={styles.numberText}>{num}</TextNormal>
           </TouchableOpacity>
         ))}
       </View>
-      {feedback && <Text style={styles.feedback}>{feedback}</Text>}
-      <Text style={styles.score}>Current Score: {score}</Text>
+      <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
+      <Modal visible={showResultsModal} transparent={true} animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <TextMedium style={styles.modalTitle}>
+              Congratulations for completing Lesson 1
+            </TextMedium>
+            <TextNormal style={styles.modalText}>
+              Your final score is {score}/10.
+            </TextNormal>
+            <View style={styles.images}>
+              <Image
+                source={require("../../../../assets/images/3fr.gif")}
+                contentFit="fill"
+                transition={1000}
+                style={[styles.gif]}
+              />
+            </View>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={handleCloseModal}
+            >
+              <TextMedium style={styles.modalButtonText}>Proceed</TextMedium>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#fff8e1",
-  },
-  text: {
-    fontSize: 15,
-    marginVertical: 5
-  },
-  question: {
-    fontSize: 20,
-    marginBottom: 20,
-    textAlign: "center",
-    color: "#5D4037",
-    fontWeight: "600",
-  },
-  optionsContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-  optionButton: {
-    backgroundColor: "#FFEB3B",
-    width: "48%",
-    aspectRatio: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 8,
-    marginVertical: 10,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    borderWidth: 2,
-    borderColor: "#F57F17",
-  },
-  optionText: {
-    fontSize: 18,
-    color: "#212121",
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  score: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginTop: 20,
-    color: "#F57F17",
-  },
-  problem: {
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  numberLineContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  number: {
-    width: 40,
-    height: 40,
-    backgroundColor: "#FFEB3B",
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 5,
-    borderRadius: 8,
-    marginVertical: 10,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    borderWidth: 2,
-    borderColor: "#F57F17",
-  },
-  numberText: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  selectedStartingNumber: {
-    backgroundColor: "#fbc02d",
-  },
-  selectedSecondNumberCorrect: {
-    backgroundColor: "#388E3C", 
-  },
-  selectedSecondNumberWrong: {
-    backgroundColor: "#D32F2F",
-  },
-  feedback: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginTop: 20,
-    textAlign: "center",
-  },
-  selectedOption:{
-    backgroundColor: '#fbc02d'
-  },
-  correctOption:{
-    backgroundColor: 'green'
-  },
-  wrongOption:{
-    backgroundColor: 'red'
-  },
-});

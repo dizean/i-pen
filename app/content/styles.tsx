@@ -24,13 +24,11 @@
     headerText: {
       color: "#FFFFF0",
       fontSize: 28,
-      fontWeight: "700",
       textAlign: 'center'
     },
     headerTextName: {
       color: "#FFFFF0",
       fontSize: 20,
-      fontWeight: "500",
       marginTop: 5,
       textAlign: 'center'
     },
@@ -55,14 +53,12 @@
     scoreTitle: {
       width: '75%',
       fontSize: 25,
-      fontWeight: "600",
       color: "#fff",
       marginBottom: 0,
     },
     scoreValue: {
       width: '25%',
       fontSize: 32,
-      fontWeight: "bold",
       color: "#fff",
       textAlign: 'center',
     },
@@ -101,7 +97,6 @@
     buttonText: {
       color: "#FFFFF0",
       fontSize: 30,
-      fontWeight: "600",
       textAlign: "center",
     },
     disabledButton: {

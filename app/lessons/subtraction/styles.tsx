@@ -30,25 +30,21 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: "600",
     color: "#1a237e",
   },
   container: {
   },
   title: {
     fontSize: 50,
-    fontWeight: "bold",
     paddingVertical: 5
   },
   subtitle: {
     fontSize: 40,
-    fontWeight: "600",
     paddingVertical: 5
   },
   sectiontititle: {
     fontSize: 25,
-    fontWeight: "500",
-    paddingVertical: 10,
+    paddingVertical: 10
   },
   text: {
     fontSize: 20,
@@ -57,28 +53,23 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 100,
+    height: 200,
     resizeMode: 'contain',
     marginVertical: 10,
   },
   textcenter: {
     textAlign: 'center',
-    fontWeight: 'bold'
-  },
-  textbold: {
-    fontWeight: 'bold'
   },
   highlight: {
-    fontWeight: "bold",
-    fontSize: 20,
-    backgroundColor: 'yellow'
+    backgroundColor: 'yellow',
+    borderRadius: 100,
+    borderWidth: 10,
   },
   question: {
     fontSize: 20,
     marginBottom: 20,
     textAlign: "center",
-    color: "#5D4037", // Warm brown for readability
-    fontWeight: "600",
+    color: "#5D4037",
   },
   optionsContainer: {
     flexDirection: "row",
@@ -105,11 +96,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "#212121", // Dark gray for better contrast
     textAlign: "center",
-    fontWeight: "bold",
   },
   score: {
     fontSize: 18,
-    fontWeight: "bold",
     textAlign: "center",
     marginTop: 20,
     color: "#F57F17",

@@ -2,15 +2,9 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
-    justifyContent: "center",
-    backgroundColor: "#38bfe7",
-  },
-  wrapper: {
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
     width: "100%",
     padding: "3%",
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 10 },
@@ -25,11 +19,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: "center",
   },
+  text: {
+    fontSize: 15,
+    marginVertical: 5,
+  },
   question: {
     fontSize: 30,
     marginBottom: 20,
     textAlign: "center",
     color: "black",
+    fontWeight: "600",
   },
   optionsContainer: {
     width: "100%",
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   optionText: {
-    fontSize: 30,
+    fontSize: 18,
     color: "#212121",
     textAlign: "center",
   },
@@ -64,8 +63,48 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#F57F17",
   },
+  problem: {
+    fontSize: 20,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  numberLineContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
+    gap:10,
+    alignItems: 'center'
+  },
+  number: {
+    backgroundColor: "#FDDA0D",
+    width: "20%",
+    aspectRatio: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    marginVertical: 10,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    borderWidth: 2,
+    borderColor: "#38bfe7",
+  },
+  numberText: {
+    fontSize: 18,
+  },
+  selectedStartingNumber: {
+    backgroundColor: "#fbc02d",
+  },
+  selectedSecondNumberCorrect: {
+    backgroundColor: "#388E3C",
+  },
+  selectedSecondNumberWrong: {
+    backgroundColor: "#D32F2F",
+  },
   selectedOption: {
-    backgroundColor: "blue",
+    backgroundColor: "#fbc02d",
   },
   correctOption: {
     backgroundColor: "green",
@@ -98,7 +137,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalButton: {
-    width: '100%',
+    width: "100%",
     backgroundColor: "#FDDA0D",
     paddingVertical: 20,
     paddingHorizontal: 20,
@@ -107,7 +146,7 @@ const styles = StyleSheet.create({
   modalButtonText: {
     fontSize: 16,
     color: "#fff",
-    textAlign: 'center'
+    textAlign: "center",
   },
   images: {
     display: "flex",
@@ -116,8 +155,8 @@ const styles = StyleSheet.create({
     height: "60%",
   },
   gif: {
-    width: "100%", 
-    height: "100%", 
+    width: "100%",
+    height: "100%",
   },
   timer: {
     fontSize: 24,
@@ -129,7 +168,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     textAlign: "center",
-    alignSelf: "center", // Center horizontally
+    alignSelf: "center",
     marginVertical: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
@@ -138,5 +177,4 @@ const styles = StyleSheet.create({
     elevation: 3, // For Android shadow
   },
 });
-
 export default styles;

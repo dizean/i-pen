@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
     color: "#FDDA0D",
   },
   text: {
-    fontSize: 27,
-    fontWeight: "bold",
+    fontSize: 25,
     textAlign: "center",
     color: "#333",
   },
@@ -61,13 +60,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 25,
-    fontWeight: "bold",
     textAlign: "center",
     color: "#fff",
   },
   math: {
     width: "100%",
-    height: "60%",
+    height: "45%",
   },
   boy: {
     width: "50%",

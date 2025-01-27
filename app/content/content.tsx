@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
-  StyleSheet,
-  ImageBackground,
   Alert,
   Image,
   ScrollView,
 } from "react-native";
+import { TextBold, TextLight, TextMedium, TextNormal } from "@/context/FontContent";
 import { useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
@@ -113,18 +111,18 @@ export default function ContentPage() {
           />
 
           <View style={styles.namewrap}>
-            <Text style={styles.headerText}>{username}</Text>
-            <Text style={styles.headerTextName}>Grade {grade} Student</Text>
+            <TextBold style={styles.headerText}>{username}</TextBold>
+            <TextMedium style={styles.headerTextName}>Grade {grade} Student</TextMedium>
           </View>
         </View>
         <View style={styles.scoreSection}>
           <View style={styles.scoreCard}>
-            <Text style={styles.scoreTitle}>Pre-test Score</Text>
-            <Text style={styles.scoreValue}>{preTestScore || 0}</Text>
+            <TextNormal style={styles.scoreTitle}>Pre-test Score</TextNormal>
+            <TextMedium style={styles.scoreValue}>{preTestScore || 0}</TextMedium>
           </View>
           <View style={styles.scoreCard}>
-            <Text style={styles.scoreTitle}>Post-test Score</Text>
-            <Text style={styles.scoreValue}>{postTestScore || 0}</Text>
+            <TextNormal style={styles.scoreTitle}>Post-test Score</TextNormal>
+            <TextMedium style={styles.scoreValue}>{postTestScore || 0}</TextMedium>
           </View>
         </View>
         <View style={styles.gridContainer}>
@@ -148,11 +146,11 @@ export default function ContentPage() {
                 }
                 disabled={!isAvailable}
               >
-                <Text style={styles.buttonText}>
+                <TextMedium style={styles.buttonText}>
                   {!isAvailable ? "(Unavailable)" : `${item.title}`}
-                </Text>
+                </TextMedium>
                 {isAvailable && item.topic !== "" && (
-                  <Text style={styles.buttonText}>{item.topic}</Text>
+                  <TextMedium style={styles.buttonText}>{item.topic}</TextMedium>
                 )}
               </TouchableOpacity>
             );

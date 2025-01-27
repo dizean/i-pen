@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     },
     subtitle: {
       fontSize: 30,
-      fontWeight: "bold",
       textAlign: 'center',
       color: '#38bfe7'
     },
@@ -42,8 +41,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: "#fff",
-      fontSize: 30,
-      fontWeight: "bold",
+      fontSize: 30
     },
     image:{
       width: '70%',

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   Modal,
   ImageBackground,
@@ -12,7 +11,7 @@ import { useRouter } from "expo-router";
 import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
-
+import { TextNormal, TextBold, TextMedium } from "@/context/FontContent";
 interface Question {
   question: string;
   correctAnswer: number;
@@ -189,8 +188,6 @@ export default function PreTest() {
       `Congratulations! Your final score is ${score} out of ${questions.length}.`
     );
   };
-  
-
   const handleCloseModal = () => {
     setPreTestScore(score);
     router.push("/content/content");
@@ -203,14 +200,14 @@ export default function PreTest() {
   return (
     <ImageBackground style={styles.container}>
       <View style={styles.wrapper}>
-        <Text style={[styles.title, { fontSize: 50, fontWeight: "900" }]}>
+        <TextBold style={[styles.title, { fontSize: 50 }]}>
           Pre - Test
-        </Text>
-        <Text style={[styles.title, { fontSize: 20 }]}>
+        </TextBold>
+        <TextNormal style={[styles.title, { fontSize: 20 }]}>
           Let us test what you know.
-        </Text>
-        <Text style={styles.question}>{currentQuestionData.question}</Text>
-        <Text style={styles.timer}>Time Remaining: {timer}s</Text>
+        </TextNormal>
+        <TextBold style={styles.question}>{currentQuestionData.question}</TextBold>
+        <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
         <View style={styles.optionsContainer}>
           {currentQuestionData.options.map((option) => (
             <TouchableOpacity
@@ -224,11 +221,11 @@ export default function PreTest() {
               onPress={() => handleAnswer(option)}
               disabled={answerSelected !== null}
             >
-              <Text style={styles.optionText}>{option}</Text>
+              <TextNormal style={styles.optionText}>{option}</TextNormal>
             </TouchableOpacity>
           ))}
         </View>
-        <Text style={styles.score}>Current Score: {score}</Text>
+        <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
       </View>
       <Modal
         visible={showResultsModal}
@@ -237,10 +234,10 @@ export default function PreTest() {
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Congratulations!</Text>
-            <Text style={styles.modalText}>
+            <TextBold style={styles.modalTitle}>Congratulations!</TextBold>
+            <TextNormal style={styles.modalText}>
               Your final score is {score}/{questions.length}.
-            </Text>
+            </TextNormal>
             <View style={styles.images}>
               <Image
                 source={require("../../../assets/images/3fr.gif")}
@@ -253,7 +250,7 @@ export default function PreTest() {
               style={styles.modalButton}
               onPress={handleCloseModal}
             >
-              <Text style={styles.modalButtonText}>Proceed</Text>
+              <TextBold style={styles.modalButtonText}>Proceed</TextBold>
             </TouchableOpacity>
           </View>
         </View>

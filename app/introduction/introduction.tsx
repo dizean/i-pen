@@ -1,19 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   Alert,
-  TextInput,
   ImageBackground,
-  Image,
   Animated,
   Easing,
 } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRouter } from "expo-router";
-
+import { TextNormal, TextLight, TextInput } from "@/context/FontContent";
 export default function PreTest() {
   const router = useRouter();
   const { setUser, setPostTestScore, setPreTestScore, grade } = useUser();
@@ -29,7 +26,8 @@ export default function PreTest() {
     setPreTestScore(0);
     switch (grade) {
           case "2":
-            router.push("/grade2/pretest/pretest");
+            // router.push("/grade2/pretest/pretest");
+             router.push("/content/content");
             break;
           case "3":
             router.push("/grade3/pretest/pretest");
@@ -74,7 +72,7 @@ export default function PreTest() {
           style={[styles.image, { transform: [{ rotate }] }]} // Using Animated.Image
           source={require("../../assets/images/calculator.png")}
         />
-        <Text style={styles.subtitle}>Enter your name</Text>
+        <TextNormal style={styles.subtitle}>Enter your name</TextNormal>
         <TextInput
           style={styles.input}
           placeholder="Type your name"
@@ -86,11 +84,11 @@ export default function PreTest() {
           onPress={handleSetUsername}
           disabled={!nameInput}
         >
-          <Text
+          <TextNormal
             style={[styles.buttonText, !nameInput && styles.disabledButtonText]}
           >
             Next
-          </Text>
+          </TextNormal>
         </TouchableOpacity>
       </View>
     </ImageBackground>

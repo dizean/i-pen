@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Image,
   ScrollView,
 } from "react-native";
-
+import * as Text from "@/context/FontContent";
 export default function AdditionPractice({ onComplete }: { onComplete: () => void }) {
   const generateRandomNumber = () => Math.floor(Math.random() * 9) + 1;
 
@@ -102,7 +101,7 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
         <View style={styles.problem}>
           {renderNumberImage(currentProblem.num1, currentProblem.image1)}
         </View>
-        <Text style={styles.problemText}>+</Text>
+        <Text.TextMedium style={styles.problemText}>+</Text.TextMedium>
         <View style={styles.problem}>
           {renderNumberImage(currentProblem.num2, currentProblem.image2)}
         </View>
@@ -123,11 +122,10 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
             onPress={() => handleChoiceSelection(choice)}
             disabled={selectedAnswer !== null} // Disable buttons after a selection
           >
-            <Text style={styles.choiceText}>{choice}</Text>
+            <Text.TextMedium style={styles.choiceText}>{choice}</Text.TextMedium>
           </TouchableOpacity>
         ))}
       </View>
-      {/* {resultMessage && <Text style={styles.resultMessage}>{resultMessage}</Text>} */}
     </ScrollView>
   );
 
@@ -155,14 +153,23 @@ export default function AdditionPractice({ onComplete }: { onComplete: () => voi
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    width: "100%",
+    padding: "3%",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
+    backdropFilter: "blur(10px)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
   },
   problem: {},
   problemText: {
     fontSize: 30,
-    fontWeight: "500",
     textAlign: "center",
     color: "#5d4037",
     padding: 10,
@@ -183,12 +190,20 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   choiceButton: {
-    backgroundColor: "#fbc02d",
-    padding: 15,
-    borderRadius: 8,
+    backgroundColor: "#FDDA0D",
     width: "30%",
+    aspectRatio: 1,
+    justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 5,
+    borderRadius: 8,
+    marginVertical: 10,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    borderWidth: 2,
+    borderColor: "#38bfe7",
   },
   choiceText: {
     fontSize: 18,

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from "react-native";
+import { View, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
 import AdditionPractice from "./examples/examples";
@@ -14,9 +14,8 @@ import WordProblem from "./wordproblems/wordproblems";
 import SpeechComponent from "./speech/speech";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import VideoPlayer from "./video/video";
-import Practice from "./practice/practice";
 import Test from "./practice/practice";
-
+import * as Text from "@/context/FontContent";
 export default function Addition() {
   const [currentSection, setCurrentSection] = useState(1);
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -59,7 +58,7 @@ export default function Addition() {
         {currentSection === 1 && <Objectives />} 
         {currentSection === 2 && (
           <>
-            <Text style={styles.subtitle}>Watch and Sing the Addition Song</Text>
+            <Text.TextBold style={styles.subtitle}>Watch and Sing the Addition Song</Text.TextBold>
             <VideoPlayer />
           </>
         )}
@@ -67,7 +66,7 @@ export default function Addition() {
         {currentSection === 4 && <Parts />}
         {currentSection === 5 && (
           <>
-            <Text style={styles.subtitle}>Practice</Text>
+            <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
             <AdditionPractice onComplete={handlePracticeComplete} />
           </>
         )}
@@ -78,10 +77,11 @@ export default function Addition() {
         {currentSection === 10 && <WordProblem />}
         {currentSection === 11 && (
           <>
-            <Text style={styles.subtitle}>Practice What You Have Learned</Text>
+            {/* <Text.TextBold style={styles.subtitle}>Practice What You Have Learned</Text.TextBold> */}
             <Test />
           </>
         )}
+      {/* <Test/> */}
       </ScrollView>
     </ImageBackground>
     <ImageBackground source={require('../../../assets/images/bgyellowbt.png')} style={styles.fixedButtonContainer}>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   SafeAreaView,
-  Text,
   View,
   TouchableOpacity,
 } from "react-native";
@@ -10,7 +9,17 @@ import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import * as Speech from "expo-speech";
 import styles from "./styles";
+import { TextBold, TextNormal } from "@/context/FontContent";
+import { useFonts } from "expo-font";
+
 export default function App() {
+  
+const [fontsLoaded] = useFonts({
+  ComicSans: require("../assets/fonts/Ldfcomicsans-jj7l.ttf"),
+  ComicSansLight: require("../assets/fonts/Ldfcomicsanslight-6dZo.ttf"),
+  ComicSansMedium: require("../assets/fonts/Ldfcomicsanshairline-5PmL.ttf"), 
+  ComicSansBold: require("../assets/fonts/Ldfcomicsansbold-zgma.ttf"), 
+});
   const route = useRouter();
   const [done, setDone] = useState(true);
   const speak = () => {
@@ -30,18 +39,24 @@ export default function App() {
     setDone(true);
   };
   useEffect(() => {
-    speak();
+    // speak();
   }, []);
 
   return (
-    <ImageBackground style={styles.background}>
+    <View style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.view}>
-          <Text style={styles.title}>
+        <Image
+            source={require("../assets/images/ipenlogo.png")}
+            contentFit="contain"
+            transition={1000}
+            style={styles.math}
+          />
+          {/* <Text style={styles.title}>
             <Text style={styles.titleHighlight}>i</Text>-Pen
-          </Text>
-          <Text style={styles.text}>Interactive Presentation for</Text>
-          <Text style={styles.text}>Enhancing Numeracy</Text>
+          </Text> */}
+          <TextBold style={styles.text}>Interactive Presentation for</TextBold>
+          <TextBold style={styles.text}>Enhancing Numeracy</TextBold>
           <Image
             source={require("../assets/images/math.gif")}
             contentFit="contain"
@@ -75,10 +90,10 @@ export default function App() {
               stopSpeaking();
             }}
           >
-            <Text style={styles.buttonText}>Start Learning</Text>
+            <TextBold style={styles.buttonText}>Start Learning</TextBold>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
-    </ImageBackground>
+    </View>
   );
 }

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   ImageBackground,
   Image,
   Animated,
 } from "react-native";
+import { TextBold } from "@/context/FontContent";
 import styles from "./styles";
 import { useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
@@ -60,7 +60,7 @@ export default function Selection() {
       <View style={styles.wrapper}>
         <View style={styles.optionsContainer}>
           <ImageBackground style={styles.titlebg}>
-            <Text style={styles.title}>Select Grade</Text>
+            <TextBold style={styles.title}>Select Grade</TextBold>
           </ImageBackground>
           <TouchableOpacity style={styles.optionButton}>
             <Image
@@ -74,7 +74,7 @@ export default function Selection() {
               style={styles.optionButton}
               onPress={() => navigateToGrade(`${index + 2}`)}
             >
-              <Text style={styles.optionText}>{grade}</Text>
+              <TextBold style={styles.optionText}>{grade}</TextBold>
               {/* <Animated.Image
                 source={grade}
                 style={[

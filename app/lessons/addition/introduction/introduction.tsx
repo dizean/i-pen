@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, TouchableOpacity } from 'react-native';
+import {ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles';
-import * as Speech from 'expo-speech';
+import * as Text from "@/context/FontContent";
 
 const Introduction = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitle}>
+      <Text.TextBold style={styles.subtitle}>
         Introduction
-      </Text>
-      <Text style={styles.sectiontititle}>
+      </Text.TextBold>
+      <Text.TextMedium style={styles.sectiontititle}>
         What is Addition?
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextMedium>
+      <Text.TextNormal style={styles.text}>
         Addition is the process of adding two or more items together.
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextNormal>
+      <Text.TextNormal style={styles.text}>
         Addition in Math is the method of calculating the sum of two or more numbers.
-      </Text>
-      <Text style={styles.sectiontititle}>
+      </Text.TextNormal>
+      <Text.TextMedium style={styles.sectiontititle}>
         Addition symbol
-      </Text>
-      <Text style={styles.textcenter}>
-        <Text style={styles.text}>
-          1 <Text style={styles.highlight}> + </Text> 1 = ?
-        </Text>
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextMedium>
+      <Text.TextNormal style={styles.textcenter}>
+        <Text.TextNormal style={styles.text}>
+          1 <Text.TextNormal style={styles.highlight}> + </Text.TextNormal> 1 = ?
+        </Text.TextNormal>
+      </Text.TextNormal>
+      <Text.TextNormal style={styles.text}>
         The addition symbol consists of one horizontal line and one vertical line.
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextNormal>
+      <Text.TextNormal style={styles.text}>
         It is also known as the addition sign or the plus sign
-        <Text style={styles.textbold}> (+)</Text>.
-      </Text>
+        <Text.TextBold > (+)</Text.TextBold>.
+      </Text.TextNormal>
     </ScrollView>
   );
 };

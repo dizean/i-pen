@@ -1,40 +1,39 @@
 import React, { useState } from 'react';
-import { Text, ScrollView, TouchableOpacity } from 'react-native';
+import {  ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles';
-import * as Speech from 'expo-speech';
-
+import * as Text from "@/context/FontContent";
 const Introduction = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitle}>
+      <Text.TextBold style={styles.subtitle}>
         Introduction
-      </Text>
-      <Text style={styles.sectiontititle}>
+      </Text.TextBold>
+      <Text.TextMedium style={styles.sectiontititle}>
         What is Subtraction?
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextMedium>
+      <Text.TextNormal style={styles.text}>
       Subtraction is the process of taking away a number from another.
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextNormal>
+      <Text.TextNormal style={styles.text}>
       It is a primary arithmetic operation that is denoted by a subtraction symbol
       is the method of calculating the difference between two numbers.
-      </Text>
-      <Text style={styles.sectiontititle}>
+      </Text.TextNormal>
+      <Text.TextMedium style={styles.sectiontititle}>
       Subtraction symbol
-      </Text>
-      <Text style={styles.textcenter}>
-        <Text style={styles.text}>
-          3 <Text style={styles.highlight}> - </Text> 2 = ?
-        </Text>
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextMedium>
+      <Text.TextNormal style={styles.textcenter}>
+        <Text.TextNormal style={styles.text}>
+          3 <Text.TextMedium style={styles.highlight}> - </Text.TextMedium> 2 = ?
+        </Text.TextNormal>
+      </Text.TextNormal>
+      <Text.TextNormal style={styles.text}>
       In mathematics, we have different symbols. 
-      </Text>
-      <Text style={styles.text}>
+      </Text.TextNormal>
+      <Text.TextNormal style={styles.text}>
       The subtraction symbol is one of the important math symbol that we use while performing subtraction. 
       The subtraction symbol is called minus.
-        <Text style={styles.textbold}> (-)</Text>.
-      </Text>
+        <Text.TextMedium> (-)</Text.TextMedium>.
+      </Text.TextNormal>
     </ScrollView>
   );
 };

@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     width: "100%",
     fontSize: 40,
     padding: 30,
-    fontWeight: "bold",
     textAlign: "center",
     borderRadius: 20,
     marginVertical: 10,
@@ -44,6 +43,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-between",
     rowGap: 20,
+    columnGap: 10
   },
   optionButton: {
     borderRadius: 20,
@@ -63,9 +63,7 @@ const styles = StyleSheet.create({
   optionText: {
     color: "#fff",
     fontSize: 50,
-    fontWeight: "900",
     textAlign: "center",
-    fontFamily: "FredokaOne-Regular",
   },
   image: {
     width: "100%",
