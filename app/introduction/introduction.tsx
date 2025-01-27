@@ -29,8 +29,8 @@ export default function PreTest() {
             router.push("/grade2/pretest/pretest");
             break;
           case "3":
-            // router.push("/grade3/pretest/pretest");
-              router.push("/content/content");
+            router.push("/grade3/pretest/pretest");
+              // router.push("/content/content");
             break;
           case "4":
             router.push("/grade4/pretest/pretest");
