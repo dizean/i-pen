@@ -39,7 +39,7 @@ const [fontsLoaded] = useFonts({
     setDone(true);
   };
   useEffect(() => {
-    // speak();
+    speak();
   }, []);
 
   return (
