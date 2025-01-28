@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext } from "react";
 
 type UserContextType = {
-  username: string | null | 'Cjarles';
+  username: string | null;
   grade: string | null;
   preTestScore: number | null;
   postTestScore: number | null;

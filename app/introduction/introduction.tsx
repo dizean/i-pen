@@ -22,29 +22,7 @@ export default function PreTest() {
       return;
     }
     setUser(nameInput.trim(), grade);
-    setPostTestScore(0);
-    setPreTestScore(0);
-    switch (grade) {
-          case "2":
-            router.push("/grade2/pretest/pretest");
-            break;
-          case "3":
-            router.push("/grade3/pretest/pretest");
-              // router.push("/content/content");
-            break;
-          case "4":
-            router.push("/grade4/pretest/pretest");
-            break;
-          case "5":
-            router.push("/grade5/pretest/pretest");
-            break;
-          case "6":
-            router.push("/grade6/pretest/pretest");
-            break;
-          default:
-            Alert.alert("Error", "Grade not set.");
-            break;
-      }
+    router.push("/test/test");
   };
   const rotateValue = useRef(new Animated.Value(0)).current;
   useEffect(() => {

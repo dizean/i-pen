@@ -18,30 +18,6 @@ export default function ContentPage() {
     preTestScore,
     postTestScore,
   } = useUser();
-
-  const takePostTest = () => {
-    switch (grade) {
-      case "2":
-        router.push("/grade2/posttest/posttest");
-        break;
-      case "3":
-        router.push("/grade3/posttest/posttest");
-        break;
-      case "4":
-        router.push("/grade4/posttest/posttest");
-        break;
-      case "5":
-        router.push("/grade5/posttest/posttest");
-        break;
-      case "6":
-        router.push("/grade6/posttest/posttest");
-        break;
-      default:
-        Alert.alert("Error", "Grade not set.");
-        break;
-    }
-  };
-
   const effectiveGrade = grade ?? "0";
 
   const gridItems = [
@@ -72,7 +48,7 @@ export default function ContentPage() {
     {
       topic: "",
       title: "Post Test",
-      onPress: takePostTest,
+      route: '/test/test',
       requiredGrade: "2",
     },
   ];
@@ -141,7 +117,7 @@ export default function ContentPage() {
                 ]}
                 onPress={
                   isAvailable
-                    ? item.onPress || (() => router.push(item.route as any))
+                    ? (() => router.push(item.route as any))
                     : undefined
                 }
                 disabled={!isAvailable}

@@ -21,7 +21,7 @@ const [fontsLoaded] = useFonts({
   ComicSansBold: require("../assets/fonts/Ldfcomicsansbold-zgma.ttf"), 
 });
   const route = useRouter();
-  const [done, setDone] = useState(true);
+  const [done, setDone] = useState(false);
   const speak = () => {
     const welcomeMessage =
       "Welcome to i-Pen! Enjoy your interactive learning experience. What are you waiting for? Let’s start learning!";
