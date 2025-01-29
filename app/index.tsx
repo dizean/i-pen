@@ -13,7 +13,9 @@ import { TextBold, TextNormal } from "@/context/FontContent";
 import { useFonts } from "expo-font";
 
 export default function App() {
-  
+useEffect(() => {
+    speak();
+  }, []);
 const [fontsLoaded] = useFonts({
   ComicSans: require("../assets/fonts/Ldfcomicsans-jj7l.ttf"),
   ComicSansLight: require("../assets/fonts/Ldfcomicsanslight-6dZo.ttf"),
@@ -21,7 +23,7 @@ const [fontsLoaded] = useFonts({
   ComicSansBold: require("../assets/fonts/Ldfcomicsansbold-zgma.ttf"), 
 });
   const route = useRouter();
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
   const speak = () => {
     const welcomeMessage =
       "Welcome to i-Pen! Enjoy your interactive learning experience. What are you waiting for? Let’s start learning!";
@@ -38,10 +40,6 @@ const [fontsLoaded] = useFonts({
     Speech.stop();
     setDone(true);
   };
-  useEffect(() => {
-    speak();
-  }, []);
-
   return (
     <View style={styles.background}>
       <SafeAreaView style={styles.safeArea}>

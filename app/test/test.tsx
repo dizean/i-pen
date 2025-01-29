@@ -31,14 +31,14 @@ export default function Test() {
   const beepSound = require("../../assets/audio/beep.mp3");
   const wrongSound = require("../../assets/audio/wrong.mp3");
   const correctSound = require("../../assets/audio/correct.mp3");
-  const cheerSound = require("../../assets/audio/cheer.mp3")
+  const cheerSound = require("../../assets/audio/cheer.mp3");
   useEffect(() => {
-    const generatedQuestions = generateQuestions(2);
+    const generatedQuestions = generateQuestions(3);
     setQuestions(generatedQuestions);
   }, []);
   useEffect(() => {
-    if (isTimerPaused || timer === 0) {
-      if (timer === 0 && !isProcessing) {
+    if (isTimerPaused || timer <= 0) {
+      if (timer === 0 && !isProcessing && currentQuestion < questions.length) {
         handleTimeout();
       }
       return;
@@ -47,9 +47,9 @@ export default function Test() {
       setTimer((prev) => prev - 1);
       playBeepSound();
     }, 1000);
-
+  
     return () => clearTimeout(countdown);
-  }, [timer, isTimerPaused, isProcessing]);
+  }, [timer, isTimerPaused, isProcessing, currentQuestion]);
   useEffect(() => {
     if (showResultsModal) {
       if (preTestScore === null || preTestScore === 0) {
@@ -176,36 +176,32 @@ export default function Test() {
     }
     return questions;
   };
-
   const playBeepSound = async () => {
     const { sound } = await Audio.Sound.createAsync(beepSound);
     await sound.playAsync();
   };
-
   const speak = (message: string) => {
     Speech.speak(message, { pitch: 1.8, rate: 0.7, volume: 0.9 });
   };
-
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-
+  
     const currentQuestionData = questions[currentQuestion];
     setCorrectAnswer(currentQuestionData.correctAnswer);
     playWrongSound(String(currentQuestionData.correctAnswer), 0);
-
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prev) => prev + 1);
         resetStateForNextQuestion();
       } else {
-        // setShowResultsModal(true);
-        // cheer(score);
+        cheer(score);
+        setTimer(-1); 
       }
       setIsProcessing(false);
     }, 2600);
   };
-
+  
   const handleAnswer = (selectedAnswer: number) => {
     if (answerSelected !== null || isProcessing) return;
     setIsProcessing(true);
@@ -252,54 +248,43 @@ export default function Test() {
   };
 
   const playCorrectSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      correctSound
-    );
+    const { sound } = await Audio.Sound.createAsync(correctSound);
     await sound.playAsync();
     speak("Correct!");
   };
 
   const playWrongSound = async (answer: string, selected: any) => {
-    const { sound } = await Audio.Sound.createAsync(
-      wrongSound
-    );
+    const { sound } = await Audio.Sound.createAsync(wrongSound);
     await sound.playAsync();
     const message =
       selected === 0
         ? `Time's up! The correct answer is ${answer}.`
         : `Incorrect! The correct answer is ${answer}.`;
     speak(message);
-    if (currentQuestion === questions.length - 1) {
-      setTimeout(() => {
-        cheer(score);
-      }, 2000);
-    }
   };
 
   const [speekDone, setSpeekDone] = useState(false);
   const cheer = async (finalScore: number) => {
     setIsTimerPaused(true);
     setIsProcessing(true);
-    const { sound } = await Audio.Sound.createAsync(
-      cheerSound
-    );
+    const { sound } = await Audio.Sound.createAsync(cheerSound);
     await sound.playAsync();
     setShowResultsModal(true);
     setTimeout(() => {
       Speech.speak(
         `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
         {
-          onDone: () => setSpeekDone(true),
+          onDone: () => {setSpeekDone(true), Speech.stop()},
         }
       );
     }, 3000);
   };
   const handleCloseModal = () => {
     router.push("/content/content");
+    setTimer(-1)
+    Speech.stop()
   };
-
   if (questions.length === 0) return null;
-
   const currentQuestionData = questions[currentQuestion];
 
   return (
@@ -358,14 +343,13 @@ export default function Test() {
             </View>
             {speekDone && (
               <TouchableOpacity
-              style={styles.modalButton}
-              onPress={handleCloseModal}
-              disabled={!speekDone}
-            >
-              <TextBold style={styles.modalButtonText}>Proceed</TextBold>
-            </TouchableOpacity>
+                style={styles.modalButton}
+                onPress={handleCloseModal}
+                disabled={!speekDone}
+              >
+                <TextBold style={styles.modalButtonText}>Proceed</TextBold>
+              </TouchableOpacity>
             )}
-            
           </View>
         </View>
       </Modal>

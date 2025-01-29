@@ -83,17 +83,16 @@ export default function Test() {
   const correctSound = require("../../../../assets/audio/correct.mp3");
   const cheerSound = require("../../../../assets/audio/cheer.mp3")
   useEffect(() => {
-    const questions = generateQuestions(7);
+    const questions = generateQuestions(1);
     setQuestions(questions);
   }, []);
   useEffect(() => {
-    if (isTimerPaused || timer === 0) {
-      if (timer === 0 && !isProcessing) {
+    if (isTimerPaused || timer <= 0) {
+      if (timer === 0 && !isProcessing && currentQuestion < questionss.length) {
         handleTimeout();
       }
       return;
     }
-
     const countdown = setTimeout(() => {
       setTimer((prev) => prev - 1);
       playBeepSound();
@@ -255,6 +254,7 @@ export default function Test() {
       setFeedback("You've completed all the questions!");
       setIsTimerPaused(true);
       setShowResultsModal(true);
+      cheer(score)
     }
   };
 
