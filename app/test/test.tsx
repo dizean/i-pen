@@ -29,6 +29,9 @@ export default function Test() {
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
   const beepSound = require("../../assets/audio/beep.mp3");
+  const wrongSound = require("../../assets/audio/wrong.mp3");
+  const correctSound = require("../../assets/audio/correct.mp3");
+  const cheerSound = require("../../assets/audio/cheer.mp3")
   useEffect(() => {
     const generatedQuestions = generateQuestions(2);
     setQuestions(generatedQuestions);
@@ -250,7 +253,7 @@ export default function Test() {
 
   const playCorrectSound = async () => {
     const { sound } = await Audio.Sound.createAsync(
-      require("../../assets/audio/correct.mp3")
+      correctSound
     );
     await sound.playAsync();
     speak("Correct!");
@@ -258,7 +261,7 @@ export default function Test() {
 
   const playWrongSound = async (answer: string, selected: any) => {
     const { sound } = await Audio.Sound.createAsync(
-      require("../../assets/audio/wrong.mp3")
+      wrongSound
     );
     await sound.playAsync();
     const message =
@@ -278,7 +281,7 @@ export default function Test() {
     setIsTimerPaused(true);
     setIsProcessing(true);
     const { sound } = await Audio.Sound.createAsync(
-      require("../../assets/audio/cheer.mp3")
+      cheerSound
     );
     await sound.playAsync();
     setShowResultsModal(true);

@@ -2,10 +2,9 @@ import React, { useState, useRef } from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
-import AdditionPractice from "./examples/examples";
+import Examples from "../examples/examples";
 import Introduction from "./introduction/introduction";
 import Parts from "./parts/parts";
-import Objectives from "./objectives/objectives";
 import WoRegroup from "./methods/woregroup/woregroup";
 import WRegroup from "./methods/wregroup/wregroup";
 import LineAdd from "./methods/lineadd/lineadd";
@@ -13,9 +12,10 @@ import Properties from "./properties/properties";
 import WordProblem from "./wordproblems/wordproblems";
 import SpeechComponent from "./speech/speech";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import VideoPlayer from "./video/video";
+import VideoPlayer from "../video/video";
 import Test from "./practice/practice";
 import * as Text from "@/context/FontContent";
+import Objectives from "../objectives/objectives";
 export default function Addition() {
   const [currentSection, setCurrentSection] = useState(1);
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -67,7 +67,7 @@ export default function Addition() {
         {currentSection === 5 && (
           <>
             <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
-            <AdditionPractice onComplete={handlePracticeComplete} />
+            <Examples onComplete={handlePracticeComplete} />
           </>
         )}
         {currentSection === 6 && <WoRegroup />}

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-    backgroundColor: '#38bfe7'
+    backgroundColor: '#38bfe7',
   },
   wrapper: {
     width: "100%",
@@ -18,32 +18,38 @@ const styles = StyleSheet.create({
   titlebg: {
     width: '100%',
     borderRadius: 20, 
-    backgroundColor: '#FDDA0D',                        
-    shadowColor: "#000",                      
+    backgroundColor: '#FDDA0D',                         
+    shadowColor: "#000",                     
     shadowOffset: { width: 0, height: 4 },     
-    shadowOpacity: 0.3,                        
+    shadowOpacity: 0.3,                       
     shadowRadius: 5,                          
-    elevation: 8,                            
-    alignItems: "center",                   
+    elevation: 8,                             
+    alignItems: "center",                    
     justifyContent: "center",     
     overflow: "hidden",       
   },  
   title: {
-    width: "100%",
     fontSize: 40,
-    padding: 30,
+    paddingVertical: 30,
     textAlign: "center",
     borderRadius: 20,
     marginVertical: 10,
-    color: '#fff'
+    color: '#38bfe7',
+    letterSpacing: 4
+  },
+  titleWrapper: {
+    flexDirection: "row", 
+    alignItems: "center", 
+    justifyContent: "center",
   },
   optionsContainer: {
     width: "100%",
+    height: '100%',
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     rowGap: 20,
-    columnGap: 10
+    columnGap: 10,
   },
   optionButton: {
     borderRadius: 20,
@@ -61,18 +67,20 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   optionText: {
+    width: '100%',
+    height: '75%',
     color: "#fff",
     fontSize: 50,
     textAlign: "center",
+    padding:20,
+    borderRadius: 100,
+    backgroundColor: 'blue',
   },
   image: {
     width: "100%",
     height: "50%",
     resizeMode: "contain",
   },
-  
 });
-// #AEEEEE
-// #2C3E50
-// #F1C40F
+
 export default styles;

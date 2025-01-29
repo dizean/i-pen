@@ -2,10 +2,18 @@ import React, { useRef, useState } from "react";
 import {ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
-import Objectives from "./objectives/objectives";
+import Objectives from "../objectives/objectives";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import * as Text from "@/context/FontContent";
 import SpeechComponent from "./speech/speech";
+import VideoPlayer from "../video/video";
+import Introduction from "./introduction/introduction";
+import Parts from "./parts/parts";
+import WoRegroup from "./methods/woregroup/woregroup";
+import WRegroup from "./methods/wregroup/wregroup";
+import Line from "./methods/line/line";
+import WordProblem from "./wordproblems/wordproblems";
+import Test from "./practice/practice";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -16,7 +24,7 @@ export default function Subtraction() {
       if (speechRef.current) {
         speechRef.current.stopSpeech();
       }
-      if (currentSection < 10) {
+      if (currentSection < 9) {
         setCurrentSection(currentSection + 1);
       }
     };
@@ -47,7 +55,7 @@ export default function Subtraction() {
      <ImageBackground source={require('../../../assets/images/purplebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {currentSection === 1 && <Objectives />} 
-        {/* {currentSection === 2 && (
+      {currentSection === 2 && (
           <>
             <Text.TextBold style={styles.subtitle}>Watch and Sing the Subtraction Song</Text.TextBold>
             <VideoPlayer />
@@ -55,22 +63,15 @@ export default function Subtraction() {
         )}
       {currentSection === 3 && <Introduction />} 
       {currentSection === 4 && <Parts />} 
-      {currentSection === 5 && (
-          <>
-            <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
-            <Practice onComplete={handlePracticeComplete} />
-          </>
-        )}
-
-      {currentSection === 6 && <WoRegroup />} 
-      {currentSection === 7 && <WRegroup />} 
-      {currentSection === 8 && <Line />} 
-      {currentSection === 9 && <WordProblem />} 
-      {currentSection === 10 && (
+      {currentSection === 5 && <WoRegroup />} 
+      {currentSection === 6 && <WRegroup />} 
+      {currentSection === 7 && <Line />}  
+      {currentSection === 8 && <WordProblem />} 
+      {currentSection === 9 && (
           <>
             <Test />
           </>
-        )} */}
+        )} 
       </ScrollView>
       
     </ImageBackground>
@@ -92,11 +93,11 @@ export default function Subtraction() {
           currentSection={currentSection}
           ref={speechRef} 
         />
-        {currentSection !== 10 ? (
+        {currentSection !== 9 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handleNext}
-            disabled={currentSection === 5 && !isPracticeComplete}
+            // disabled={currentSection === 5 && !isPracticeComplete}
           >
             <AntDesign name="doubleright" size={30} color="black" />
           </TouchableOpacity>

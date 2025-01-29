@@ -2,13 +2,13 @@ import React, { useRef, useState } from "react";
 import {ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
-import Objectives from "./objectives/objectives";
+import Objectives from "../objectives/objectives";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import SpeechComponent from "./speech/speech";
-import VideoPlayer from "./video/video";
+import VideoPlayer from "../video/video";
 import Introduction from "./introduction/introduction";
 import Parts from "./parts/parts";
-import Practice from "./examples/examples";
+import Examples from "../examples/examples";
 import WoRegroup from "./methods/woregroup/woregroup";
 import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
@@ -67,7 +67,7 @@ export default function Subtraction() {
       {currentSection === 5 && (
           <>
             <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
-            <Practice onComplete={handlePracticeComplete} />
+            <Examples onComplete={handlePracticeComplete} />
           </>
         )}
 

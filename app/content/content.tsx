@@ -117,7 +117,7 @@ export default function ContentPage() {
                 ]}
                 onPress={
                   isAvailable
-                    ? (() => router.push(item.route as any))
+                    ? (() => router.push({pathname: item.route as any,params: { topic: item.topic }}))
                     : undefined
                 }
                 disabled={!isAvailable}

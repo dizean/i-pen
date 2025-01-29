@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
+  Text,
   TouchableOpacity,
   StyleSheet,
   ImageBackground,
@@ -16,17 +17,15 @@ interface Problem {
   startNumber: number;
   steps: number;
 }
-
 interface Question {
   question: string;
   correctAnswer: number;
   options: number[];
 }
-
 export default function Test() {
   const [currentPractice, setCurrentPractice] = useState<
-    "subtraction" | "line"
-  >("subtraction");
+    "multiplication" | "line"
+  >("multiplication");
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
 
@@ -34,17 +33,15 @@ export default function Test() {
     const questions = [];
     for (let i = 0; i < count; i++) {
       const num1 = Math.floor(Math.random() * 10);
-      const num2 = Math.floor(Math.random() * (10 - num1)) + num1;
-      const correctAnswer = num2 - num1;
+      const num2 = Math.floor(Math.random() * (10 - num1));
+      const correctAnswer = num1 * num2;
       const options = new Set<number>();
       options.add(correctAnswer);
       while (options.size < 4) {
-        const randomOption =
-          Math.floor(Math.random() * (20 - correctAnswer)) + correctAnswer;
-        options.add(randomOption);
+        options.add(Math.floor(Math.random() * 20));
       }
       questions.push({
-        question: `What is ${num2} - ${num1}?`,
+        question: `What is ${num1} x ${num2}?`,
         correctAnswer,
         options: Array.from(options).sort(() => Math.random() - 0.5),
       });
@@ -54,16 +51,12 @@ export default function Test() {
   const generateProblems = () => {
     const problems = [];
     for (let i = 0; i < 3; i++) {
-      let startNumber, steps;
-      do {
-        startNumber = Math.floor(Math.random() * 15) + 1;
-        steps = Math.floor(Math.random() * (startNumber - 2)) + 1;
-      } while (startNumber === 0 || steps === 0);
+      const startNumber = Math.floor(Math.random() * 4) + 1;
+      const steps = Math.floor(Math.random() * 5) + 1;
       problems.push({ startNumber, steps });
     }
     return problems;
   };
-
   const [problems] = useState(generateProblems());
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
   const [currentSelection, setCurrentSelection] = useState<number | null>(null);
@@ -111,7 +104,7 @@ export default function Test() {
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-    if (currentPractice === "subtraction") {
+    if (currentPractice === "multiplication") {
       const currentQuestionData = questionss[currentQuestion];
       setCorrectAnswer(currentQuestionData.correctAnswer);
       playWrongSound(String(currentQuestionData.correctAnswer), 0);
@@ -147,6 +140,7 @@ export default function Test() {
     setTimer(15);
     setIsTimerPaused(false);
   };
+
   const playCorrectSound = async () => {
     const { sound } = await Audio.Sound.createAsync(
       correctSound
@@ -174,6 +168,7 @@ export default function Test() {
     await sound.playAsync();
     speak(`Congratulations! Your final score is ${finalScore} out of 10.`);
   };
+
   const handleCloseModal = () => {
     router.push("/content/content");
   };
@@ -206,6 +201,7 @@ export default function Test() {
       setIsProcessing(false);
     }, 2600);
   };
+
   const handleNumberLineSelection = (number: number) => {
     if (isProcessing) return;
     const { startNumber, steps } = problems[currentProblemIndex];
@@ -216,7 +212,8 @@ export default function Test() {
       } else {
       }
     } else {
-      const expectedAnswer = startNumber - steps;
+      let expectedAnswer = startNumber * steps;
+      expectedAnswer = Math.min(Math.max(expectedAnswer, 1), 20);
       setIsAnswering(true);
       setIsTimerPaused(false);
       setCurrentSecondSelection(number);
@@ -226,7 +223,6 @@ export default function Test() {
       if (number === expectedAnswer) {
         setScore((prev) => {
           const newScore = prev + 1;
-          console.log(newScore);
           if (currentProblemIndex === problems.length - 1) {
             cheer(newScore);
           }
@@ -262,12 +258,12 @@ export default function Test() {
     }
   };
 
-  if (currentPractice === "subtraction") {
+  if (currentPractice === "multiplication") {
     const currentQuestionData = questionss[currentQuestion];
     if (!currentQuestionData) {
       return (
         <View style={styles.container}>
-          <TextMedium>Loading questions...</TextMedium>
+          <TextNormal>Loading questions...</TextNormal>
         </View>
       );
     }
@@ -284,9 +280,9 @@ export default function Test() {
         </TextBold>
         <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
         <View style={styles.optionsContainer}>
-          {currentQuestionData.options.map((option, index) => (
+          {currentQuestionData.options.map((option) => (
             <TouchableOpacity
-              key={index}
+              key={option}
               style={[
                 styles.optionButton,
                 answerSelected === option && styles.selectedOption,
@@ -315,11 +311,12 @@ export default function Test() {
         Let us test what you have learned
       </TextNormal>
       <TextNormal style={styles.text}>
-        Select the Minuend then count the steps for the correct answer.
+        Select the first addend then count the steps for the correct answer.
       </TextNormal>
       <TextNormal style={styles.problem}>
-        Solve: {startNumber} - {steps}
+        Solve: {startNumber} x {steps}
       </TextNormal>
+      <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
       <View style={styles.numberLineContainer}>
         {numberLine.map((num) => (
           <TouchableOpacity
@@ -347,7 +344,7 @@ export default function Test() {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <TextMedium style={styles.modalTitle}>
-              Congratulations for completing Lesson 2
+              Congratulations for completing Lesson 1
             </TextMedium>
             <TextNormal style={styles.modalText}>
               Your final score is {score}/10.
