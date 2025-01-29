@@ -83,7 +83,7 @@ export default function Test() {
   const correctSound = require("../../../../assets/audio/correct.mp3");
   const cheerSound = require("../../../../assets/audio/cheer.mp3")
   useEffect(() => {
-    const questions = generateQuestions(1);
+    const questions = generateQuestions(7);
     setQuestions(questions);
   }, []);
   useEffect(() => {
