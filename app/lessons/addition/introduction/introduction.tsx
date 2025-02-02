@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import * as Text from "@/context/FontContent";
+import { Image } from 'expo-image';
 
 const Introduction = () => {
   return (
@@ -30,9 +31,12 @@ const Introduction = () => {
         The addition symbol consists of one horizontal line and one vertical line.
       </Text.TextNormal>
       <Text.TextNormal style={styles.text}>
-        It is also known as the addition sign or the plus sign
-        <Text.TextBold > (+)</Text.TextBold>.
+        It is also known as the addition sign or the plus sign.
       </Text.TextNormal>
+      <Image
+        source={require("../../../../assets/images/plus.png")}
+        style={[styles.image, {height:100}]}
+      />
     </ScrollView>
   );
 };

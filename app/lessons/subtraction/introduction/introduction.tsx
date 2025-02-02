@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {  ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import * as Text from "@/context/FontContent";
+import { Image } from 'expo-image';
 const Introduction = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -32,8 +33,11 @@ const Introduction = () => {
       <Text.TextNormal style={styles.text}>
       The subtraction symbol is one of the important math symbol that we use while performing subtraction. 
       The subtraction symbol is called minus.
-        <Text.TextMedium> (-)</Text.TextMedium>.
       </Text.TextNormal>
+      <Image
+        source={require("../../../../assets/images/minus.png")}
+        style={[styles.image, {height:100}]}
+      />
     </ScrollView>
   );
 };

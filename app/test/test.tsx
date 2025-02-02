@@ -226,6 +226,11 @@ export default function Test() {
       setCorrectAnswer(currentQuestionData.correctAnswer);
       setWrongAnswer(selectedAnswer);
       playWrongSound(String(currentQuestionData.correctAnswer), selectedAnswer);
+      if (currentQuestion === questions.length - 1) {
+        setTimeout(() => {
+          cheer(score);
+        }, 2000);
+      }
     }
 
     setTimeout(() => {

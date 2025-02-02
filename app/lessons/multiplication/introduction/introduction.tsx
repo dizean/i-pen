@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import * as Text from "@/context/FontContent";
+import { Image } from 'expo-image';
 
 const Introduction = () => {
   return (
@@ -41,6 +42,10 @@ const Introduction = () => {
       by the mid-line dot operator<Text.TextBold> (⋅) </Text.TextBold>, and by the asterisk sign 
       <Text.TextBold> (*) </Text.TextBold>.
       </Text.TextNormal>
+      <Image
+        source={require("../../../../assets/images/multiply.png")}
+        style={[styles.image, {height:100}]}
+      />
     </ScrollView>
   );
 };

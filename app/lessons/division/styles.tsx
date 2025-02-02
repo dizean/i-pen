@@ -1,30 +1,10 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     padding: 20,
-    backgroundColor: "#fff8e1",
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 25,
-    color: "#1a237e", // Darker shade for formal feel
-  },
-  subtitle: {
-    fontSize: 22,
-    fontWeight: "600",
-    marginVertical: 12,
-    textAlign: "center",
-    color: "#f57f17", // Dark yellow shade for subtitles
-  },
-  text: {
-    fontSize: 18,
-    marginVertical: 12,
-    textAlign: "center",
-    color: "#5d4037", // Brownish color for a formal tone
+    paddingBottom: 100,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -32,37 +12,96 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingHorizontal: 10,
   },
+  fixedButtonContainer: {
+    width: '100%',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    position: "absolute",
+    bottom: 0, 
+    paddingVertical: 10,
+    borderTopWidth: 1, 
+    borderColor: "#000", 
+  },
   button: {
-    backgroundColor: "#fbc02d", // Golden yellow for buttons
     padding: 15,
-    borderRadius: 8,
-    width: "45%",
-    alignItems: "center", // Ensures text is centered within the button
+    borderRadius: 15,
+    width: "30%",
+    alignItems: "center",
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: "600",
-    color: "#1a237e", // Navy blue text for buttons
+    color: "#1a237e",
   },
-  highlightwrap: {
-    display: 'flex',
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    width: '100%', 
+  container: {
+  },
+  title: {
+    fontSize: 50,
+    paddingVertical: 5
+  },
+  subtitle: {
+    fontSize: 40,
+    paddingVertical: 5
+  },
+  sectiontititle: {
+    fontSize: 25,
+    paddingVertical: 10
+  },
+  text: {
+    fontSize: 20,
+    lineHeight: 30,
+    paddingVertical: 5
+  },
+  image: {
+    width: '100%',
+    height: 100,
+    resizeMode: 'contain',
+    marginVertical: 10,
+  },
+  textcenter: {
+    textAlign: 'center',
   },
   highlight: {
-    backgroundColor: "#ffeb3b", // Bright yellow for highlight
-    borderColor: '#f57f17', // Dark yellow for border
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    backgroundColor: 'yellow',
+    borderRadius: 100,
+    borderWidth: 10,
+  },
+  question: {
+    fontSize: 20,
+    marginBottom: 20,
     textAlign: "center",
-    textAlignVertical: "center",
-    fontWeight: "bold",
-    fontSize: 32,
-    color: "#1a237e", // Dark navy blue for contrast
-    marginHorizontal: 6, // Slightly larger gap for spacing
+    color: "#5D4037",
+  },
+  optionsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  optionButton: {
+    backgroundColor: "#FFEB3B", // Bright yellow for buttons
+    width: "48%",
+    aspectRatio: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+    marginVertical: 10,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    borderWidth: 2,
+    borderColor: "#F57F17", // Border matches title color
+  },
+  optionText: {
+    fontSize: 18,
+    color: "#212121", // Dark gray for better contrast
+    textAlign: "center",
+  },
+  score: {
+    fontSize: 18,
+    textAlign: "center",
+    marginTop: 20,
+    color: "#F57F17",
   },
 });
 
