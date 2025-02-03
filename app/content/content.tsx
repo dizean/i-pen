@@ -10,16 +10,27 @@ import { TextBold, TextLight, TextMedium, TextNormal } from "@/context/FontConte
 import { useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
+import { useRoute } from "@react-navigation/native";
+interface RouteParams {
+  score: number;
+}
 export default function ContentPage() {
   const router = useRouter();
+  const route = useRoute();
+    const { score } = (route.params as RouteParams) || {};
   const {
     username,
     grade,
-    preTestScore,
+    preTestScore,setPreTestScore,
     postTestScore,
   } = useUser();
   const effectiveGrade = grade ?? "0";
-
+  useEffect(()=>{
+    if(preTestScore === 0 || preTestScore ===null){
+      setPreTestScore(score)
+    }
+    
+  },[])
   const gridItems = [
     {
       topic: "Addition",

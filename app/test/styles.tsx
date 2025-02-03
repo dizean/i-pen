@@ -87,13 +87,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     elevation: 5,
+    display: "flex",
+    justifyContent: "space-between",
+    position: "relative", // Ensures the background GIF stays inside
+    overflow: "hidden", // Prevents any overflow
+  },
+  backgroundGif: {
+    position: "absolute",
+    width: "150%",
+    height: "150%",
+    opacity: .8,
+    alignSelf: 'center',
   },
   modalTitle: {
-    fontSize: 24,
+    fontSize: 34,
     marginBottom: 10,
   },
   modalText: {
-    fontSize: 18,
+    fontSize: 24,
     marginBottom: 20,
     textAlign: "center",
   },
@@ -105,7 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalButtonText: {
-    fontSize: 16,
+    fontSize: 24,
     color: "#fff",
     textAlign: 'center'
   },

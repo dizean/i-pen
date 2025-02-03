@@ -13,9 +13,8 @@ import { useRouter } from "expo-router";
 import { TextNormal, TextLight, TextInput } from "@/context/FontContent";
 export default function PreTest() {
   const router = useRouter();
-  const { setUser, setPostTestScore, setPreTestScore, grade } = useUser();
+  const { setUser, grade } = useUser();
   const [nameInput, setNameInput] = useState("");
-
   const handleSetUsername = () => {
     if (nameInput.trim() === "") {
       Alert.alert("Error", "Please enter your name.");
@@ -65,7 +64,17 @@ export default function PreTest() {
           <TextNormal
             style={[styles.buttonText, !nameInput && styles.disabledButtonText]}
           >
-            Next
+            Proceed
+          </TextNormal>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, {backgroundColor: '#38bfe7',marginTop: '2%'}]}
+          onPress={()=>router.push('/selection/selection')}
+        >
+          <TextNormal
+            style={[styles.buttonText]}
+          >
+            Back
           </TextNormal>
         </TouchableOpacity>
       </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Modal, ImageBackground } from "react-native";
+import { View, TouchableOpacity, Modal, ImageBackground, Animated } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRouter } from "expo-router";
@@ -7,7 +7,6 @@ import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
 import { TextNormal, TextBold, TextMedium } from "@/context/FontContent";
-
 interface Question {
   question: string;
   correctAnswer: number;
@@ -47,18 +46,9 @@ export default function Test() {
       setTimer((prev) => prev - 1);
       playBeepSound();
     }, 1000);
-  
+
     return () => clearTimeout(countdown);
   }, [timer, isTimerPaused, isProcessing, currentQuestion]);
-  useEffect(() => {
-    if (showResultsModal) {
-      if (preTestScore === null || preTestScore === 0) {
-        setPreTestScore(score);
-      } else {
-        setPostTestScore(score);
-      }
-    }
-  }, [showResultsModal, score]);
 
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
@@ -186,7 +176,6 @@ export default function Test() {
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-  
     const currentQuestionData = questions[currentQuestion];
     setCorrectAnswer(currentQuestionData.correctAnswer);
     playWrongSound(String(currentQuestionData.correctAnswer), 0);
@@ -196,12 +185,12 @@ export default function Test() {
         resetStateForNextQuestion();
       } else {
         cheer(score);
-        setTimer(-1); 
+        setTimer(-1);
       }
       setIsProcessing(false);
     }, 2600);
   };
-  
+
   const handleAnswer = (selectedAnswer: number) => {
     if (answerSelected !== null || isProcessing) return;
     setIsProcessing(true);
@@ -221,7 +210,7 @@ export default function Test() {
         return newScore;
       });
       setCorrectAnswer(selectedAnswer);
-      playCorrectSound();
+      playCorrectSound(String(selectedAnswer));
     } else {
       setCorrectAnswer(currentQuestionData.correctAnswer);
       setWrongAnswer(selectedAnswer);
@@ -252,10 +241,10 @@ export default function Test() {
     setIsTimerPaused(false);
   };
 
-  const playCorrectSound = async () => {
+  const playCorrectSound = async (answer: string) => {
     const { sound } = await Audio.Sound.createAsync(correctSound);
     await sound.playAsync();
-    speak("Correct!");
+    speak(`Correct!${answer} is the answer.`);
   };
 
   const playWrongSound = async (answer: string, selected: any) => {
@@ -279,19 +268,38 @@ export default function Test() {
       Speech.speak(
         `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
         {
-          onDone: () => {setSpeekDone(true), Speech.stop()},
+          onDone: () => {
+            setSpeekDone(true);
+            Speech.stop();
+            if (preTestScore !== null && preTestScore !== 0) {
+              setPostTestScore(finalScore);
+            }
+          },
         }
       );
     }, 3000);
   };
-  const handleCloseModal = () => {
-    router.push("/content/content");
-    setTimer(-1)
-    Speech.stop()
+  useEffect(() => {
+    if (questions.length > 0) {
+      let questionText = questions[currentQuestion].question;
+      if (questionText.includes("-")) {
+        questionText = questionText.replace(/-/g, " minus ");
+      } else if (questionText.includes("*")) {
+        questionText = questionText.replace(/\*/g, " times ");
+      } else if (questionText.includes("/")) {
+        questionText = questionText.replace(/\//g, " divided by ");
+      }
+      speak(questionText);
+    }
+  }, [currentQuestion, questions]);
+
+  const handleCloseModal = (score: number) => {
+    router.push({ pathname: "/content/content", params: { score } });
+    setTimer(-1);
+    Speech.stop();
   };
   if (questions.length === 0) return null;
   const currentQuestionData = questions[currentQuestion];
-
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -334,6 +342,12 @@ export default function Test() {
       <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
+            <Image
+              source={require("../../assets/images/confetti.gif")}
+              style={styles.backgroundGif}
+              contentFit="fill"
+              transition={1000}
+            />
             <TextBold style={styles.modalTitle}>Congratulations!</TextBold>
             <TextNormal style={styles.modalText}>
               Your final score is {score}/{questions.length}.
@@ -341,20 +355,20 @@ export default function Test() {
             <View style={styles.images}>
               <Image
                 source={require("../../assets/images/3fr.gif")}
+                style={styles.gif}
                 contentFit="fill"
                 transition={1000}
-                style={[styles.gif]}
               />
             </View>
-            {speekDone && (
-              <TouchableOpacity
-                style={styles.modalButton}
-                onPress={handleCloseModal}
-                disabled={!speekDone}
-              >
-                <TextBold style={styles.modalButtonText}>Proceed</TextBold>
-              </TouchableOpacity>
-            )}
+            {speekDone &&
+             <TouchableOpacity
+             style={styles.modalButton}
+             onPress={() => handleCloseModal(score)}
+             disabled={!speekDone}
+           >
+             <TextBold style={styles.modalButtonText}>Proceed</TextBold>
+           </TouchableOpacity>
+            }
           </View>
         </View>
       </Modal>
