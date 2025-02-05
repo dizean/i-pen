@@ -57,10 +57,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "48%",
     height: "30%",
-    backgroundColor: "#FDDA0D",
+    // backgroundColor: "#afe3ee",
     overflow: "hidden", 
+    position: 'relative'
   },
-  
+  circle: {
+    position: "absolute",
+    width: "100%",
+    height: "50%",
+    top: 0,
+    opacity: .8,
+    borderBottomLeftRadius: 100,
+    borderBottomRightRadius: 100
+  },
   animatedBorder: {
     position: "absolute",
     borderWidth: 5,

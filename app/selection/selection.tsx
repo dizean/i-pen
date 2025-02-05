@@ -77,6 +77,20 @@ export default function Selection() {
     require("../../assets/images/gr4.jpg"),
     require("../../assets/images/gr6.jpg"),
   ];
+  const  backgroundcolors = [
+    '#01c59f',
+    '#f77c57',
+    '#1bbbeb',
+    '#d69749',
+    '#e4848c',
+  ]
+  const subcolors = [
+    '#70ddbb',
+    '#fbc4a5',
+    '#53dbfb',
+    '#fbbe62',
+    '#fb8b9b'
+  ]
   const letterAnimValues = useRef(
     "Please Choose Your Grade".split("").map(() => new Animated.Value(1))
   ).current;
@@ -101,7 +115,7 @@ export default function Selection() {
 
     Animated.loop(Animated.stagger(200, animations)).start();
   }, []);
-
+  
   return (
     <ImageBackground style={styles.container}>
       <View style={styles.wrapper}>
@@ -152,19 +166,11 @@ export default function Selection() {
               key={index}
               style={[
                 styles.optionButton,
+                {backgroundColor: backgroundcolors[index]}
               ]}
               onPress={() => {navigateToGrade(`${grade.grade}`)}}
             >
-              <ImageBackground
-                source={gradesbg[index]}
-                resizeMode="cover"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
+              <View style={[styles.circle, {backgroundColor: subcolors[index]}]}></View>
                 <Animated.Image
                   source={grade.image}
                   style={[
@@ -172,7 +178,6 @@ export default function Selection() {
                     { transform: [{ scale: imageScaleValue }] },
                   ]}
                 />
-              </ImageBackground>
             </TouchableOpacity>
           ))}
         </View>
