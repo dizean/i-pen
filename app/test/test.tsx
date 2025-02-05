@@ -171,7 +171,12 @@ export default function Test() {
     await sound.playAsync();
   };
   const speak = (message: string) => {
-    Speech.speak(message, { pitch: 1.8, rate: 0.7, volume: 0.9 });
+    if (grade === '2' || grade === '3'){
+      Speech.speak(message, { pitch: 1.8, rate: 0.6, volume: 1 });
+    }else{
+      Speech.speak(message, { pitch: 1.8, rate: 0.8, volume: 1 });
+    }
+    
   };
   const handleTimeout = () => {
     if (isProcessing) return;
@@ -244,17 +249,17 @@ export default function Test() {
   const playCorrectSound = async (answer: string) => {
     const { sound } = await Audio.Sound.createAsync(correctSound);
     await sound.playAsync();
-    speak(`Correct!${answer} is the answer.`);
+    // speak(`Correct!${answer} is the answer.`);
   };
 
   const playWrongSound = async (answer: string, selected: any) => {
     const { sound } = await Audio.Sound.createAsync(wrongSound);
     await sound.playAsync();
-    const message =
-      selected === 0
-        ? `Time's up! The correct answer is ${answer}.`
-        : `Incorrect! The correct answer is ${answer}.`;
-    speak(message);
+    // const message =
+    //   selected === 0
+    //     ? `Time's up! The correct answer is ${answer}.`
+    //     : `Incorrect! The correct answer is ${answer}.`;
+    // speak(message);
   };
 
   const [speekDone, setSpeekDone] = useState(false);
@@ -264,20 +269,38 @@ export default function Test() {
     const { sound } = await Audio.Sound.createAsync(cheerSound);
     await sound.playAsync();
     setShowResultsModal(true);
-    setTimeout(() => {
-      Speech.speak(
-        `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
-        {
-          onDone: () => {
-            setSpeekDone(true);
-            Speech.stop();
-            if (preTestScore !== null && preTestScore !== 0) {
-              setPostTestScore(finalScore);
-            }
-          },
-        }
-      );
-    }, 3000);
+    if(finalScore > 2){
+      setTimeout(() => {
+        Speech.speak(
+          `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
+          {
+            onDone: () => {
+              setSpeekDone(true);
+              Speech.stop();
+              if (preTestScore !== null && preTestScore !== 0) {
+                setPostTestScore(finalScore);
+              }
+            },
+          }
+        );
+      }, 3000);
+    }else{
+      setTimeout(() => {
+        Speech.speak(
+          `Your final score is ${finalScore} out of ${questions.length}. Better Luck Next Time`,
+          {
+            onDone: () => {
+              setSpeekDone(true);
+              Speech.stop();
+              if (preTestScore !== null && preTestScore !== 0) {
+                setPostTestScore(finalScore);
+              }
+            },
+          }
+        );
+      }, 3000);
+    }
+    
   };
   useEffect(() => {
     if (questions.length > 0) {

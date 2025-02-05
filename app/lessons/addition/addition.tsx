@@ -13,9 +13,11 @@ import WordProblem from "./wordproblems/wordproblems";
 import SpeechComponent from "./speech/speech";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import VideoPlayer from "../video/video";
-import Test from "./practice/practice";
+// import Test from "./practice/practice";
 import * as Text from "@/context/FontContent";
 import Objectives from "../objectives/objectives";
+import * as Speech from 'expo-speech'
+import Test from "@/app/practice/practice";
 export default function Addition() {
   const [currentSection, setCurrentSection] = useState(1);
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -50,12 +52,13 @@ export default function Addition() {
       speechRef.current.stopSpeech(); 
     }
     router.push('/content/content');
+    Speech.stop()
   };
   return (
     <>
     <ImageBackground source={require('../../../assets/images/bgyellowcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {currentSection === 1 && <Objectives />} 
+        {/* {currentSection === 1 && <Objectives />} 
         {currentSection === 2 && (
           <>
             <Text.TextBold style={styles.subtitle}>Watch and Sing the Addition Song</Text.TextBold>
@@ -77,11 +80,10 @@ export default function Addition() {
         {currentSection === 10 && <WordProblem />}
         {currentSection === 11 && (
           <>
-            {/* <Text.TextBold style={styles.subtitle}>Practice What You Have Learned</Text.TextBold> */}
             <Test />
           </>
-        )}
-      {/* <Test/> */}
+        )} */}
+     <Test subject="addition"/>
       </ScrollView>
     </ImageBackground>
     <ImageBackground source={require('../../../assets/images/bgyellowbt.png')} style={styles.fixedButtonContainer}>

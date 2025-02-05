@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     backdropFilter: "blur(10px)",
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.3)",
+    borderColor: "rgba(25, 42, 236, 0.3)",
+    
   },
   title: {
     fontSize: 24,
@@ -25,10 +26,13 @@ const styles = StyleSheet.create({
   },
   question: {
     fontSize: 30,
-    marginBottom: 20,
     textAlign: "center",
-    color: "black",
+    color: "#38bfe7",
     fontWeight: "600",
+    borderWidth: 12,
+    borderColor: "#38bfe7",
+    padding: 10,
+    borderRadius: 10
   },
   optionsContainer: {
     width: "100%",
@@ -54,8 +58,8 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   optionText: {
-    fontSize: 18,
-    color: "#212121",
+    fontSize: 40,
+    color: "#fff",
     textAlign: "center",
   },
   score: {

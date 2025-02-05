@@ -7,6 +7,7 @@ import * as Text from "@/context/FontContent";
 import Objectives from "../objectives/objectives";
 import SpeechComponent from "./speech/speech";
 import Introduction from "./introduction/introduction";
+import Test from "@/app/practice/practice";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -47,8 +48,9 @@ export default function Subtraction() {
     <>
      <ImageBackground source={require('../../../assets/images/bluebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      {currentSection === 1 && <Objectives />} 
-      {currentSection === 2 && <Introduction />} 
+      {/* {currentSection === 1 && <Objectives />} 
+      {currentSection === 2 && <Introduction />}  */}
+      <Test subject="division"/>
       </ScrollView>
       
     </ImageBackground>

@@ -13,8 +13,9 @@ import WoRegroup from "./methods/woregroup/woregroup";
 import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
 import WordProblem from "./wordproblems/wordproblems";
-import Test from "./practice/practice";
+// import Test from "./practice/practice";
 import * as Text from "@/context/FontContent";
+import Test from "@/app/practice/practice";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -55,7 +56,7 @@ export default function Subtraction() {
     <>
      <ImageBackground source={require('../../../assets/images/greenbgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      {currentSection === 1 && <Objectives />} 
+      {/* {currentSection === 1 && <Objectives />} 
         {currentSection === 2 && (
           <>
             <Text.TextBold style={styles.subtitle}>Watch and Sing the Subtraction Song</Text.TextBold>
@@ -79,7 +80,8 @@ export default function Subtraction() {
           <>
             <Test />
           </>
-        )}
+        )} */}
+        <Test subject="subtraction"/>
       </ScrollView>
       
     </ImageBackground>

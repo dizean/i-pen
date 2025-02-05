@@ -23,13 +23,16 @@ interface Question {
   correctAnswer: number;
   options: number[];
 }
-export default function Test() {
-  const [currentPractice, setCurrentPractice] = useState<"addition" | "line">(
-    "addition"
-  );
+interface SubjectProp {
+  subject: string
+}
+export default function Test({ subject }: SubjectProp) {
+  const [currentPractice, setCurrentPractice] = useState<string>(subject);
+  console.log(currentPractice)
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const {grade}= useUser()
+  const {grade}= useUser();
+  const [lineOperation, setLineOperation] = useState('')
   const generateQuestions = (count: number) => {
     const questions = [];
     for (let i = 0; i < count; i++) {
@@ -64,7 +67,75 @@ export default function Test() {
         console.error("Grade is null");
         continue;
       }
-      const correctAnswer = num1 + num2;
+      let correctAnswer: number;
+      let operation = "";
+      switch (subject) {
+        case "addition":
+          correctAnswer = num1 + num2;
+          operation = "+"
+          break;
+        case "subtraction":
+          if (num2 > num1) {
+            [num1, num2] = [num2, num1];
+          }
+          correctAnswer = num1 - num2;
+          operation = "-"
+          break;
+        case "multiplication":
+          switch (+grade) {
+            case 3:
+              num1 = Math.floor(Math.random() * 5) + 1;
+              num2 = Math.floor(Math.random() * 5) + 1;
+              break;
+            case 4:
+              num1 = Math.floor(Math.random() * 6) + 5;
+              num2 = Math.floor(Math.random() * 6) + 5;
+              break;
+            case 5:
+              num1 = Math.floor(Math.random() * 11) + 10;
+              num2 = Math.floor(Math.random() * 6) + 5;
+              break;
+            case 6:
+              num1 = Math.floor(Math.random() * 16) + 15;
+              num2 = Math.floor(Math.random() * 11) + 10;
+              break;
+          }
+          num1 = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+          num2 = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+          correctAnswer = num1 * num2;
+          operation = "*"
+          break;
+        case "division":
+          switch (+grade) {
+            case 4:
+              num2 = Math.floor(Math.random() * 10 + 1);
+              num1 = num2 * Math.floor(Math.random() * 5 + 1);
+              if (num1 > 40) {
+                num1 = 40;
+              }
+              break;
+            case 5:
+              num2 = Math.floor(Math.random() * 10) + 5;
+              num1 = num2 * (Math.floor(Math.random() * 10) + 1);
+              if (num1 > 80) {
+                num1 = 80;
+              }
+              break;
+            case 6:
+              num2 = Math.floor(Math.random() * (20 - 8 + 1)) + 8;
+              num1 = num2 * Math.floor(Math.random() * 15 + 1);
+              if (num1 > 100) {
+                num1 = 100;
+              }
+              break;
+          }
+          correctAnswer = num1 / num2;
+          operation = "/"
+          break;
+        default:
+          correctAnswer = 0;
+      }
+      setLineOperation(operation)
       const options = new Set<number>();
       options.add(correctAnswer);
       while (options.size < 4) {
@@ -76,7 +147,7 @@ export default function Test() {
         }
       }
       questions.push({
-        question: `What is ${num1} + ${num2}?`,
+        question: `What is ${num1} ${operation} ${num2}?`,
         correctAnswer,
         options: Array.from(options).sort(() => Math.random() - 0.5),
       });
@@ -113,10 +184,10 @@ export default function Test() {
   const [isTimerPaused, setIsTimerPaused] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
-  const beepSound = require("../../../../assets/audio/beep.mp3");
-  const wrongSound = require("../../../../assets/audio/wrong.mp3");
-  const correctSound = require("../../../../assets/audio/correct.mp3");
-  const cheerSound = require("../../../../assets/audio/cheer.mp3");
+  const beepSound = require("../../assets/audio/beep.mp3");
+  const wrongSound = require("../../assets/audio/wrong.mp3");
+  const correctSound = require("../../assets/audio/correct.mp3");
+  const cheerSound = require("../../assets/audio/cheer.mp3");
   useEffect(() => {
     const questions = generateQuestions(7);
     setQuestions(questions);
@@ -139,7 +210,7 @@ export default function Test() {
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-    if (currentPractice === "addition") {
+    if (currentPractice === subject) {
       const currentQuestionData = questionss[currentQuestion];
       setCorrectAnswer(currentQuestionData.correctAnswer);
       playWrongSound(String(currentQuestionData.correctAnswer), 0);
@@ -229,24 +300,49 @@ export default function Test() {
       setIsProcessing(false);
     }, 2600);
   };
-
+  
   const handleNumberLineSelection = (number: number) => {
     if (isProcessing) return;
-    const { startNumber, steps } = problems[currentProblemIndex];
-
+    let { startNumber, steps } = problems[currentProblemIndex];
+  
     if (currentSelection === null) {
       if (number === startNumber) {
         setCurrentSelection(startNumber);
-      } else {
       }
     } else {
-      const expectedAnswer = startNumber + steps;
+      let expectedAnswer: number;
+      switch (subject) {
+        case "addition":
+          expectedAnswer = startNumber + steps;
+          break;
+        case "subtraction":
+          if (steps > startNumber) {
+            [startNumber, steps] = [steps, startNumber];
+          }
+          expectedAnswer = startNumber - steps;
+          break;  
+        case "multiplication":
+          expectedAnswer = startNumber * steps;
+          expectedAnswer = Math.min(Math.max(expectedAnswer, 1), 20);
+          break;
+        case "division":
+          if (startNumber % steps === 0) { 
+            expectedAnswer = startNumber / steps;
+          } else {
+            steps = Math.floor(startNumber / 2);
+            expectedAnswer = startNumber / steps;
+          }
+          expectedAnswer = Math.min(Math.max(expectedAnswer, 1), 20);
+          break;
+        default:
+          expectedAnswer = 0;
+      }
       setIsAnswering(true);
       setIsTimerPaused(false);
       setCurrentSecondSelection(number);
       setCorrectAnswer(expectedAnswer);
       setSecondSelectionCorrect(number === expectedAnswer);
-
+  
       if (number === expectedAnswer) {
         setScore((prev) => {
           const newScore = prev + 1;
@@ -262,11 +358,13 @@ export default function Test() {
         playWrongSound(String(expectedAnswer), currentSecondSelection);
         setIsTimerPaused(true);
       }
+  
       setTimeout(() => {
         moveToNextNumberLineQuestion();
       }, 1500);
     }
   };
+  
 
   const moveToNextNumberLineQuestion = () => {
     if (currentProblemIndex < problems.length - 1) {
@@ -285,7 +383,7 @@ export default function Test() {
     }
   };
 
-  if (currentPractice === "addition") {
+  if (currentPractice === subject) {
     const currentQuestionData = questionss[currentQuestion];
     if (!currentQuestionData) {
       return (
@@ -341,7 +439,7 @@ export default function Test() {
         Select the first addend then count the steps for the correct answer.
       </TextNormal>
       <TextNormal style={styles.problem}>
-        Solve: {startNumber} + {steps}
+        Solve: {startNumber} {lineOperation} {steps}
       </TextNormal>
       <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
       <View style={styles.numberLineContainer}>
@@ -378,7 +476,7 @@ export default function Test() {
             </TextNormal>
             <View style={styles.images}>
               <Image
-                source={require("../../../../assets/images/3fr.gif")}
+                source={require("../../assets/images/3fr.gif")}
                 contentFit="fill"
                 transition={1000}
                 style={[styles.gif]}
