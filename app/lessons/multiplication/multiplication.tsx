@@ -14,6 +14,7 @@ import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
 import WordProblem from "./wordproblems/wordproblems";
 import Test from "@/app/practice/practice";
+import * as Speech from 'expo-speech'
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -42,12 +43,14 @@ export default function Subtraction() {
       setIsPracticeComplete(true);
       setCurrentSection(6);
     };
-  
+    const [stopAll, setStopAll] = useState(false)
     const handleReturnHome = () => {
+      setStopAll(true)
       if (speechRef.current) {
         speechRef.current.stopSpeech(); 
       }
       router.push('/content/content');
+      
     };
 
   return (
@@ -55,23 +58,14 @@ export default function Subtraction() {
      <ImageBackground source={require('../../../assets/images/purplebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {currentSection === 1 && <Objectives />} 
-      {currentSection === 2 && (
-          <>
-            <Text.TextBold style={styles.subtitle}>Watch and Sing the Subtraction Song</Text.TextBold>
-            <VideoPlayer />
-          </>
-        )}
+      {currentSection === 2 &&<VideoPlayer />}
       {currentSection === 3 && <Introduction />} 
       {currentSection === 4 && <Parts />} 
       {currentSection === 5 && <WoRegroup />} 
       {currentSection === 6 && <WRegroup />} 
       {currentSection === 7 && <Line />}  
       {currentSection === 8 && <WordProblem />} 
-      {currentSection === 9 && (
-          <>
-           <Test subject="multiplication"/>
-          </>
-        )} 
+      {currentSection === 9 && <Test subject="multiplication" stop={stopAll}/>} 
       </ScrollView>
       
     </ImageBackground>

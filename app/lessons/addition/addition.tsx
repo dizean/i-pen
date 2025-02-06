@@ -47,42 +47,30 @@ export default function Addition() {
     setCurrentSection(6);
   };
 
-  const handleReturnHome = () => {
-    if (speechRef.current) {
-      speechRef.current.stopSpeech(); 
-    }
-    router.push('/content/content');
-    Speech.stop()
-  };
+  const [stopAll, setStopAll] = useState(false)
+      const handleReturnHome = () => {
+        setStopAll(true)
+        if (speechRef.current) {
+          speechRef.current.stopSpeech(); 
+        }
+        router.push('/content/content');
+        
+      };
   return (
     <>
     <ImageBackground source={require('../../../assets/images/bgyellowcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {currentSection === 1 && <Objectives />} 
-        {currentSection === 2 && (
-          <>
-            <Text.TextBold style={styles.subtitle}>Watch and Sing the Addition Song</Text.TextBold>
-            <VideoPlayer />
-          </>
-        )}
+        {currentSection === 2 && <VideoPlayer />}
         {currentSection === 3 && <Introduction />}
         {currentSection === 4 && <Parts />}
-        {currentSection === 5 && (
-          <>
-            <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
-            <Examples onComplete={handlePracticeComplete} />
-          </>
-        )}
+        {currentSection === 5 && <Examples onComplete={handlePracticeComplete} />}
         {currentSection === 6 && <WoRegroup />}
         {currentSection === 7 && <WRegroup />}
         {currentSection === 8 && <LineAdd />}
         {currentSection === 9 && <Properties />}
         {currentSection === 10 && <WordProblem />}
-        {currentSection === 11 && (
-          <>
-           <Test subject="addition"/>
-          </>
-        )}
+        {currentSection === 11 &&<Test subject="addition" stop={stopAll}/>}
      
       </ScrollView>
     </ImageBackground>

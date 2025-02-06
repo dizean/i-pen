@@ -66,138 +66,118 @@ const SpeechComponent = forwardRef(({ currentSection }: SpeechComponentProps, re
 const getTextListForSection = (currentSection: number) => {
   switch (currentSection) {
     case 1:
-      return ["Objectives of Addition",
+      return ["Objectives of multiplication",
         `At the end of this lesson, you should be able to:`,
-        `Develop skills to perform addition of numbers
+        `Develop skills to perform multiplication of numbers
         using various methods and strategies with the aid of computer-assisted tools.`
       ];
       case 2:
-        return ["Together, Let us SIng the addition song"
+        return ["Together, Let us SIng the multiplication song"
         ];
     case 3:
       return [
-       "Introduction to Addition",
-      "What is Addition?",
-      `Addition is the process of adding two or more items together.
-      Addition in Math is the method of calculating the sum of two or more numbers.`,
-      "Addition symbol",
-      `The addition symbol consists of one horizontal line and one vertical line.
-      It is also known as the addition sign or the plus sign.`,
+       "Introduction to multiplication",
+      "What is multiplication?",
+      `In math, multiplication is the method of finding the product of two or more numbers. 
+     It is a primary arithmetic operation that is used quite often in real life. 
+      Multiplication is used when we need to combine groups of equal sizes.
+    `,
+    `Multiplication is an operation that represents the basic idea of repeated addition of the same number. 
+    Multiplication is used to simplify the task of repeated addition of the same number.
+`,
+      "multiplication symbol",
+      `The multiplication symbol is one of the commonly used math symbols. 
+      Apart from the cross symbol, multiplication is also denoted by the mid-line dot operator, 
+      and by the asterisk sign 
+      .`,
       ];
     case 4:
-      return ["Parts of Addition",
-        `Addends`,
-        `The numbers that are added together are known as the addends.`,
-        `Addition Symbol`,
-        `There is the addition symbol (+), which is placed between the addends`,
-        `Lastly, The Sum`,
-        `The final result obtained after adding the addends is known as the sum.`,
-        
-      ];
+      return [
+        `The multiplication formula`,
+          `The multiplication formula is expressed as,Multiplicand times Multiplier = Product, `,
+          `where in 7 times 5 = 35, 7 is the Multiplicand`,
+          `Multiplicand is The first number (factor).`,
+          `5 is the Multiplier`,
+          `Multiplier is The second number (factor).`,
+          `35 is the Product`,
+          `Product is The final result after multiplying the multiplicand and multiplier.`,
+          `And the Product symbol which connects the entire expression`,
+          ];
     case 5:
-      return ["Let us Practice Adding",
-        'Choose the correct answer'
-      ];
+        return [
+            "Methods in Solving multiplication Problem",
+            "multiplication Without Regrouping",
+           `Multiplication of two numbers without regrouping involves smaller numbers where there is no need to take a carry-over to the next higher place value.`,
+            "Example:",
+            "Multiply 3014 by 2.",
+            "Solution:",
+            "Let us multiply 3014 by 2 using the steps given below and try to relate them with the following figure.",
+            "Step 1: Start with the digit in ones place. (2 times 4 = 8)",
+            "Step 2: Multiply 2 with the digit in tens place. (2 times 1 = 2)",
+            "Step 3: Now, multiply 2 with the digit in hundreds place. (2 times 0 = 0)",
+            "Step 4: Now multiply 2 with the digit in thousands place. (2 times 3 = 6)",
+            "Step 6: Hence, 3014 times 2 = 6028."];
     case 6:
         return [
-            "Methods in Solving Addition Problem",
-            "Addition Without Regrouping",
-            "The addition in which the sum of the digits is less than or equal to 9 in each column is called addition without regrouping.",
-            "Let us understand how to add two or more numbers without regrouping with the help of an example.",
+            "multiplication With Regrouping",
+            "Multiplication of more than two numbers with regrouping involves numbers with a 2-digit product.",
             "Example:",
-            "Add 11234 and 21123",
+            "Multiply 2468 with 8",
             "Solution:",
-            "We will use the following given steps and try to relate them with the following figure.",
-            "Step 1: Start with the digits in the ones (O) column. (4 + 3 = 7)",
-            "Step 2: Move to the digits in the tens (T) column. (3 + 2 = 5)",
-            "Step 3: Now add the digits in the hundreds (H) column. (2 + 1 = 3)",
-            "Step 4: After this, add the digits in the thousands (Th) column. (1 + 1 = 2)",
-            "Step 5: Finally, add the digits in the ten thousands (T-th) column. (1 + 2 = 3)",
-            "Step 6: Hence, 11234 + 21123 = 32357"];
+            "Let us multiply 2468 by 8 using the steps given below and try to relate them with the following figure.",
+            "Step 1:",
+            `Start with the digit in ones place, that is, 8 times 8 = 64 ones which means 6 tens 4 ones. 
+            Now, carry 6 tens to the tens column.`,
+            "Step 2:",
+           `Multiply 8 with the digit in the tens place, that is, 8 times 6 = 48 tens. 
+           Now, we will add this to the carry-over. This means, 48 + 6 (carry-over from step 1) = 54. 
+           Carry 5 to the hundreds column.`,
+            "Step 3:",
+            `Multiply 8 with the digit in the hundreds place, that is, 8 times 4 = 32 hundreds. 
+            Now, let us add this to the carry-over from the previous step. 
+            This means, 32 + 5 (carry-over from step 2) = 37. We will again carry 3 to thousands column.`,
+            "Step 4:",
+            `Multiply 8 with the digit in the thousands place, that is, 8 times 2 = 16 thousands. 
+            So, let us again add this to the carry-over, that is, 16 + 3 (carry-over from step 3) = 19`,
+            "Step 5:",
+            "Therefore, the product of 2468 times 8 = 19744."];
     case 7:
         return [
-            "Addition With Regrouping",
-            "While adding numbers, if the sum of the addends is greater than 9 in any of the columns, we regroup this sum into tens and ones. Then we carry over the tens digit of the sum to the preceding column and write the ones digit of the sum in that particular column.",
-            "Let us understand how to add two or more numbers by regrouping with the help of an example.",
+          "Number Line multiplication",
+            "Multiplication on a number line means to apply the multiplication operation on a given set of numbers through a number line.",
             "Example:",
-            "Add 3475 and 2865",
+            "Multiply 3 by 5 using a number line.",
             "Solution:",
-            "We will use the following given steps and try to relate them with the following figure.",
-            "Step 1:",
-            "Start with the digits in the ones (O) place.",
-            "(5 + 5 = 10).",
-            "Here the sum is 10. The tens digit of the sum, that is, 1, will be carried to the preceding column.",
-            "Step 2:",
-            "Add the digits in the tens (T) column along with the carryover 1.",
-            "1 (carry-over) + 7 + 6 = 14.",
-            "Here the sum is 14. The tens digit of the sum, that is, 1, will be carried to the hundreds column.",
-            "Step 3:",
-            "Now, add the digits in the hundreds (H) place along with the carryover digit 1.",
-            "1 (carry-over) + 4 + 8 = 13.",
-            "Here the sum is 13. The tens digit of the sum, that is, 1, will be carried to the thousands column.",
-            "Step 4:",
-            "Now, add the digits in the thousands place (Th) along with the carryover digit 1.",
-            "1 (carry-over) + 3 + 2 = 6.",
-            "Step 5:",
-            "Therefore, the sum of 3475 + 2865 is 6340."];
+           `Observe the following number line to see the working of 3 by 5 = 15. 
+           We will start from 0 and move towards the right of the number line, we will form 3 groups of 5 equal intervals. 
+           This will take us to 15.`,
+            `The above number line shows 3 times 5 is 15. 
+            The representation can also be written as 5 + 5 + 5 = 15. The multiplication statement is expressed as, 3 times 5 = 15.`
+        ];
     case 8:
         return [
-          "Number Line Addition",
-            "Another way to add numbers is with the help of number lines.",
-            "Let us understand the addition on a number line with the help of an example and the number line given below.",
-            "Example:",
-            "Add 10 and 3",
-            "Solution:",
-            "We start by marking the number 10 on the number line. When we add using a number line, we count by moving one number at a time to the right of the number.",
-            "Since we are adding 10 and 3, we will move 3 steps to the right. This brings us to 13.",
-            "Hence, 10 + 3 = 13."  
-        ];
-    case 9:
-        return [
-            "Properties of Addition",
-            "Commutative Property",
-            "According to this property, the sum of two or more addends remains the same irrespective of the order of the addends.",
+            "Word Problems in multiplication",
+            "Multiplication word problems can be easily solved by carefully observing the situation and identifying the solution.",
             "Example :",
-            "8 + 7 = 7 + 8 = 15.",
-            "Associative Property",
-            "According to this property, the sum of three or more addends remains the same irrespective of the grouping of the addends.",
-            "Example :",
-            "5 + (7 + 3) = (5 + 7) + 3 = 15.",
-            "Additive Identity Property",
-            "According to this property of addition, if we add 0 to any number, the resultant sum is always the actual number.",
-            "Example :",
-            "0 + 7 = 7."
-        ];
-    case 10:
-        return [
-            "Word Problems in Addition",
-            "The concept of the addition operation is used in our day-to-day activities. We should carefully observe the situation and identify the solution using the tips and tricks that follows addition.",
-            "Let us understand how to solve addition word problems with the help of an interesting example.",
-            "Example :",
-            "A soccer match had 4535 spectators in the first row and 2332 spectators in the second row. Using the concept of addition find the total number of spectators present in the match.",
+            "A box contains 245 fruits. Find the number of fruits in 4 such boxes using the multiplication formula.",
             "Solution :",
-            "The number of spectators in the first row is 4545.",
-            "The number of spectators in the second row is 2332.",
-            "We can get the total number of spectators if we add the given number of spectators in the two rows.",
-            "Here 4545 and 2332 are the addends.",
-            "Let us find the total number of spectators by adding these two numbers using the following steps.",
+            `To solve such multiplication word problems the easiest way is to note down the given parameters and then solve.`,
+            "The total number of fruits in one box = 245",
+            "The number of boxes = 4",
+            "Total number of fruits in 4 such boxes = 245 times 4",
+            "Let us multiply 245 by 4 using the steps given below and try to relate them with the following figure.",
             "Step 1:",
-            "Add the digits in the ones (O) place.",
-            "(5 + 2 = 7)",
+            "Start with the digit in ones place. Multiply 4 by 5 = 20. Now carry 2 to the tens column.",
             "Step 2:",
-            "Add the digits in the tens (T) place.",
-            "(3 + 3 = 6)",
+            `Multiply 4 with the digit in tens place, that is, 4 by 4 = 16. 
+            Now, add this to the carry-over from the previous step. 16 + 2 (carry-over from step 1) = 18. 
+            From this, carry 1 to the hundreds column.`,
             "Step 3:",
-            "Add the digits in the hundreds (H) place.",
-            "(5 + 3 = 8)",
+            `Multiply 4 with the digit in hundreds place, 4 by 2 = 8 hundreds. 8 + 1 (carry-over from step 2) = 9.`,
             "Step 4:",
-            "Add the digits in the thousands (Th) place.",
-            "(4 + 2 = 6)",
-            "Step 5:",
-            "4535 + 2332 = 6867",
-            "Therefore, the total number of spectators present in the match is 6867."
+            "Therefore, the product of 245 times 4 = 980.",
             ];
-    case 11:
+    case 9:
       return [
           "Let us Practice What You have LEarned.",
           ];

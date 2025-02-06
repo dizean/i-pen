@@ -32,8 +32,9 @@ export default function Test() {
   const correctSound = require("../../assets/audio/correct.mp3");
   const cheerSound = require("../../assets/audio/cheer.mp3");
   useEffect(() => {
-    const generatedQuestions = generateQuestions(3);
+    const generatedQuestions = generateQuestions(15);
     setQuestions(generatedQuestions);
+    console.log(generatedQuestions)
   }, []);
   useEffect(() => {
     if (isTimerPaused || timer <= 0) {
@@ -52,7 +53,8 @@ export default function Test() {
 
   const generateQuestions = (count: number): Question[] => {
     const questions: Question[] = [];
-    for (let i = 0; i < count; i++) {
+    const questionSet = new Set<string>();
+    while (questions.length < count) {
       let num1: number = 0;
       let num2: number = 0;
       let operations: string[] = [];
@@ -76,12 +78,12 @@ export default function Test() {
           case 5:
             num1 = Math.floor(Math.random() * 31) + 20;
             num2 = Math.floor(Math.random() * 31) + 20;
-            operations = ["+", "-", "*", "/"];
+            operations = [ "/"];
             break;
           case 6:
             num1 = Math.floor(Math.random() * 51) + 30;
             num2 = Math.floor(Math.random() * 51) + 30;
-            operations = ["+", "-", "*", "/"];
+            operations = [ "/"];
             break;
           default:
             throw new Error("Invalid grade level");
@@ -125,22 +127,28 @@ export default function Test() {
       } else {
         switch (+grade) {
           case 4:
-            num2 = Math.floor(Math.random() * 10 + 1);
-            num1 = num2 * Math.floor(Math.random() * 5 + 1);
+            while (num1 % num2 !== 0) {
+              num1 = Math.floor(Math.random() * 15) + 1;
+              num2 = Math.floor(Math.random() * 5) + 2;
+            }
             if (num1 > 40) {
               num1 = 40;
             }
             break;
           case 5:
-            num2 = Math.floor(Math.random() * 10) + 5;
-            num1 = num2 * (Math.floor(Math.random() * 10) + 1);
+            while (num1 % num2 !== 0) {
+              num1 = Math.floor(Math.random() * 30) + 10;
+              num2 = Math.floor(Math.random() * 10) + 5;
+            }
             if (num1 > 80) {
               num1 = 80;
             }
             break;
           case 6:
-            num2 = Math.floor(Math.random() * (20 - 8 + 1)) + 8;
-            num1 = num2 * Math.floor(Math.random() * 15 + 1);
+            while (num1 % num2 !== 0) {
+              num1 = Math.floor(Math.random() * 50) + 20;
+              num2 = Math.floor(Math.random() * 15) + 5;
+            }
             if (num1 > 100) {
               num1 = 100;
             }
@@ -148,6 +156,13 @@ export default function Test() {
         }
         correctAnswer = num1 / num2;
       }
+      const questionText = `${num1} ${operation} ${num2}`;
+
+    if (questionSet.has(questionText)) {
+      continue; // Skip duplicate question
+    }
+    
+    questionSet.add(questionText);
       const options = new Set<number>();
       options.add(correctAnswer);
       while (options.size < 4) {

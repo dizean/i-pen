@@ -69,6 +69,12 @@ export default function ContentPage() {
       route: '/test/test',
       requiredGrade: "2",
     },
+    {
+      topic: "",
+      title: "Select Grade",
+      route: '/selection/selection',
+      requiredGrade: "2",
+    },
   ];
   const images = [
     require("../../assets/images/lion.png"),

@@ -131,14 +131,15 @@ export default function Practice({ onComplete }: { onComplete: () => void }) {
   }, [isPracticeComplete]);
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <View style={styles.problem}>
-        <View style={styles.problem}>
+      <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
+      <View style={styles.problemContainer}>
+        <View>
           {renderNumberImage(currentProblem.num1, currentProblem.image1)}
         </View>
         <Text.TextMedium style={styles.problemText}>
           {operation}
         </Text.TextMedium>
-        <View style={styles.problem}>
+        <View >
           {renderNumberImage(currentProblem.num2, currentProblem.image2)}
         </View>
       </View>
@@ -207,9 +208,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.3)",
   },
-  problem: {},
+  problemContainer: {
+    height: '50%',
+    width: '80%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   problemText: {
-    fontSize: 30,
+    fontSize: 50,
     textAlign: "center",
     color: "#5d4037",
     padding: 10,
@@ -264,5 +271,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1a237e",
     marginTop: 10,
+  },subtitle: {
+    fontSize: 40,
+    paddingVertical: 20
   },
 });

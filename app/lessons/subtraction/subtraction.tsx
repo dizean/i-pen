@@ -45,11 +45,14 @@ export default function Subtraction() {
       setCurrentSection(6);
     };
   
+    const [stopAll, setStopAll] = useState(false)
     const handleReturnHome = () => {
+      setStopAll(true)
       if (speechRef.current) {
         speechRef.current.stopSpeech(); 
       }
       router.push('/content/content');
+      
     };
 
   return (
@@ -57,30 +60,15 @@ export default function Subtraction() {
      <ImageBackground source={require('../../../assets/images/greenbgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {currentSection === 1 && <Objectives />} 
-        {currentSection === 2 && (
-          <>
-            <Text.TextBold style={styles.subtitle}>Watch and Sing the Subtraction Song</Text.TextBold>
-            <VideoPlayer />
-          </>
-        )}
+      {currentSection === 2 && <VideoPlayer />}
       {currentSection === 3 && <Introduction />} 
       {currentSection === 4 && <Parts />} 
-      {currentSection === 5 && (
-          <>
-            <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
-            <Examples onComplete={handlePracticeComplete} />
-          </>
-        )}
-
+      {currentSection === 5 && <Examples onComplete={handlePracticeComplete} />}
       {currentSection === 6 && <WoRegroup />} 
       {currentSection === 7 && <WRegroup />} 
       {currentSection === 8 && <Line />} 
       {currentSection === 9 && <WordProblem />} 
-      {currentSection === 10 && (
-          <>
-           <Test subject="subtraction"/>
-          </>
-        )}
+      {currentSection === 10 && <Test subject="subtraction" stop={stopAll}/>}
         
       </ScrollView>
       

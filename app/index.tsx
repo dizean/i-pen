@@ -13,9 +13,9 @@ import { TextBold, TextNormal } from "@/context/FontContent";
 import { useFonts } from "expo-font";
 
 export default function App() {
-// useEffect(() => {
-//     speak();
-//   }, []);
+useEffect(() => {
+    speak();
+  }, []);
 const [fontsLoaded] = useFonts({
   ComicSans: require("../assets/fonts/Ldfcomicsans-jj7l.ttf"),
   ComicSansLight: require("../assets/fonts/Ldfcomicsanslight-6dZo.ttf"),

@@ -8,6 +8,8 @@ import Objectives from "../objectives/objectives";
 import SpeechComponent from "./speech/speech";
 import Introduction from "./introduction/introduction";
 import Test from "@/app/practice/practice";
+import Parts from "./parts/parts";
+import * as Speech from 'expo-speech'
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -18,7 +20,7 @@ export default function Subtraction() {
       if (speechRef.current) {
         speechRef.current.stopSpeech();
       }
-      if (currentSection < 9) {
+      if (currentSection < 4) {
         setCurrentSection(currentSection + 1);
       }
     };
@@ -36,21 +38,23 @@ export default function Subtraction() {
       setIsPracticeComplete(true);
       setCurrentSection(6);
     };
-  
+    const [stopAll, setStopAll] = useState(false)
     const handleReturnHome = () => {
+      setStopAll(true)
       if (speechRef.current) {
         speechRef.current.stopSpeech(); 
       }
       router.push('/content/content');
+      
     };
-
   return (
     <>
      <ImageBackground source={require('../../../assets/images/bluebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {currentSection === 1 && <Objectives />} 
       {currentSection === 2 && <Introduction />} 
-      {currentSection === 3 && <Test subject="division"/>} 
+      {currentSection === 3 && <Parts />} 
+      {currentSection === 4 && <Test subject="division" stop={stopAll}/>} 
       
       </ScrollView>
       
@@ -73,7 +77,7 @@ export default function Subtraction() {
           currentSection={currentSection}
           ref={speechRef} 
         />
-        {currentSection !== 9 ? (
+        {currentSection !== 4 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handleNext}

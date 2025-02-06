@@ -21,7 +21,7 @@ export default function PreTest() {
       return;
     }
     setUser(nameInput.trim(), grade);
-    router.push("/content/content");
+    router.push("/test/test");
   };
   const rotateValue = useRef(new Animated.Value(0)).current;
   useEffect(() => {
