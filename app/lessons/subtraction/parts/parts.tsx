@@ -46,7 +46,6 @@ const Parts = () => {
       <Image
         style={{
           width: "100%",
-          resizeMode: "contain",
           height: 100,
           marginVertical: 10,
         }}

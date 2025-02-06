@@ -28,7 +28,6 @@ interface SubjectProp {
 }
 export default function Test({ subject }: SubjectProp) {
   const [currentPractice, setCurrentPractice] = useState<string>(subject);
-  console.log(currentPractice)
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const {grade}= useUser();
@@ -157,8 +156,12 @@ export default function Test({ subject }: SubjectProp) {
   const generateProblems = () => {
     const problems = [];
     for (let i = 0; i < 3; i++) {
-      const startNumber = Math.floor(Math.random() * 15) + 1;
-      const steps = Math.floor(Math.random() * 5) + 1;
+      let startNumber = Math.floor(Math.random() * 15) + 1;
+      let steps = Math.floor(Math.random() * 5) + 1;
+      while (startNumber % steps !== 0) {
+        startNumber = Math.floor(Math.random() * 15) + 1;
+        steps = Math.floor(Math.random() * 5) + 1;
+      }
       problems.push({ startNumber, steps });
     }
     return problems;
@@ -426,7 +429,7 @@ export default function Test({ subject }: SubjectProp) {
     );
   }
 
-  const { startNumber, steps } = problems[currentProblemIndex];
+  let { startNumber, steps } = problems[currentProblemIndex];
   return (
     <View style={styles.container}>
       <TextBold style={[styles.title, { fontSize: 40 }]}>

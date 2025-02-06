@@ -5,9 +5,11 @@ type UserContextType = {
   grade: string | null;
   preTestScore: number | null;
   postTestScore: number | null;
+  selectedImage: any;
   setUser: (username: string | null, grade: string | null) => void;
   setPreTestScore: (score: number) => void;
   setPostTestScore: (score: number) => void;
+  setSelectedImage: (selectedImage: any) => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -17,6 +19,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [grade, setGrade] = useState<string | null>(null);
   const [preTestScore, setPreTestScoreState] = useState<number | null>(null);
   const [postTestScore, setPostTestScoreState] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
 
   const setUser = (username: string | null, grade: string | null) => {
     setUsername(username);
@@ -38,9 +41,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         grade,
         preTestScore,
         postTestScore,
+        selectedImage,
         setUser,
         setPreTestScore,
         setPostTestScore,
+        setSelectedImage(selectedImage) {
+          
+        },
       }}
     >
       {children}

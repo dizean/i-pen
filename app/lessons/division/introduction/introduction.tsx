@@ -27,6 +27,7 @@ const Introduction = () => {
       used in Anglophone countries to indicate the operation of division.
       </Text.TextNormal>
       <Image
+        contentFit='contain'
         source={require("../../../../assets/images/divided.png")}
         style={styles.image}
       />

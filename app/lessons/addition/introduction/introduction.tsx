@@ -34,6 +34,7 @@ const Introduction = () => {
         It is also known as the addition sign or the plus sign.
       </Text.TextNormal>
       <Image
+        contentFit='contain'
         source={require("../../../../assets/images/plus.png")}
         style={[styles.image, {height:100}]}
       />

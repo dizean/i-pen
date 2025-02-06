@@ -23,7 +23,14 @@ export default function ContentPage() {
     grade,
     preTestScore,setPreTestScore,
     postTestScore,
+    selectedImage,setSelectedImage
   } = useUser();
+  useEffect(() => {
+    if (!selectedImage) {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      setSelectedImage(images[randomIndex]);
+    }
+  }, []);
   const effectiveGrade = grade ?? "0";
   useEffect(()=>{
     if(preTestScore === 0 || preTestScore ===null){

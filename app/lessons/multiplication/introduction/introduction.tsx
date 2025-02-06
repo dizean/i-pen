@@ -43,6 +43,7 @@ const Introduction = () => {
       <Text.TextBold> (*) </Text.TextBold>.
       </Text.TextNormal>
       <Image
+        contentFit='contain'
         source={require("../../../../assets/images/multiply.png")}
         style={[styles.image, {height:100}]}
       />

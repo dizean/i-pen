@@ -54,7 +54,7 @@ export default function Subtraction() {
     <>
      <ImageBackground source={require('../../../assets/images/purplebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      {/* {currentSection === 1 && <Objectives />} 
+      {currentSection === 1 && <Objectives />} 
       {currentSection === 2 && (
           <>
             <Text.TextBold style={styles.subtitle}>Watch and Sing the Subtraction Song</Text.TextBold>
@@ -69,10 +69,9 @@ export default function Subtraction() {
       {currentSection === 8 && <WordProblem />} 
       {currentSection === 9 && (
           <>
-            <Test />
+           <Test subject="multiplication"/>
           </>
-        )}  */}
-        <Test subject="multiplication"/>
+        )} 
       </ScrollView>
       
     </ImageBackground>

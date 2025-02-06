@@ -35,6 +35,7 @@ const Introduction = () => {
       The subtraction symbol is called minus.
       </Text.TextNormal>
       <Image
+        contentFit='contain'
         source={require("../../../../assets/images/minus.png")}
         style={[styles.image, {height:100}]}
       />

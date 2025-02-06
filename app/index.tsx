@@ -45,7 +45,7 @@ const [fontsLoaded] = useFonts({
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.view}>
         <Image
-            source={require("../assets/images/ipenlogo.png")}
+            source={require("../assets/images/ipenlogo2.png")}
             contentFit="contain"
             transition={1000}
             style={styles.math}
@@ -53,7 +53,7 @@ const [fontsLoaded] = useFonts({
           {/* <Text style={styles.title}>
             <Text style={styles.titleHighlight}>i</Text>-Pen
           </Text> */}
-          <TextBold style={styles.text}>Interactive Presentation for</TextBold>
+          <TextBold style={styles.text}>Interactive Program for</TextBold>
           <TextBold style={styles.text}>Enhancing Numeracy</TextBold>
           <Image
             source={require("../assets/images/math.gif")}

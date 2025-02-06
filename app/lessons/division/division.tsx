@@ -48,9 +48,10 @@ export default function Subtraction() {
     <>
      <ImageBackground source={require('../../../assets/images/bluebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      {/* {currentSection === 1 && <Objectives />} 
-      {currentSection === 2 && <Introduction />}  */}
-      <Test subject="division"/>
+      {currentSection === 1 && <Objectives />} 
+      {currentSection === 2 && <Introduction />} 
+      {currentSection === 3 && <Test subject="division"/>} 
+      
       </ScrollView>
       
     </ImageBackground>
