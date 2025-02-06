@@ -191,7 +191,6 @@ export default function Test({ subject, stop }: SubjectProp) {
   const correctSound = require("../../assets/audio/correct.mp3");
   const cheerSound = require("../../assets/audio/cheer.mp3");
   useEffect(() => {
-    console.log("Stop Prop Updated:", stop);
     if (stop) {
       setIsTimerPaused(true);
       Speech.stop();

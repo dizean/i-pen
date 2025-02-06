@@ -34,7 +34,6 @@ export default function Test() {
   useEffect(() => {
     const generatedQuestions = generateQuestions(15);
     setQuestions(generatedQuestions);
-    console.log(generatedQuestions)
   }, []);
   useEffect(() => {
     if (isTimerPaused || timer <= 0) {
