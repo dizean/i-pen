@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Modal, ImageBackground, Animated } from "react-
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRouter } from "expo-router";
-import { Audio } from "expo-av";
+import { Audio, AVPlaybackStatusSuccess } from "expo-av";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
 import { TextNormal, TextBold, TextMedium } from "@/context/FontContent";
@@ -181,8 +181,19 @@ export default function Test() {
     return questions;
   };
   const playBeepSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(beepSound);
-    await sound.playAsync();
+    try {
+      const { sound } = await Audio.Sound.createAsync(beepSound, { shouldPlay: true });
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (
+          status &&
+          (status as AVPlaybackStatusSuccess).didJustFinish
+        ) {
+          sound.unloadAsync();
+        }
+      });
+    } catch (error) {
+      console.error("Error playing correct sound:", error);
+    }
   };
   const speak = (message: string) => {
     if (grade === '2' || grade === '3'){
@@ -261,14 +272,36 @@ export default function Test() {
   };
 
   const playCorrectSound = async (answer: string) => {
-    const { sound } = await Audio.Sound.createAsync(correctSound);
-    await sound.playAsync();
-    // speak(`Correct!${answer} is the answer.`);
+    try {
+      const { sound } = await Audio.Sound.createAsync(correctSound, { shouldPlay: true });
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (
+          status &&
+          (status as AVPlaybackStatusSuccess).didJustFinish
+        ) {
+          sound.unloadAsync();
+        }
+      });
+    } catch (error) {
+      console.error("Error playing correct sound:", error);
+    }
   };
+  
 
   const playWrongSound = async (answer: string, selected: any) => {
-    const { sound } = await Audio.Sound.createAsync(wrongSound);
-    await sound.playAsync();
+    try {
+      const { sound } = await Audio.Sound.createAsync(wrongSound, { shouldPlay: true });
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (
+          status &&
+          (status as AVPlaybackStatusSuccess).didJustFinish
+        ) {
+          sound.unloadAsync();
+        }
+      });
+    } catch (error) {
+      console.error("Error playing correct sound:", error);
+    }
     // const message =
     //   selected === 0
     //     ? `Time's up! The correct answer is ${answer}.`
@@ -280,41 +313,51 @@ export default function Test() {
   const cheer = async (finalScore: number) => {
     setIsTimerPaused(true);
     setIsProcessing(true);
-    const { sound } = await Audio.Sound.createAsync(cheerSound);
-    await sound.playAsync();
-    setShowResultsModal(true);
-    if(finalScore > 2){
-      setTimeout(() => {
-        Speech.speak(
-          `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
-          {
-            onDone: () => {
-              setSpeekDone(true);
-              Speech.stop();
-              if (preTestScore !== null && preTestScore !== 0) {
-                setPostTestScore(finalScore);
-              }
-            },
-          }
-        );
-      }, 3000);
-    }else{
-      setTimeout(() => {
-        Speech.speak(
-          `Your final score is ${finalScore} out of ${questions.length}. Better Luck Next Time`,
-          {
-            onDone: () => {
-              setSpeekDone(true);
-              Speech.stop();
-              if (preTestScore !== null && preTestScore !== 0) {
-                setPostTestScore(finalScore);
-              }
-            },
-          }
-        );
-      }, 3000);
+    try {
+      const { sound } = await Audio.Sound.createAsync(cheerSound, { shouldPlay: true });
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (
+          status &&
+          (status as AVPlaybackStatusSuccess).didJustFinish
+        ) {
+          sound.unloadAsync();
+        }
+      });
+      setShowResultsModal(true);
+      if(finalScore > 2){
+        setTimeout(() => {
+          Speech.speak(
+            `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
+            {
+              onDone: () => {
+                setSpeekDone(true);
+                Speech.stop();
+                if (preTestScore !== null && preTestScore !== 0) {
+                  setPostTestScore(finalScore);
+                }
+              },
+            }
+          );
+        }, 3000);
+      }else{
+        setTimeout(() => {
+          Speech.speak(
+            `Your final score is ${finalScore} out of ${questions.length}. Better Luck Next Time`,
+            {
+              onDone: () => {
+                setSpeekDone(true);
+                Speech.stop();
+                if (preTestScore !== null && preTestScore !== 0) {
+                  setPostTestScore(finalScore);
+                }
+              },
+            }
+          );
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error playing correct sound:", error);
     }
-    
   };
   useEffect(() => {
     if (questions.length > 0) {

@@ -13,6 +13,22 @@ import { TextBold, TextNormal } from "@/context/FontContent";
 import { useFonts } from "expo-font";
 
 export default function App() {
+  useEffect(() => {
+    const fetchVoices = async () => {
+      try {
+        const availableVoices = await Speech.getAvailableVoicesAsync();
+        const englishUSVoices = availableVoices.filter(
+          (voice) => voice.language === "en-US" && voice.quality === "Enhanced"
+        );
+        console.log('voices wtfs',englishUSVoices);
+      } catch (error) {
+        console.error("Error fetching voices:", error);
+      }
+    };
+    fetchVoices();
+  }, [Speech]);
+  
+  
 useEffect(() => {
     speak();
   }, []);
@@ -28,14 +44,14 @@ const [fontsLoaded] = useFonts({
     const welcomeMessage =
       "Welcome to i-Pen! Enjoy your interactive learning experience. What are you waiting for? Let’s start learning!";
     const options = {
-      pitch: 1.8,
-      rate: 0.7,
-      volume: 1.0,
+     voice: 'en-us-x-iol-network',
+     rate: .6,
       onDone: () => setDone(true),
     };
     Speech.speak(welcomeMessage, options);
   };
-
+// en-us-x-tpf-local,en-us-x-iob-local,en-us-x-tpd-network,en-us-x-tpc-network,en-us-x-iob-network
+// en-us-x-iol-network,en-us-x-iom-network,en-us-x-iol-local
   const stopSpeaking = () => {
     Speech.stop();
     setDone(true);
