@@ -38,12 +38,14 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: RFPercentage(6),
-    textAlign: "center",
+    lineHeight: RFPercentage(6) * 1.2, // Adjust this ratio
+    textAlign: 'center',
     color: "#38bfe7",
     textShadowColor: '#fff',
-    textShadowOffset: {width:4, height:4},
+    textShadowOffset: { width: 4, height: 4}, // Reduce shadow height
     textShadowRadius: 5,
   },
+  
   image: {
     width: 200,
     height: "20%",
@@ -64,6 +66,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: RFPercentage(8),
+    lineHeight: RFPercentage(6) * 1.2, // Adjust this ratio
     textAlign: 'center',
     color: "#fff",
     textShadowColor: '#38bfe7',
