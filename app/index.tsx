@@ -3,7 +3,7 @@ import {
   ImageBackground,
   SafeAreaView,
   View,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
@@ -22,7 +22,7 @@ useEffect(() => {
     speak();
   }, []);
   const route = useRouter();
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
   const speak = () => {
     const welcomeMessage =
       "Welcome to i-Pen! Enjoy your interactive learning experience. What are you waiting for? Let’s start learning!";
@@ -47,7 +47,7 @@ useEffect(() => {
             source={require("../assets/images/ipenlogo2.png")}
             contentFit="contain"
             transition={1000}
-            style={styles.math}
+            style={styles.logo}
           />
           {/* <Text style={styles.title}>
             <Text style={styles.titleHighlight}>i</Text>-Pen

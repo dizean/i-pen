@@ -14,13 +14,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: "3%",
+    width: '100%',
+    height: '100%'
   },
   view: {
     width: "100%",
     height: '60%',
+    padding: '5%',
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 20,
-    padding: "5%",
     borderWidth: 2,
     borderColor: "rgba(0, 0, 0, 0.1)",
   },
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: RFPercentage(6),
-    lineHeight: RFPercentage(6) * 1.2, // Adjust this ratio
+    lineHeight: RFPercentage(5) * 1.2, // Adjust this ratio
     textAlign: 'center',
     color: "#38bfe7",
     textShadowColor: '#fff',
@@ -49,7 +51,6 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: "20%",
-    margin: "auto",
     objectFit: "contain",
   },
   button: {
@@ -65,17 +66,22 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   buttonText: {
-    fontSize: RFPercentage(8),
-    lineHeight: RFPercentage(6) * 1.2, // Adjust this ratio
+    fontSize: RFPercentage(6),
+    lineHeight: RFPercentage(5) * 1.2, // Adjust this ratio
     textAlign: 'center',
     color: "#fff",
     textShadowColor: '#38bfe7',
     textShadowOffset: {width:4, height:4},
     textShadowRadius: 5
   },
+  logo: {
+    width: "100%",
+    height: "45%",
+  },
   math: {
     width: "100%",
     height: "45%",
+    marginTop: '-25%'
   },
   boy: {
     width: "50%",
