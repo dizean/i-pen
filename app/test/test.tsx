@@ -8,7 +8,7 @@ import * as Speech from "expo-speech";
 import { Image } from "expo-image";
 import { Text } from "@/context/FontContent";
 import { RFPercentage } from "react-native-responsive-fontsize";
-import { updateScores } from "@/database/dbservice";
+import { getUserByName, updateScores } from "@/database/dbservice";
 interface Question {
   question: string;
   correctAnswer: number;
@@ -16,7 +16,7 @@ interface Question {
 }
 
 export default function Test() {
-  const { username, grade, preTestScore, setPreTestScore, setPostTestScore } =
+  const { username, setUser, grade, preTestScore, setPreTestScore, setPostTestScore } =
     useUser();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
@@ -369,13 +369,32 @@ export default function Test() {
       speak(questionText);
     }
   }, [currentQuestion, questions]);
-
+  const [donepretest, setDonepretest] = useState("false");
+useEffect(()=>{
+    const fetchData = async () =>{
+        try{
+          const query = await getUserByName(String(username), Number(grade));
+          setPreTestScore(query?.pretestscore ?? 0);
+          setPostTestScore(query?.posttestscore ?? 0);
+          setDonepretest(query?.pretestDone ?? "false")
+          const firstName = String(username).split(" ")[0];
+          setUser(firstName, grade)
+        }
+        catch(err){
+          console.log(err)
+        }
+    }
+    fetchData()
+  },[preTestScore,donepretest])
   const handleCloseModal = (score: number) => {
+    console.log(donepretest)
     try{
-      if (preTestScore === 0)  {
-        const insertquery = updateScores(String(username), score, 0);
-      }else{
+      if (donepretest === "true")  {
+        console.log('tapos na prestest', preTestScore)
         const insertquery = updateScores(String(username), Number(preTestScore), score);
+      }else{
+        console.log('way pa ka pretest', preTestScore)
+        const insertquery = updateScores(String(username), score, 0);
       }
       router.push({ pathname: "/content/content", params: { score } });
       setTimer(-1);

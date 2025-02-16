@@ -32,10 +32,9 @@ export default function ContentPage() {
     const fetchData = async () =>{
         try{
           const query = await getUserByName(String(username), Number(grade));
+          console.log(query)
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
-          const firstName = String(username).split(" ")[0];
-          setUser(firstName, String(4))
         }
         catch(err){
           console.log(err)

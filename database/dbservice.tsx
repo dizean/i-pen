@@ -12,11 +12,11 @@ const db = SQLite.openDatabase(
   () => console.log('Database opened'),
   (error) => console.error('Database error:', error)
 );
-db.transaction((tx) => {
-  tx.executeSql("DROP TABLE IF EXISTS Users;", [], () => {
-    console.log("Users table dropped.");
-  });
-});
+// db.transaction((tx) => {
+//   tx.executeSql("DROP TABLE IF EXISTS Users;", [], () => {
+//     console.log("Users table dropped.");
+//   });
+// });
 
 // Function to initialize the database and create tables
 export const initDatabase = () => {
@@ -72,7 +72,7 @@ export const getUserByName = (username: string, grade: number): Promise<User | n
 // Function to update pretest or posttest scores
 export const updateScores = (username: string, pretest: number, posttest: number) => {
   return new Promise((resolve, reject) => {
-    console.log(username,posttest,pretest)
+    console.log(username,pretest,posttest)
     db.transaction((tx) => {
       tx.executeSql(
         `UPDATE Users SET pretestDone = ?, pretestscore = ?, posttestscore = ? WHERE username = ?;`,

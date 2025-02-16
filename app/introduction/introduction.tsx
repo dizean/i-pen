@@ -65,7 +65,7 @@ export default function Introduction() {
     setUser(nameInput, grade)
     try {
       const existingUser = await getUserByName(nameInput, Number(grade));
-      console.log(existingUser);
+      console.log('existing user', existingUser);
       if (existingUser) {
         stopBgMusic();
         if(existingUser.pretestDone === "false"){
