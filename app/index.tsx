@@ -4,48 +4,31 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import * as Speech from "expo-speech";
 import styles from "./styles";
-import { TextBold, TextNormal } from "@/context/FontContent";
 import { useFonts } from "expo-font";
 
 export default function App() {
-  useEffect(() => {
-    const fetchVoices = async () => {
-      try {
-        const availableVoices = await Speech.getAvailableVoicesAsync();
-        const englishUSVoices = availableVoices.filter(
-          (voice) => voice.language === "en-US" && voice.quality === "Enhanced"
-        );
-        console.log('voices wtfs',englishUSVoices);
-      } catch (error) {
-        console.error("Error fetching voices:", error);
-      }
-    };
-    fetchVoices();
-  }, [Speech]);
-  
-  
+  const [fontsLoaded] = useFonts({
+    Font: require("../assets/fonts/mouse-memoirs.regular.ttf"),
+  });
 useEffect(() => {
-    speak();
-  }, []);
-const [fontsLoaded] = useFonts({
-  ComicSans: require("../assets/fonts/Ldfcomicsans-jj7l.ttf"),
-  ComicSansLight: require("../assets/fonts/Ldfcomicsanslight-6dZo.ttf"),
-  ComicSansMedium: require("../assets/fonts/Ldfcomicsanshairline-5PmL.ttf"), 
-  ComicSansBold: require("../assets/fonts/Ldfcomicsansbold-zgma.ttf"), 
-});
+  }, [fontsLoaded]);
+  // useEffect(() => {
+  //   speak();
+  // }, []);
   const route = useRouter();
   const [done, setDone] = useState(true);
   const speak = () => {
     const welcomeMessage =
       "Welcome to i-Pen! Enjoy your interactive learning experience. What are you waiting for? Let’s start learning!";
     const options = {
-     voice: 'en-us-x-iol-network',
-     rate: .6,
+     voice: 'en-us-x-iol-local',
+     rate: .9,
       onDone: () => setDone(true),
     };
     Speech.speak(welcomeMessage, options);
@@ -69,8 +52,8 @@ const [fontsLoaded] = useFonts({
           {/* <Text style={styles.title}>
             <Text style={styles.titleHighlight}>i</Text>-Pen
           </Text> */}
-          <TextBold style={styles.text}>Interactive Program for</TextBold>
-          <TextBold style={styles.text}>Enhancing Numeracy</TextBold>
+          <Text style={styles.text}>Interactive Program for Enhancing Numeracy</Text>
+          {/* <Text style={styles.text}>Enhancing Numeracy</Text> */}
           <Image
             source={require("../assets/images/math.gif")}
             contentFit="contain"
@@ -104,7 +87,7 @@ const [fontsLoaded] = useFonts({
               stopSpeaking();
             }}
           >
-            <TextBold style={styles.buttonText}>Start Learning</TextBold>
+            <Text style={styles.buttonText}>Start Learning</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>

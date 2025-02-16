@@ -1,5 +1,5 @@
 import { Dimensions, Platform, StyleSheet } from "react-native";
-
+import { RFPercentage } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -24,9 +24,12 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '100%',
-    fontSize: 35,
+    fontSize: RFPercentage(6.5),
     color: "#fff", 
-    paddingLeft: '15%',
+    paddingLeft: '14%',
+    textShadowColor: "#FDDA0D", // Border color
+    textShadowOffset: { width: 2, height: 2 }, // Position of shadow
+    textShadowRadius: 3, // Blur effect
   },
   backgroundImage: {
     flex: 1,

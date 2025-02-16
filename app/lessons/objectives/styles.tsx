@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -35,19 +36,19 @@ const styles = StyleSheet.create({
   container: {
   },
   title: {
-    fontSize: 50,
+    fontSize: RFPercentage(7),
     paddingVertical: 5
   },
   subtitle: {
-    fontSize: 40,
+    fontSize: RFPercentage(6),
     paddingVertical: 5
   },
   sectiontititle: {
-    fontSize: 25,
+    fontSize: RFPercentage(5),
     paddingVertical: 10
   },
   text: {
-    fontSize: 20,
+    fontSize: RFPercentage(4),
     lineHeight: 30,
     paddingVertical: 5
   },

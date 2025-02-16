@@ -1,14 +1,16 @@
-import { StyleSheet } from "react-native";
-
+import { Dimensions, StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
+const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    height: height,
     justifyContent: "center",
     backgroundColor: "#38bfe7",
   },
   wrapper: {
     width: "100%",
+    height: '100%',
     padding: "3%",
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     borderRadius: 10,
@@ -21,15 +23,23 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255, 255, 255, 0.3)",
   },
   title: {
-    fontSize: 24,
-    marginBottom: 20,
     textAlign: "center",
+    color: "rgb(255, 255, 255)",
+    textShadowColor: '#38bfe7',
+    textShadowOffset: {width: 5,height:3},
+    textShadowRadius: 3,
+    padding: 0,
   },
   question: {
-    fontSize: 30,
-    marginBottom: 20,
     textAlign: "center",
-    color: "black",
+    color: "rgb(255, 255, 255)",
+    borderWidth: 10,
+    borderColor: "#38bfe7",
+    padding: 10,
+    borderRadius: 10,
+    textShadowColor: '#38bfe7',
+    textShadowOffset: {width: 5,height:3},
+    textShadowRadius: 3
   },
   optionsContainer: {
     width: "100%",
@@ -55,12 +65,12 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   optionText: {
-    fontSize: 30,
-    color: "#212121",
+    fontSize: RFPercentage(8),
+    color: "#fff",
     textAlign: "center",
   },
   score: {
-    fontSize: 20,
+    fontSize: RFPercentage(4),
     textAlign: "center",
     color: "#F57F17",
   },
@@ -80,8 +90,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    width: "80%",
-    height: "60%",
+    width: "90%",
+    height: "70%",
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
@@ -100,12 +110,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   modalTitle: {
-    fontSize: 34,
-    marginBottom: 10,
+    fontSize: RFPercentage(5),
   },
   modalText: {
-    fontSize: 24,
-    marginBottom: 20,
+    fontSize: RFPercentage(4),
     textAlign: "center",
   },
   modalButton: {
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalButtonText: {
-    fontSize: 24,
+    fontSize: RFPercentage(4),
     color: "#fff",
     textAlign: 'center'
   },
@@ -131,7 +139,7 @@ const styles = StyleSheet.create({
     height: "100%", 
   },
   timer: {
-    fontSize: 24,
+    fontSize: RFPercentage(3.8),
     color: "#ff5555",
     backgroundColor: "#ffe5e5",
     borderWidth: 2,

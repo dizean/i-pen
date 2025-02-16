@@ -1,35 +1,38 @@
-import { StyleSheet } from "react-native";
-
+import { Dimensions, StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
+const { width, height } = Dimensions.get("window");
 const styles = StyleSheet.create({
     // INTRODUCTION
     container: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 16,
+      height: height,
+      justifyContent: 'center',
       backgroundColor: '#38bfe7'
     },
     wrapper: {
         width: '100%', 
+        height: '100%',
         backgroundColor: "rgba(255, 255, 255, 0.8)", 
         borderRadius: 10,
         alignSelf: 'center',
         padding: 5
     },
     subtitle: {
-      fontSize: 30,
+      fontSize: RFPercentage(6),
       textAlign: 'center',
       color: '#38bfe7'
     },
     input: {
       width: '90%',
       height: '15%',
+      fontSize: RFPercentage(5),
       borderWidth: 1,
       borderColor: "#ccc",
       borderRadius: 8,
       padding: 12,
       backgroundColor: "#fff",
-      margin: 'auto'
+      margin: 'auto',
+      color: '#38bfe7'
     },
     button: {
       width: '90%',

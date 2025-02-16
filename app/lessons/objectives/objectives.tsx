@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View} from "react-native";
-import * as Text from "@/context/FontContent";
+import {Text}from "@/context/FontContent";
 import styles from "./styles";
 import { useRoute } from "@react-navigation/native";
 interface RouteParams {
@@ -25,16 +25,16 @@ export default function Objectives() {
   
   return (
     <View>
-      <Text.TextBold style={styles.title}>Lesson {useTopic.lesson} : {useTopic.title}</Text.TextBold>
-      <Text.TextMedium style={styles.subtitle}>Objectives</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      <Text style={styles.title}>Lesson {useTopic.lesson} : {useTopic.title}</Text>
+      <Text style={styles.subtitle}>Objectives</Text>
+      <Text style={styles.text}>
       At the end of this lesson, you should be able to:
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>
       Develop skills to perform {useTopic.text} of numbers
       using various methods and strategies with the
       aid of computer-assisted tools.
-      </Text.TextNormal>
+      </Text>
     </View>
   );
 }

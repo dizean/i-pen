@@ -6,11 +6,13 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { TextBold, TextLight, TextMedium, TextNormal } from "@/context/FontContent";
+import { Text, TextBold, TextLight, TextMedium, TextNormal } from "@/context/FontContent";
 import { useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRoute } from "@react-navigation/native";
+import { Audio, AVPlaybackStatusSuccess } from "expo-av";
+import { getUserByName } from "@/database/dbservice";
 interface RouteParams {
   score: number;
 }
@@ -19,25 +21,67 @@ export default function ContentPage() {
   const route = useRoute();
     const { score } = (route.params as RouteParams) || {};
   const {
-    username,
+    username, setUser,
     grade,
     preTestScore,setPreTestScore,
-    postTestScore,
+    postTestScore, setPostTestScore,
     selectedImage,setSelectedImage
   } = useUser();
-  useEffect(() => {
-    if (!selectedImage) {
-      const randomIndex = Math.floor(Math.random() * images.length);
-      setSelectedImage(images[randomIndex]);
+  useEffect(()=>{
+    const fetchData = async () =>{
+        try{
+          const query = await getUserByName(String(username), Number(grade));
+          setPreTestScore(query?.pretestscore ?? 0);
+          setPostTestScore(query?.posttestscore ?? 0);
+          const firstName = String(username).split(" ")[0];
+          setUser(firstName, grade)
+        }
+        catch(err){
+          console.log(err)
+        }
     }
-  }, []);
+    fetchData()
+  },[preTestScore,postTestScore])
+  // useEffect(() => {
+  //   playbgmusic();
+  //   if (!selectedImage) {
+  //     const randomIndex = Math.floor(Math.random() * images.length);
+  //     setSelectedImage(images[randomIndex]);
+  //   }
+  // }, []);
   const effectiveGrade = grade ?? "0";
   useEffect(()=>{
     if(preTestScore === 0 || preTestScore ===null){
       setPreTestScore(score)
     }
     
-  },[])
+  },[]);
+  const [bgSound, setBgSound] = useState<Audio.Sound | null>(null);
+  const bgMusic = require("../../assets/audio/bgmusic3.mp3");
+  const playbgmusic=async()=>{
+    try {
+      const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
+      setBgSound(sound)
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (
+          status &&
+          (status as AVPlaybackStatusSuccess).didJustFinish
+        ) {
+          sound.unloadAsync();
+        }
+      });
+      await sound.playAsync(); 
+    } catch (error) {
+      console.error("Error playing correct sound:", error);
+    }
+  }
+  const stopBgMusic = async () => {
+    if (bgSound) {
+      await bgSound.stopAsync();
+      await bgSound.unloadAsync();
+      setBgSound(null);
+    }
+  };
   const gridItems = [
     {
       topic: "Addition",
@@ -111,18 +155,18 @@ export default function ContentPage() {
           />
 
           <View style={styles.namewrap}>
-            <TextBold style={styles.headerText}>{username}</TextBold>
-            <TextMedium style={styles.headerTextName}>Grade {grade} Student</TextMedium>
+            <Text style={styles.headerText}>{username}</Text>
+            <Text style={styles.headerTextName}>Grade {grade} Student</Text>
           </View>
         </View>
         <View style={styles.scoreSection}>
           <View style={styles.scoreCard}>
-            <TextNormal style={styles.scoreTitle}>Pre-test Score</TextNormal>
-            <TextMedium style={styles.scoreValue}>{preTestScore || 0}</TextMedium>
+            <Text style={styles.scoreTitle}>Pre-test Score</Text>
+            <Text style={styles.scoreValue}>{preTestScore || 0}</Text>
           </View>
           <View style={styles.scoreCard}>
-            <TextNormal style={styles.scoreTitle}>Post-test Score</TextNormal>
-            <TextMedium style={styles.scoreValue}>{postTestScore || 0}</TextMedium>
+            <Text style={styles.scoreTitle}>Post-test Score</Text>
+            <Text style={styles.scoreValue}>{postTestScore || 0}</Text>
           </View>
         </View>
         <View style={styles.gridContainer}>
@@ -141,16 +185,20 @@ export default function ContentPage() {
                 ]}
                 onPress={
                   isAvailable
-                    ? (() => router.push({pathname: item.route as any,params: { topic: item.topic }}))
+                    ? (() => {
+                      stopBgMusic();
+                      router.push({pathname: item.route as any,params: { topic: item.topic }});
+                  
+                  })
                     : undefined
                 }
                 disabled={!isAvailable}
               >
-                <TextMedium style={styles.buttonText}>
+                <Text style={styles.buttonText}>
                   {!isAvailable ? "(Unavailable)" : `${item.title}`}
-                </TextMedium>
+                </Text>
                 {isAvailable && item.topic !== "" && (
-                  <TextMedium style={styles.buttonText}>{item.topic}</TextMedium>
+                  <Text style={styles.buttonText}>{item.topic}</Text>
                 )}
               </TouchableOpacity>
             );

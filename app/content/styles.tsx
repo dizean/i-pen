@@ -1,12 +1,14 @@
   import { Dimensions, StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
   const styles = StyleSheet.create({
     view: {
       flex: 1,
+      height: 1000,
       backgroundColor: '#38bfe7',
     },
     scrollView: {
-      height: '100%'
+      height: 1000
     },
     headerSection: {
       width: '100%',
@@ -23,13 +25,12 @@
     },
     headerText: {
       color: "#FFFFF0",
-      fontSize: 28,
+      fontSize: RFPercentage(6),
       textAlign: 'center'
     },
     headerTextName: {
       color: "#FFFFF0",
-      fontSize: 20,
-      marginTop: 5,
+      fontSize: RFPercentage(4),
       textAlign: 'center'
     },
     namewrap:{
@@ -52,13 +53,13 @@
     },
     scoreTitle: {
       width: '75%',
-      fontSize: 25,
+      fontSize: RFPercentage(4),
       color: "#fff",
       marginBottom: 0,
     },
     scoreValue: {
       width: '25%',
-      fontSize: 32,
+      fontSize: RFPercentage(5.5),
       color: "#fff",
       textAlign: 'center',
     },
@@ -67,7 +68,7 @@
       justifyContent: 'space-evenly',
       alignItems:'center',
       gap: 10,
-      height: 600,
+      height: 800,
       borderWidth: 1,
       borderColor: '#38bfe7',
       borderTopLeftRadius: 40,
@@ -75,7 +76,6 @@
     },
     fullWidthGridItem: {
       width: "100%",
-      fontSize: 50
     },
     disabledGridItem: {
       backgroundColor: "#ccc", 
@@ -96,7 +96,7 @@
     },
     buttonText: {
       color: "#FFFFF0",
-      fontSize: 30,
+      fontSize: RFPercentage(4.5),
       textAlign: "center",
     },
     disabledButton: {

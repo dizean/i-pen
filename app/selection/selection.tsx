@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -11,7 +11,7 @@ import { useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import { useRoute } from "@react-navigation/native";
 import styles from "./styles";
-
+import { Audio, AVPlaybackStatusSuccess } from "expo-av";
 interface RouteParams {
   username?: string;
 }
@@ -19,14 +19,39 @@ interface RouteParams {
 export default function Selection() {
   const router = useRouter();
   const route = useRoute();
-  const { setUser,setPostTestScore, setPreTestScore} = useUser();
-  const { username } = (route.params as RouteParams) || {};
+  const { setUser, username} = useUser();
+  // const { username } = (route.params as RouteParams) || {};
+  const bgMusic = require("../../assets/audio/bgmusic.mp3");
   useEffect(() => {
-        setPreTestScore(0);
-        setPostTestScore(0);
+        playbgmusic();
   }, []);
+  const [bgSound, setBgSound] = useState<Audio.Sound | null>(null);
+  const playbgmusic=async()=>{
+    try {
+      const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
+      setBgSound(sound)
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (
+          status &&
+          (status as AVPlaybackStatusSuccess).didJustFinish
+        ) {
+          sound.unloadAsync();
+        }
+      });
+      await sound.playAsync(); 
+    } catch (error) {
+      console.error("Error playing correct sound:", error);
+    }
+  }
+  const stopBgMusic = async () => {
+    if (bgSound) {
+      await bgSound.stopAsync();
+      await bgSound.unloadAsync();
+      setBgSound(null);
+    }
+  };
   const navigateToGrade = (grade: string) => {
-    setUser(username ?? null, grade);
+    setUser(username, grade);
     router.push("/introduction/introduction");
   };
   const rotationAnim = useRef(new Animated.Value(0)).current;
@@ -144,7 +169,7 @@ export default function Selection() {
                   key={index}
                   style={[
                     styles.title,
-                    { fontFamily: "ComicSansBold", marginRight: 5 },
+                    { fontFamily: "Font",  color: 'white' },
                     {
                       transform: [
                         {
@@ -168,7 +193,11 @@ export default function Selection() {
                 styles.optionButton,
                 {backgroundColor: backgroundcolors[index]}
               ]}
-              onPress={() => {navigateToGrade(`${grade.grade}`)}}
+              onPress={() => {
+                stopBgMusic();
+                navigateToGrade(`${grade.grade}`);
+              }}
+              
             >
               <View style={[styles.circle, {backgroundColor: subcolors[index]}]}></View>
                 <Animated.Image

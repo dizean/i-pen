@@ -6,7 +6,9 @@ import { useRouter } from "expo-router";
 import { Audio, AVPlaybackStatusSuccess } from "expo-av";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
-import { TextNormal, TextBold, TextMedium } from "@/context/FontContent";
+import { TextNormal, TextBold, TextMedium, Text } from "@/context/FontContent";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import { updateScores } from "@/database/dbservice";
 interface Question {
   question: string;
   correctAnswer: number;
@@ -32,7 +34,7 @@ export default function Test() {
   const correctSound = require("../../assets/audio/correct.mp3");
   const cheerSound = require("../../assets/audio/cheer.mp3");
   useEffect(() => {
-    const generatedQuestions = generateQuestions(15);
+    const generatedQuestions = generateQuestions(3);
     setQuestions(generatedQuestions);
   }, []);
   useEffect(() => {
@@ -197,9 +199,9 @@ export default function Test() {
   };
   const speak = (message: string) => {
     if (grade === '2' || grade === '3'){
-      Speech.speak(message, { pitch: 1.8, rate: 0.6, volume: 1 });
+      Speech.speak(message, { voice: 'en-us-x-iol-local' });
     }else{
-      Speech.speak(message, { pitch: 1.8, rate: 0.8, volume: 1 });
+      Speech.speak(message, {voice: 'en-us-x-iol-local', rate: 0.8, volume: 1 });
     }
     
   };
@@ -329,6 +331,7 @@ export default function Test() {
           Speech.speak(
             `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
             {
+              voice: 'en-us-x-iol-local',
               onDone: () => {
                 setSpeekDone(true);
                 Speech.stop();
@@ -344,6 +347,7 @@ export default function Test() {
           Speech.speak(
             `Your final score is ${finalScore} out of ${questions.length}. Better Luck Next Time`,
             {
+              voice: 'en-us-x-iol-local',
               onDone: () => {
                 setSpeekDone(true);
                 Speech.stop();
@@ -374,9 +378,16 @@ export default function Test() {
   }, [currentQuestion, questions]);
 
   const handleCloseModal = (score: number) => {
-    router.push({ pathname: "/content/content", params: { score } });
-    setTimer(-1);
-    Speech.stop();
+    try{
+      const insertquery = updateScores(String(username), score, 0);
+      router.push({ pathname: "/content/content", params: { score } });
+      setTimer(-1);
+      Speech.stop();
+    }
+    catch(err){
+      console.log(err)
+    }
+    
   };
   if (questions.length === 0) return null;
   const currentQuestionData = questions[currentQuestion];
@@ -384,22 +395,22 @@ export default function Test() {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         {preTestScore === null || preTestScore === 0 ? (
-          <TextBold style={[styles.title, { fontSize: 50 }]}>
+          <Text style={[styles.title, { fontSize: RFPercentage(9) }]}>
             Pre - Test
-          </TextBold>
+          </Text>
         ) : (
-          <TextBold style={[styles.title, { fontSize: 50 }]}>
+          <Text style={[styles.title, { fontSize: RFPercentage(9)}]}>
             Post - Test
-          </TextBold>
+          </Text>
         )}
 
-        <TextNormal style={[styles.title, { fontSize: 20 }]}>
+        {/* <Text style={[styles.title, { fontSize: RFPercentage(3.5)  }]}>
           Let us test what you know.
-        </TextNormal>
-        <TextBold style={styles.question}>
+        </Text> */}
+        <Text style={[styles.question,{ fontSize: RFPercentage(6)  }]}>
           {currentQuestionData.question}
-        </TextBold>
-        <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
+        </Text>
+        <Text style={styles.timer}>Time Remaining: {timer}s</Text>
         <View style={styles.optionsContainer}>
           {currentQuestionData.options.map((option) => (
             <TouchableOpacity
@@ -413,11 +424,11 @@ export default function Test() {
               onPress={() => handleAnswer(option)}
               disabled={answerSelected !== null}
             >
-              <TextNormal style={styles.optionText}>{option}</TextNormal>
+              <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>
           ))}
         </View>
-        <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
+        <Text style={styles.score}>Current Score: {score}</Text>
       </View>
       <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
@@ -428,10 +439,10 @@ export default function Test() {
               contentFit="fill"
               transition={1000}
             />
-            <TextBold style={styles.modalTitle}>Congratulations!</TextBold>
-            <TextNormal style={styles.modalText}>
+            <Text style={styles.modalTitle}>Congratulations!</Text>
+            <Text style={styles.modalText}>
               Your final score is {score}/{questions.length}.
-            </TextNormal>
+            </Text>
             <View style={styles.images}>
               <Image
                 source={require("../../assets/images/3fr.gif")}
@@ -446,7 +457,7 @@ export default function Test() {
              onPress={() => handleCloseModal(score)}
              disabled={!speekDone}
            >
-             <TextBold style={styles.modalButtonText}>Proceed</TextBold>
+             <Text style={styles.modalButtonText}>Proceed</Text>
            </TouchableOpacity>
             }
           </View>

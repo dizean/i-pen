@@ -14,8 +14,8 @@ const SpeechComponent = forwardRef(({ currentSection }: SpeechComponentProps, re
 
   const speakWithKidTone = (text: string, callback?: () => void) => {
     Speech.speak(text, {
-      pitch: 1.8,
-      rate: 0.7,
+      voice: 'en-us-x-iol-local',
+      rate: .9,
       volume: 1.0,
       onDone: callback,
     });
@@ -68,8 +68,8 @@ const getTextListForSection = (currentSection: number) => {
     case 1:
       return ["Objectives of Addition",
         `At the end of this lesson, you should be able to:`,
-        `Develop skills to perform addition of numbers
-        using various methods and strategies with the aid of computer-assisted tools.`
+        `Develop skills to perform addition of numbers using various methods and strategies with the aid of computer-assisted tools.`
+        
       ];
       case 2:
         return ["Together, Let us SIng the addition song"
