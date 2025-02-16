@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Modal, ImageBackground, Animated } from "react-native";
+import { View, TouchableOpacity, Modal, ImageBackground, Animated, Pressable } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRouter } from "expo-router";
@@ -288,8 +288,6 @@ export default function Test() {
       console.error("Error playing correct sound:", error);
     }
   };
-  
-
   const playWrongSound = async (answer: string, selected: any) => {
     try {
       const { sound } = await Audio.Sound.createAsync(wrongSound, { shouldPlay: true });
@@ -304,11 +302,6 @@ export default function Test() {
     } catch (error) {
       console.error("Error playing correct sound:", error);
     }
-    // const message =
-    //   selected === 0
-    //     ? `Time's up! The correct answer is ${answer}.`
-    //     : `Incorrect! The correct answer is ${answer}.`;
-    // speak(message);
   };
 
   const [speekDone, setSpeekDone] = useState(false);
@@ -379,7 +372,11 @@ export default function Test() {
 
   const handleCloseModal = (score: number) => {
     try{
-      const insertquery = updateScores(String(username), score, 0);
+      if (preTestScore === 0)  {
+        const insertquery = updateScores(String(username), score, 0);
+      }else{
+        const insertquery = updateScores(String(username), Number(preTestScore), score);
+      }
       router.push({ pathname: "/content/content", params: { score } });
       setTimer(-1);
       Speech.stop();

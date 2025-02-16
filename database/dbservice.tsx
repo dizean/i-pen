@@ -12,11 +12,11 @@ const db = SQLite.openDatabase(
   () => console.log('Database opened'),
   (error) => console.error('Database error:', error)
 );
-// db.transaction((tx) => {
-//   tx.executeSql("DROP TABLE IF EXISTS Users;", [], () => {
-//     console.log("Users table dropped.");
-//   });
-// });
+db.transaction((tx) => {
+  tx.executeSql("DROP TABLE IF EXISTS Users;", [], () => {
+    console.log("Users table dropped.");
+  });
+});
 
 // Function to initialize the database and create tables
 export const initDatabase = () => {

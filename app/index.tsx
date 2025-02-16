@@ -18,9 +18,9 @@ export default function App() {
   });
 useEffect(() => {
   }, [fontsLoaded]);
-  // useEffect(() => {
-  //   speak();
-  // }, []);
+  useEffect(() => {
+    speak();
+  }, []);
   const route = useRouter();
   const [done, setDone] = useState(true);
   const speak = () => {

@@ -14,7 +14,8 @@ import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
 import WordProblem from "./wordproblems/wordproblems";
 // import Test from "./practice/practice";
-import * as Text from "@/context/FontContent";
+import { Text } from "@/context/FontContent";
+import { RFPercentage } from "react-native-responsive-fontsize";
 import Test from "@/app/practice/practice";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
@@ -58,6 +59,18 @@ export default function Subtraction() {
   return (
     <>
      <ImageBackground source={require('../../../assets/images/greenbgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
+     <ImageBackground source={require('../../../assets/images/greenbgcut.png')}>
+      <TouchableOpacity 
+        style={{
+          width: '100%',
+          paddingHorizontal: '5%', paddingVertical: '5%',
+          borderBottomWidth: 1, borderColor: "#38bfe7", 
+        }}
+        onPress={()=> router.push('/content/content')}
+      >
+        <Text style={{fontSize: RFPercentage(5), color: '#38bfe7'}}>Back to home</Text>
+      </TouchableOpacity>
+      </ImageBackground>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {currentSection === 1 && <Objectives />} 
       {currentSection === 2 && <VideoPlayer />}

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Video, ResizeMode, VideoFullscreenUpdate } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useRoute } from "@react-navigation/native";
@@ -12,7 +12,7 @@ const VideoPlayer: React.FC = () => {
   const route = useRoute()
   const { topic } = route.params as RouteParams || {};
   const videoRef = useRef<Video>(null);
-
+  const [isPlaying, setIsPlaying] = useState(false);
   const handleFullscreenUpdate = async (event: { fullscreenUpdate: VideoFullscreenUpdate }) => {
     if (event.fullscreenUpdate === VideoFullscreenUpdate.PLAYER_WILL_PRESENT) {
       await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_RIGHT);
@@ -32,7 +32,20 @@ const VideoPlayer: React.FC = () => {
         return null; 
     }
   });
-  
+  const togglePlayPause = async () => {
+    if (videoRef.current) {
+      const status = await videoRef.current.getStatusAsync();
+      if (status?.isLoaded) {
+        if (status.isPlaying) {
+          await videoRef.current.pauseAsync();
+          setIsPlaying(false);
+        } else {
+          await videoRef.current.playAsync();
+          setIsPlaying(true);
+        }
+      }
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Watch and Sing the {topic} Song</Text>
@@ -46,6 +59,13 @@ const VideoPlayer: React.FC = () => {
           onFullscreenUpdate={handleFullscreenUpdate}
         />
       </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={togglePlayPause}
+      >
+        <Text style={styles.buttonText}>{isPlaying ? "Pause Video" : "Play Video"}</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -76,6 +96,28 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 40,
     paddingVertical: 40
+  },
+  button: {
+    width: "100%",
+    borderRadius: 20,
+    marginTop: '2%',
+    padding: "4%",
+    backgroundColor: "#FDDA0D",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 10,
+    zIndex: 0,
+  },buttonText: {
+    fontSize: RFPercentage(5),
+    textAlign: 'center',
+    fontFamily: 'Font',
+    fontWeight: '100',
+    color: "#fff",
+    textShadowColor: '#38bfe7',
+    textShadowOffset: {width:4, height:4},
+    textShadowRadius: 5
   },
 });
 

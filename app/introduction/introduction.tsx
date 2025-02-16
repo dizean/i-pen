@@ -72,6 +72,8 @@ export default function Introduction() {
           router.push("/test/test");
         }
         else{
+          setPreTestScore(existingUser.pretestscore);
+          setPostTestScore(existingUser.posttestscore)
           router.push('/content/content');
         }
       } else {

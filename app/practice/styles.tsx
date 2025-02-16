@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-    width: "80%",
-    height: "60%",
+    width: "90%",
+    height: "80%",
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
@@ -134,11 +134,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: RFPercentage(8),
+    fontSize: RFPercentage(7),
     marginBottom: 10,
   },
   modalText: {
-    fontSize: RFPercentage(6),
+    fontSize: RFPercentage(5),
     marginBottom: 20,
     textAlign: "center",
   },
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    height: "60%",
+    height: "50%",
   },
   gif: {
     width: "100%",

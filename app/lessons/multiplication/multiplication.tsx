@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import styles from "./styles";
 import Objectives from "../objectives/objectives";
 import AntDesign from '@expo/vector-icons/AntDesign';
-import * as Text from "@/context/FontContent";
 import SpeechComponent from "./speech/speech";
 import VideoPlayer from "../video/video";
 import Introduction from "./introduction/introduction";
@@ -15,6 +14,8 @@ import Line from "./methods/line/line";
 import WordProblem from "./wordproblems/wordproblems";
 import Test from "@/app/practice/practice";
 import * as Speech from 'expo-speech'
+import { Text } from "@/context/FontContent";
+import { RFPercentage } from "react-native-responsive-fontsize";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -56,6 +57,18 @@ export default function Subtraction() {
   return (
     <>
      <ImageBackground source={require('../../../assets/images/purplebgcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
+     <ImageBackground source={require('../../../assets/images/purplebgcut.png')}>
+      <TouchableOpacity 
+        style={{
+          width: '100%',
+          paddingHorizontal: '5%', paddingVertical: '5%',
+          borderBottomWidth: 1, borderColor: "#38bfe7", 
+        }}
+        onPress={()=> router.push('/content/content')}
+      >
+        <Text style={{fontSize: RFPercentage(5), color: '#38bfe7'}}>Back to home</Text>
+      </TouchableOpacity>
+      </ImageBackground>
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {currentSection === 1 && <Objectives />} 
       {currentSection === 2 &&<VideoPlayer />}
