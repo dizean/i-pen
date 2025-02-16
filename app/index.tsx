@@ -3,14 +3,14 @@ import {
   ImageBackground,
   SafeAreaView,
   View,
-  TouchableOpacity,
-  Text,
+  TouchableOpacity
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
 import * as Speech from "expo-speech";
 import styles from "./styles";
 import { useFonts } from "expo-font";
+import { Text } from "@/context/FontContent";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,7 +22,7 @@ useEffect(() => {
     speak();
   }, []);
   const route = useRouter();
-  const [done, setDone] = useState(true);
+  const [done, setDone] = useState(false);
   const speak = () => {
     const welcomeMessage =
       "Welcome to i-Pen! Enjoy your interactive learning experience. What are you waiting for? Let’s start learning!";
