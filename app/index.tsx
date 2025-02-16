@@ -17,6 +17,7 @@ export default function App() {
     Font: require("../assets/fonts/mouse-memoirs.regular.ttf"),
   });
 useEffect(() => {
+  console.log('Fonts', fontsLoaded)
   }, [fontsLoaded]);
   useEffect(() => {
     speak();
