@@ -1,48 +1,48 @@
 import React from "react";
 import { View, Image } from "react-native";
 import styles from "../styles";
-import * as Text from "@/context/FontContent";
+import { Text } from '@/context/FontContent';
 const Parts = () => {
   return (
     <View style={styles.container}>
-      <Text.TextBold style={styles.subtitle}>Parts of Subtraction</Text.TextBold>
-      <Text.TextMedium style={styles.sectiontititle}>Minuend</Text.TextMedium>
-      <Text.TextNormal style={[styles.textcenter,styles.text]}>
-          <Text.TextMedium style={styles.highlight}>1</Text.TextMedium>
-          <Text.TextNormal> - </Text.TextNormal>
-          <Text.TextNormal>1</Text.TextNormal>
-          <Text.TextNormal> = </Text.TextNormal>
-          <Text.TextNormal> 0 </Text.TextNormal>
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      <Text style={styles.subtitle}>Parts of Subtraction</Text>
+      <Text style={styles.sectiontititle}>Minuend</Text>
+      <Text style={[styles.textcenter,styles.text]}>
+          <Text style={styles.highlight}>1</Text>
+          <Text> - </Text>
+          <Text>1</Text>
+          <Text> = </Text>
+          <Text> 0 </Text>
+      </Text>
+      <Text style={styles.text}>
         TThe number from which the other number is subtracted.
-      </Text.TextNormal>
-      <Text.TextMedium style={styles.sectiontititle}>Subtrahend</Text.TextMedium>
-      <Text.TextNormal style={[styles.textcenter, styles.text]}>
-          <Text.TextNormal>1</Text.TextNormal>
-          <Text.TextNormal> -</Text.TextNormal>
-          <Text.TextMedium style={styles.highlight}>1</Text.TextMedium>
-          <Text.TextNormal> = </Text.TextNormal>
-          <Text.TextNormal> 0 </Text.TextNormal>
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.sectiontititle}>Subtrahend</Text>
+      <Text style={[styles.textcenter, styles.text]}>
+          <Text>1</Text>
+          <Text> -</Text>
+          <Text style={styles.highlight}>1</Text>
+          <Text> = </Text>
+          <Text> 0 </Text>
+      </Text>
+      <Text style={styles.text}>
         The number which is to be subtracted from the minuend.
-      </Text.TextNormal>
-      <Text.TextMedium style={styles.sectiontititle}>Difference</Text.TextMedium>
-      <Text.TextNormal style={[styles.textcenter,styles.text]}>
-          <Text.TextNormal>1</Text.TextNormal>
-          <Text.TextNormal> - </Text.TextNormal>
-          <Text.TextNormal>1</Text.TextNormal>
-          <Text.TextNormal> = </Text.TextNormal>
-          <Text.TextMedium style={styles.highlight}> 0 </Text.TextMedium>
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.sectiontititle}>Difference</Text>
+      <Text style={[styles.textcenter,styles.text]}>
+          <Text>1</Text>
+          <Text> - </Text>
+          <Text>1</Text>
+          <Text> = </Text>
+          <Text style={styles.highlight}> 0 </Text>
+      </Text>
+      <Text style={styles.text}>
         The final result after subtracting the subtrahend from the minuend.
-      </Text.TextNormal>
-      <Text.TextMedium style={styles.sectiontititle}>Subtraction Formula</Text.TextMedium>
-      <Text.TextMedium style={styles.text}>
+      </Text>
+      <Text style={styles.sectiontititle}>Subtraction Formula</Text>
+      <Text style={styles.text}>
        Minuend - Subtrahend = Difference
-      </Text.TextMedium>
+      </Text>
       <Image
         style={{
           width: "100%",

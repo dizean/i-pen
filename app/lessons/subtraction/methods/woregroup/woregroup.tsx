@@ -1,26 +1,26 @@
 import React from "react";
 import { Image, ScrollView } from "react-native";
 import styles from "../../styles";
-import * as Text from "@/context/FontContent";
+import { Text } from '@/context/FontContent';
 const WoRegroup = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* Title */}
-      <Text.TextBold style={styles.subtitle}>
+      <Text style={styles.subtitle}>
         Methods in Solving Subtraction Problem
-      </Text.TextBold>
-      <Text.TextMedium style={styles.sectiontititle}>Subtraction Without Regrouping</Text.TextMedium>
-      <Text.TextMedium style={styles.text}>Example:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.sectiontititle}>Subtraction Without Regrouping</Text>
+      <Text style={styles.text}>Example:</Text>
+      <Text style={styles.text}>
         Subtract
-        <Text.TextMedium> 25632</Text.TextMedium> from
-        <Text.TextMedium> 48756</Text.TextMedium>
-      </Text.TextNormal>
-      <Text.TextMedium style={styles.text}>Solution:</Text.TextMedium>
+        <Text> 25632</Text> from
+        <Text> 48756</Text>
+      </Text>
+      <Text style={styles.text}>Solution:</Text>
       {/* Section 2 */}
-      <Text.TextNormal style={styles.text}>
+      <Text style={styles.text}>
         Follow the given steps and try to relate them with the following figure.
-      </Text.TextNormal>
+      </Text>
       <Image
         source={require("../../../../../assets/images/subworegrp.png")}
         style={{
@@ -30,11 +30,11 @@ const WoRegroup = () => {
           marginVertical: 10,
         }}
       />
-      <Text.TextMedium style={styles.text}>Step 1:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      <Text style={styles.text}>Step 1:</Text>
+      <Text style={styles.text}>
         Start with the digits in the ones (O) column.
-      </Text.TextNormal>
-      <Text.TextMedium
+      </Text>
+      <Text
         style={[
           styles.text,
           styles.textcenter,
@@ -42,12 +42,12 @@ const WoRegroup = () => {
         ]}
       >
         (6 - 2 = 4)
-      </Text.TextMedium>
-      <Text.TextMedium style={styles.text}>Step 2:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>Step 2:</Text>
+      <Text style={styles.text}>
         Move to the digits in the tens (T) column.
-      </Text.TextNormal>
-      <Text.TextMedium
+      </Text>
+      <Text
         style={[
           styles.text,
           styles.textcenter,
@@ -55,12 +55,12 @@ const WoRegroup = () => {
         ]}
       >
         (5 - 3 = 2)
-      </Text.TextMedium>
-      <Text.TextMedium style={styles.text}>Step 3:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>Step 3:</Text>
+      <Text style={styles.text}>
         Now subtract the digits in the hundreds (H) column.
-      </Text.TextNormal>
-      <Text.TextMedium
+      </Text>
+      <Text
         style={[
           styles.text,
           styles.textcenter,
@@ -68,12 +68,12 @@ const WoRegroup = () => {
         ]}
       >
         (7 - 6 = 1)
-      </Text.TextMedium>
-      <Text.TextMedium style={styles.text}>Step 4:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>Step 4:</Text>
+      <Text style={styles.text}>
         After this, subtract the digits in the thousands (Th) column.
-      </Text.TextNormal>
-      <Text.TextMedium
+      </Text>
+      <Text
         style={[
           styles.text,
           styles.textcenter,
@@ -81,12 +81,12 @@ const WoRegroup = () => {
         ]}
       >
         (8 - 5 = 3)
-      </Text.TextMedium>
-      <Text.TextMedium style={styles.text}>Step 5:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>Step 5:</Text>
+      <Text style={styles.text}>
         Finally, subtract the digits in the ten thousands (T-th) column.
-      </Text.TextNormal>
-      <Text.TextMedium
+      </Text>
+      <Text
         style={[
           styles.text,
           styles.textcenter,
@@ -94,18 +94,18 @@ const WoRegroup = () => {
         ]}
       >
         (4 - 2 = 2)
-      </Text.TextMedium>
-      <Text.TextMedium style={styles.text}>Step 6:</Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>Step 6:</Text>
+      <Text style={styles.text}>
         Therefore, the difference between the two given numbers is
-      </Text.TextNormal>
-      <Text.TextNormal style={{ fontSize: 25, textAlign: "center" }}>
+      </Text>
+      <Text style={{ fontSize: 25, textAlign: "center" }}>
         48756 - 25632 =
-        <Text.TextMedium style={[ styles.highlight, { fontSize: 25 }]}>
+        <Text style={[ styles.highlight, { fontSize: 25 }]}>
           {" "}
           23124.
-        </Text.TextMedium>
-      </Text.TextNormal>
+        </Text>
+      </Text>
     </ScrollView>
   );
 };

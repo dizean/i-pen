@@ -37,13 +37,14 @@ const styles = StyleSheet.create({
     color: "#FDDA0D",
   },
   text: {
-    fontFamily: 'BalooFont',
+    fontFamily: 'Font',
     fontSize: RFPercentage(6),
     textAlign: "center",
     color: "#38bfe7",
     textShadowColor: '#fff',
     textShadowOffset: {width:4, height:4},
-    textShadowRadius: 5
+    textShadowRadius: 5,
+    fontWeight: '100',
   },
   image: {
     width: 200,
@@ -64,9 +65,10 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   buttonText: {
-    fontSize: RFPercentage(6),
+    fontSize: RFPercentage(8),
     textAlign: 'center',
-    fontFamily: 'BalooFont',
+    fontFamily: 'Font',
+    fontWeight: '100',
     color: "#fff",
     textShadowColor: '#38bfe7',
     textShadowOffset: {width:4, height:4},

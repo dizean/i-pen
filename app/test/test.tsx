@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import { Audio, AVPlaybackStatusSuccess } from "expo-av";
 import * as Speech from "expo-speech";
 import { Image } from "expo-image";
-import { TextNormal, TextBold, TextMedium, Text } from "@/context/FontContent";
+import { Text } from "@/context/FontContent";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { updateScores } from "@/database/dbservice";
 interface Question {
@@ -395,11 +395,11 @@ export default function Test() {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         {preTestScore === null || preTestScore === 0 ? (
-          <Text style={[styles.title, { fontSize: RFPercentage(9) }]}>
+          <Text style={[styles.title, { fontSize: RFPercentage(12) }]}>
             Pre - Test
           </Text>
         ) : (
-          <Text style={[styles.title, { fontSize: RFPercentage(9)}]}>
+          <Text style={[styles.title, { fontSize: RFPercentage(12)}]}>
             Post - Test
           </Text>
         )}
@@ -407,7 +407,7 @@ export default function Test() {
         {/* <Text style={[styles.title, { fontSize: RFPercentage(3.5)  }]}>
           Let us test what you know.
         </Text> */}
-        <Text style={[styles.question,{ fontSize: RFPercentage(6)  }]}>
+        <Text style={[styles.question,{ fontSize: RFPercentage(8)  }]}>
           {currentQuestionData.question}
         </Text>
         <Text style={styles.timer}>Time Remaining: {timer}s</Text>

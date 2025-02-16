@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,19 +14,20 @@ const styles = StyleSheet.create({
     backdropFilter: "blur(10px)",
     borderWidth: 1,
     borderColor: "rgba(25, 42, 236, 0.3)",
-    
+   
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
+  title: { 
+    fontSize: RFPercentage(10),
     textAlign: "center",
+    padding: '2%'
   },
   text: {
-    fontSize: 15,
-    marginVertical: 5,
+    fontSize: RFPercentage(5),
+    textAlign: 'center',
+    padding: '2%'
   },
   question: {
-    fontSize: 30,
+    fontSize: RFPercentage(8),
     textAlign: "center",
     color: "#38bfe7",
     fontWeight: "600",
@@ -58,12 +60,12 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   optionText: {
-    fontSize: 40,
+    fontSize: RFPercentage(9),
     color: "#fff",
     textAlign: "center",
   },
   score: {
-    fontSize: 20,
+    fontSize: RFPercentage(6),
     textAlign: "center",
     color: "#F57F17",
   },
@@ -132,11 +134,11 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   modalTitle: {
-    fontSize: 24,
+    fontSize: RFPercentage(8),
     marginBottom: 10,
   },
   modalText: {
-    fontSize: 18,
+    fontSize: RFPercentage(6),
     marginBottom: 20,
     textAlign: "center",
   },
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalButtonText: {
-    fontSize: 16,
+    fontSize: RFPercentage(5),
     color: "#fff",
     textAlign: "center",
   },
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   timer: {
-    fontSize: 24,
+    fontSize: RFPercentage(6),
     color: "#ff5555",
     backgroundColor: "#ffe5e5",
     borderWidth: 2,

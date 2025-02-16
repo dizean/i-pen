@@ -36,21 +36,28 @@ const styles = StyleSheet.create({
   container: {
   },
   title: {
-    fontSize: RFPercentage(7),
-    paddingVertical: 5
+    fontSize: RFPercentage(10),
+    paddingVertical: 10,
+    color: '#38bfe7',
+    textShadowColor: 'rgb(250, 250, 250)',
+    textShadowOffset: {width: 7, height: 7},
+    textShadowRadius: 5
   },
   subtitle: {
-    fontSize: RFPercentage(6),
-    paddingVertical: 5
+    fontSize: RFPercentage(8),
+    paddingVertical: '5%',
+    color: '#38bfe7',
   },
   sectiontititle: {
-    fontSize: RFPercentage(5),
-    paddingVertical: 10
+    fontSize: RFPercentage(6),
+    paddingVertical: '5%',
+    color: '#38bfe7'
   },
   text: {
-    fontSize: RFPercentage(4),
-    lineHeight: 30,
-    paddingVertical: 5
+    fontSize: RFPercentage(5.5),
+    lineHeight: 35,
+    paddingVertical: '5%',
+    color: '#38bfe7'
   },
   image: {
     width: '100%',

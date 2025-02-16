@@ -19,18 +19,29 @@ export default function Introduction() {
   const router = useRouter();
   const { setUser, grade, username, setPostTestScore, setPreTestScore } = useUser();
   const [nameInput, setNameInput] = useState("");
-  const [bgSound, setBgSound] = useState<Audio.Sound | null>(null);
+  const bgSoundRef = useRef<Audio.Sound | null>(null);
   const bgMusic = require("../../assets/audio/bgmusic2.mp3");
+  useEffect(() => {
+      playbgmusic();
+    
+      return () => {
+        stopBgMusic(); // Cleanup when unmounting
+      };
+    }, []);
   const playbgmusic=async()=>{
     try {
+      if (bgSoundRef.current) {
+        return;
+      }
       const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
-      setBgSound(sound)
+      bgSoundRef.current = sound;
       sound.setOnPlaybackStatusUpdate((status) => {
         if (
           status &&
           (status as AVPlaybackStatusSuccess).didJustFinish
         ) {
           sound.unloadAsync();
+          bgSoundRef.current = null;
         }
       });
       await sound.playAsync(); 
@@ -39,10 +50,10 @@ export default function Introduction() {
     }
   }
   const stopBgMusic = async () => {
-    if (bgSound) {
-      await bgSound.stopAsync();
-      await bgSound.unloadAsync();
-      setBgSound(null);
+    if (bgSoundRef.current) {
+      await bgSoundRef.current.stopAsync();
+      await bgSoundRef.current.unloadAsync();
+      bgSoundRef.current = null;
     }
   };
   const handleSetUsername = async() => {
@@ -74,8 +85,7 @@ export default function Introduction() {
   };
   const rotateValue = useRef(new Animated.Value(0)).current;
   useEffect(() => {
-    initDatabase()
-    playbgmusic();
+    initDatabase();
     Animated.loop(
       Animated.timing(rotateValue, {
         toValue: 1,

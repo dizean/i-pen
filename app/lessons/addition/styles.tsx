@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     bottom: 0, 
     paddingVertical: 10,
     borderTopWidth: 1, 
-    borderColor: "#000", 
+    borderColor: "#38bfe7", 
   },
   button: {
     padding: 15,
@@ -33,23 +34,31 @@ const styles = StyleSheet.create({
     color: "#1a237e",
   },
   container: {
+    
+    gap: 5
   },
   title: {
     fontSize: 50,
     paddingVertical: 5
   },
   subtitle: {
-    fontSize: 40,
-    paddingVertical: 5
+    fontSize: RFPercentage(12),
+    paddingVertical: 5,
+    color: '#38bfe7',
+    textShadowColor: 'rgb(250, 250, 250)',
+    textShadowOffset: {width: 7, height: 7},
+    textShadowRadius: 5
   },
   sectiontititle: {
-    fontSize: 25,
+    fontSize: RFPercentage(8),
+    color: '#38bfe7',
     paddingVertical: 10
   },
   text: {
-    fontSize: 20,
-    lineHeight: 30,
-    paddingVertical: 5
+    fontSize: RFPercentage(5),
+    lineHeight: 35,
+    paddingVertical: 5,
+    color: '#38bfe7',
   },
   image: {
     width: '100%',

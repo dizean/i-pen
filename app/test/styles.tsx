@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   score: {
-    fontSize: RFPercentage(4),
+    fontSize: RFPercentage(5),
     textAlign: "center",
     color: "#F57F17",
   },
@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   modalTitle: {
-    fontSize: RFPercentage(5),
+    fontSize: RFPercentage(8),
   },
   modalText: {
-    fontSize: RFPercentage(4),
+    fontSize: RFPercentage(5.5),
     textAlign: "center",
   },
   modalButton: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   modalButtonText: {
-    fontSize: RFPercentage(4),
+    fontSize: RFPercentage(6),
     color: "#fff",
     textAlign: 'center'
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     height: "100%", 
   },
   timer: {
-    fontSize: RFPercentage(3.8),
+    fontSize: RFPercentage(6),
     color: "#ff5555",
     backgroundColor: "#ffe5e5",
     borderWidth: 2,

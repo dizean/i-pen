@@ -6,8 +6,10 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import * as Text from "@/context/FontContent";
+
 import { useRoute } from "@react-navigation/native";
+import { Text } from "@/context/FontContent";
+import { RFPercentage } from "react-native-responsive-fontsize";
 interface RouteParams {
   topic?: string;
 }
@@ -131,14 +133,14 @@ export default function Practice({ onComplete }: { onComplete: () => void }) {
   }, [isPracticeComplete]);
   return (
     <ScrollView contentContainerStyle={styles.contentContainer}>
-      <Text.TextBold style={styles.subtitle}>Practice</Text.TextBold>
+      <Text style={styles.subtitle}>Practice</Text>
       <View style={styles.problemContainer}>
         <View>
           {renderNumberImage(currentProblem.num1, currentProblem.image1)}
         </View>
-        <Text.TextMedium style={styles.problemText}>
+        <Text style={styles.problemText}>
           {operation}
-        </Text.TextMedium>
+        </Text>
         <View >
           {renderNumberImage(currentProblem.num2, currentProblem.image2)}
         </View>
@@ -161,9 +163,9 @@ export default function Practice({ onComplete }: { onComplete: () => void }) {
             onPress={() => handleChoiceSelection(choice)}
             disabled={selectedAnswer !== null}
           >
-            <Text.TextMedium style={styles.choiceText}>
+            <Text style={styles.choiceText}>
               {choice}
-            </Text.TextMedium>
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -253,9 +255,9 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   choiceText: {
-    fontSize: 18,
+    fontSize: RFPercentage(10),
     fontWeight: "600",
-    color: "#1a237e",
+    color: "#FFF",
   },
   correct: {
     backgroundColor: "#388e3c",
@@ -267,12 +269,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#4caf50",
   },
   resultMessage: {
-    fontSize: 18,
+    fontSize: RFPercentage(7),
     fontWeight: "600",
     color: "#1a237e",
     marginTop: 10,
-  },subtitle: {
-    fontSize: 40,
+  },
+  subtitle: {
+    fontSize: RFPercentage(12),
     paddingVertical: 20
   },
 });

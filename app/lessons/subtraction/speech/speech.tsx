@@ -55,9 +55,9 @@ const SpeechComponent = forwardRef(({ currentSection }: SpeechComponentProps, re
     <TouchableOpacity style={[styles.button]} onPress={handleSpeechToggle}>
       <Text style={styles.buttonText}>
         {isSpeaking ? (
-          <AntDesign name="pausecircle" size={24} color="black" />
+          <AntDesign name="pausecircle" size={24} color="bl#38bfe7ack" />
         ) : (
-          <AntDesign name="play" size={24} color="black" />
+          <AntDesign name="play" size={24} color="#38bfe7" />
         )}
       </Text>
     </TouchableOpacity>

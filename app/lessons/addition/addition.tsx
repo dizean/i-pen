@@ -58,7 +58,7 @@ export default function Addition() {
       };
   return (
     <>
-    <ImageBackground source={require('../../../assets/images/bgyellowcut.png')} style={{ flex: 1, backgroundColor: "#000" }}>
+    <ImageBackground source={require('../../../assets/images/bgyellowcut.png')} style={{ flex: 1, backgroundColor: "#FDDA0D" }}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         {currentSection === 1 && <Objectives />} 
         {currentSection === 2 && <VideoPlayer />}
@@ -74,18 +74,18 @@ export default function Addition() {
      
       </ScrollView>
     </ImageBackground>
-    <ImageBackground source={require('../../../assets/images/bgyellowbt.png')} style={styles.fixedButtonContainer}>
+    <ImageBackground style={styles.fixedButtonContainer}>
         {currentSection !== 1 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handlePrev}
             disabled={currentSection === 1}
           >
-            <AntDesign name="doubleleft" size={30} color="black" />
+            <AntDesign name="doubleleft" size={30} color="#38bfe7" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
-            <AntDesign name="home" size={30} color="black" />
+            <AntDesign name="home" size={30} color="#38bfe7" />
           </TouchableOpacity>
         )}
         <SpeechComponent
@@ -98,11 +98,11 @@ export default function Addition() {
             onPress={handleNext}
             disabled={currentSection === 5 && !isPracticeComplete}
           >
-            <AntDesign name="doubleright" size={30} color="black" />
+            <AntDesign name="doubleright" size={30} color="#38bfe7" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
-            <AntDesign name="home" size={30} color="black" />
+            <AntDesign name="home" size={30} color="#38bfe7" />
           </TouchableOpacity>
         )}
       </ImageBackground>

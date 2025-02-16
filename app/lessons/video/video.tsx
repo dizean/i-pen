@@ -3,7 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { Video, ResizeMode, VideoFullscreenUpdate } from "expo-av";
 import * as ScreenOrientation from "expo-screen-orientation";
 import { useRoute } from "@react-navigation/native";
-import { TextBold } from "@/context/FontContent";
+import { Text } from "@/context/FontContent";
+import { RFPercentage } from "react-native-responsive-fontsize";
 interface RouteParams {
   topic?: string;
 }
@@ -34,7 +35,7 @@ const VideoPlayer: React.FC = () => {
   
   return (
     <View style={styles.container}>
-      <TextBold style={styles.subtitle}>Watch and Sing the {topic} Song</TextBold>
+      <Text style={styles.title}>Watch and Sing the {topic} Song</Text>
       <View style={styles.videoContainer}>
         <Video
           ref={videoRef}
@@ -52,11 +53,17 @@ const VideoPlayer: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
+    fontSize: RFPercentage(9),
     marginBottom: 20,
+    textAlign: 'center',
+    color: '#38bfe7',
+    textShadowColor: 'rgb(250, 250, 250)',
+    textShadowOffset: {width: 7, height: 7},
+    textShadowRadius: 5
   },
   videoContainer: {
     width: "100%",

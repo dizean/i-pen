@@ -25,12 +25,12 @@ import { RFPercentage } from "react-native-responsive-fontsize";
     },
     headerText: {
       color: "#FFFFF0",
-      fontSize: RFPercentage(6),
+      fontSize: RFPercentage(8),
       textAlign: 'center'
     },
     headerTextName: {
       color: "#FFFFF0",
-      fontSize: RFPercentage(4),
+      fontSize: RFPercentage(5),
       textAlign: 'center'
     },
     namewrap:{
@@ -53,13 +53,13 @@ import { RFPercentage } from "react-native-responsive-fontsize";
     },
     scoreTitle: {
       width: '75%',
-      fontSize: RFPercentage(4),
+      fontSize: RFPercentage(6),
       color: "#fff",
       marginBottom: 0,
     },
     scoreValue: {
       width: '25%',
-      fontSize: RFPercentage(5.5),
+      fontSize: RFPercentage(7),
       color: "#fff",
       textAlign: 'center',
     },
@@ -96,7 +96,7 @@ import { RFPercentage } from "react-native-responsive-fontsize";
     },
     buttonText: {
       color: "#FFFFF0",
-      fontSize: RFPercentage(4.5),
+      fontSize: RFPercentage(6),
       textAlign: "center",
     },
     disabledButton: {

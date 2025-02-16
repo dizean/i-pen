@@ -1,39 +1,39 @@
 import React, { useState } from 'react';
 import {  ScrollView, TouchableOpacity } from 'react-native';
 import styles from '../styles';
-import * as Text from "@/context/FontContent";
+import { Text } from '@/context/FontContent';
 import { Image } from 'expo-image';
 const Introduction = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text.TextBold style={styles.subtitle}>
+      <Text style={styles.subtitle}>
         Introduction
-      </Text.TextBold>
-      <Text.TextMedium style={styles.sectiontititle}>
+      </Text>
+      <Text style={styles.sectiontititle}>
         What is Subtraction?
-      </Text.TextMedium>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>
       Subtraction is the process of taking away a number from another.
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>
       It is a primary arithmetic operation that is denoted by a subtraction symbol
       is the method of calculating the difference between two numbers.
-      </Text.TextNormal>
-      <Text.TextMedium style={styles.sectiontititle}>
+      </Text>
+      <Text style={styles.sectiontititle}>
       Subtraction symbol
-      </Text.TextMedium>
-      <Text.TextNormal style={styles.textcenter}>
-        <Text.TextNormal style={styles.text}>
-          3 <Text.TextMedium style={styles.highlight}> - </Text.TextMedium> 2 = ?
-        </Text.TextNormal>
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.textcenter}>
+        <Text style={styles.text}>
+          3 <Text style={styles.highlight}> - </Text> 2 = ?
+        </Text>
+      </Text>
+      <Text style={styles.text}>
       In mathematics, we have different symbols. 
-      </Text.TextNormal>
-      <Text.TextNormal style={styles.text}>
+      </Text>
+      <Text style={styles.text}>
       The subtraction symbol is one of the important math symbol that we use while performing subtraction. 
       The subtraction symbol is called minus.
-      </Text.TextNormal>
+      </Text>
       <Image
         contentFit='contain'
         source={require("../../../../assets/images/minus.png")}

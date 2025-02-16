@@ -20,22 +20,31 @@ export default function Selection() {
   const router = useRouter();
   const route = useRoute();
   const { setUser, username} = useUser();
+  const bgSoundRef = useRef<Audio.Sound | null>(null);
   // const { username } = (route.params as RouteParams) || {};
   const bgMusic = require("../../assets/audio/bgmusic.mp3");
   useEffect(() => {
-        playbgmusic();
+    playbgmusic();
+  
+    return () => {
+      stopBgMusic(); // Cleanup when unmounting
+    };
   }, []);
-  const [bgSound, setBgSound] = useState<Audio.Sound | null>(null);
   const playbgmusic=async()=>{
     try {
+      if (bgSoundRef.current) {
+        return;
+      }
       const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
-      setBgSound(sound)
+      bgSoundRef.current = sound;
+
       sound.setOnPlaybackStatusUpdate((status) => {
         if (
           status &&
           (status as AVPlaybackStatusSuccess).didJustFinish
         ) {
           sound.unloadAsync();
+          bgSoundRef.current = null;
         }
       });
       await sound.playAsync(); 
@@ -44,10 +53,10 @@ export default function Selection() {
     }
   }
   const stopBgMusic = async () => {
-    if (bgSound) {
-      await bgSound.stopAsync();
-      await bgSound.unloadAsync();
-      setBgSound(null);
+    if (bgSoundRef.current) {
+      await bgSoundRef.current.stopAsync();
+      await bgSoundRef.current.unloadAsync();
+      bgSoundRef.current = null;
     }
   };
   const navigateToGrade = (grade: string) => {

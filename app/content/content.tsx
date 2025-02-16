@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   TouchableOpacity,
@@ -6,7 +6,7 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { Text, TextBold, TextLight, TextMedium, TextNormal } from "@/context/FontContent";
+import { Text} from "@/context/FontContent";
 import { useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
@@ -27,6 +27,7 @@ export default function ContentPage() {
     postTestScore, setPostTestScore,
     selectedImage,setSelectedImage
   } = useUser();
+  const bgSoundRef = useRef<Audio.Sound | null>(null);
   useEffect(()=>{
     const fetchData = async () =>{
         try{
@@ -34,7 +35,7 @@ export default function ContentPage() {
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
           const firstName = String(username).split(" ")[0];
-          setUser(firstName, grade)
+          setUser(firstName, String(4))
         }
         catch(err){
           console.log(err)
@@ -42,13 +43,19 @@ export default function ContentPage() {
     }
     fetchData()
   },[preTestScore,postTestScore])
-  // useEffect(() => {
-  //   playbgmusic();
-  //   if (!selectedImage) {
-  //     const randomIndex = Math.floor(Math.random() * images.length);
-  //     setSelectedImage(images[randomIndex]);
-  //   }
-  // }, []);
+  useEffect(() => {
+      playbgmusic();
+    
+      return () => {
+        stopBgMusic(); 
+      };
+    }, []);
+  useEffect(() => {
+    if (!selectedImage) {
+      const randomIndex = Math.floor(Math.random() * images.length);
+      setSelectedImage(images[randomIndex]);
+    }
+  }, []);
   const effectiveGrade = grade ?? "0";
   useEffect(()=>{
     if(preTestScore === 0 || preTestScore ===null){
@@ -56,18 +63,21 @@ export default function ContentPage() {
     }
     
   },[]);
-  const [bgSound, setBgSound] = useState<Audio.Sound | null>(null);
   const bgMusic = require("../../assets/audio/bgmusic3.mp3");
   const playbgmusic=async()=>{
     try {
+      if (bgSoundRef.current) {
+        return;
+      }
       const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
-      setBgSound(sound)
+      bgSoundRef.current = sound;
       sound.setOnPlaybackStatusUpdate((status) => {
         if (
           status &&
           (status as AVPlaybackStatusSuccess).didJustFinish
         ) {
           sound.unloadAsync();
+          bgSoundRef.current = null;
         }
       });
       await sound.playAsync(); 
@@ -76,10 +86,10 @@ export default function ContentPage() {
     }
   }
   const stopBgMusic = async () => {
-    if (bgSound) {
-      await bgSound.stopAsync();
-      await bgSound.unloadAsync();
-      setBgSound(null);
+    if (bgSoundRef.current) {
+      await bgSoundRef.current.stopAsync();
+      await bgSoundRef.current.unloadAsync();
+      bgSoundRef.current = null;
     }
   };
   const gridItems = [

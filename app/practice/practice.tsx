@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  Text,
   TouchableOpacity,
   Modal,
 } from "react-native";
@@ -10,7 +9,7 @@ import { Audio } from "expo-av";
 import * as Speech from "expo-speech";
 import { useRouter } from "expo-router";
 import { Image } from "expo-image";
-import { TextBold, TextMedium, TextNormal } from "@/context/FontContent";
+import { Text } from "@/context/FontContent";
 import { useUser } from "@/context/UserContext";
 interface Problem {
   startNumber: number;
@@ -201,21 +200,21 @@ export default function Test({ subject, stop }: SubjectProp) {
     const questions = generateQuestions(7);
     setQuestions(questions);
   }, []);
-  useEffect(() => {
-    if (isTimerPaused || timer === 0) {
-      if (timer === 0 && !isProcessing) {
-        handleTimeout();
-      }
-      return;
-    }
+  // useEffect(() => {
+  //   if (isTimerPaused || timer === 0) {
+  //     if (timer === 0 && !isProcessing) {
+  //       handleTimeout();
+  //     }
+  //     return;
+  //   }
 
-    const countdown = setTimeout(() => {
-      setTimer((prev) => prev - 1);
-      playBeepSound();
-    }, 1000);
+  //   const countdown = setTimeout(() => {
+  //     setTimer((prev) => prev - 1);
+  //     playBeepSound();
+  //   }, 1000);
 
-    return () => clearTimeout(countdown);
-  }, [timer, isTimerPaused, isProcessing, score]);
+  //   return () => clearTimeout(countdown);
+  // }, [timer, isTimerPaused, isProcessing, score]);
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
@@ -396,22 +395,22 @@ export default function Test({ subject, stop }: SubjectProp) {
     if (!currentQuestionData) {
       return (
         <View style={styles.container}>
-          <TextNormal>Loading questions...</TextNormal>
+          <Text>Loading questions...</Text>
         </View>
       );
     }
     return (
       <View style={styles.container}>
-        <TextBold style={[styles.title, { fontSize: 40 }]}>
+        <Text style={[styles.title]}>
           Let`s Practice!
-        </TextBold>
-        <TextNormal style={[styles.title, { fontSize: 20 }]}>
-          Let us test what you have learned
-        </TextNormal>
-        <TextBold style={styles.question}>
+        </Text>
+        <Text style={[styles.text]}>
+          Let us test what you have learned.
+        </Text>
+        <Text style={styles.question}>
           {currentQuestionData.question}
-        </TextBold>
-        <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
+        </Text>
+        <Text style={styles.timer}>Time Remaining: {timer}s</Text>
         <View style={styles.optionsContainer}>
           {currentQuestionData.options.map((option) => (
             <TouchableOpacity
@@ -425,11 +424,11 @@ export default function Test({ subject, stop }: SubjectProp) {
               onPress={() => handleAdditionAnswer(option)}
               disabled={answerSelected !== null}
             >
-              <TextBold style={styles.optionText}>{option}</TextBold>
+              <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>
           ))}
         </View>
-        <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
+        <Text style={styles.score}>Current Score: {score}</Text>
       </View>
     );
   }
@@ -437,19 +436,19 @@ export default function Test({ subject, stop }: SubjectProp) {
   let { startNumber, steps } = problems[currentProblemIndex];
   return (
     <View style={styles.container}>
-      <TextBold style={[styles.title, { fontSize: 40 }]}>
+      <Text style={[styles.title]}>
         Let`s Practice!
-      </TextBold>
-      <TextNormal style={[styles.title, { fontSize: 20 }]}>
-        Let us test what you have learned
-      </TextNormal>
-      <TextNormal style={styles.text}>
+      </Text>
+      <Text style={[styles.title, { fontSize: 50 }]}>
+        Let us test what you have learneds
+      </Text>
+      <Text style={styles.text}>
         Select the first addend then count the steps for the correct answer.
-      </TextNormal>
-      <TextNormal style={styles.problem}>
+      </Text>
+      <Text style={styles.problem}>
         Solve: {startNumber} {lineOperation} {steps}
-      </TextNormal>
-      <TextMedium style={styles.timer}>Time Remaining: {timer}s</TextMedium>
+      </Text>
+      <Text style={styles.timer}>Time Remaining: {timer}s</Text>
       <View style={styles.numberLineContainer}>
         {numberLine.map((num) => (
           <TouchableOpacity
@@ -468,20 +467,20 @@ export default function Test({ subject, stop }: SubjectProp) {
             onPress={() => handleNumberLineSelection(num)}
             disabled={isAnswering}
           >
-            <TextNormal style={styles.numberText}>{num}</TextNormal>
+            <Text style={styles.numberText}>{num}</Text>
           </TouchableOpacity>
         ))}
       </View>
-      <TextNormal style={styles.score}>Current Score: {score}</TextNormal>
+      <Text style={styles.score}>Current Score: {score}</Text>
       <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <TextMedium style={styles.modalTitle}>
+            <Text style={styles.modalTitle}>
               Congratulations for completing Lesson 1
-            </TextMedium>
-            <TextNormal style={styles.modalText}>
+            </Text>
+            <Text style={styles.modalText}>
               Your final score is {score}/10.
-            </TextNormal>
+            </Text>
             <View style={styles.images}>
               <Image
                 source={require("../../assets/images/3fr.gif")}
@@ -494,7 +493,7 @@ export default function Test({ subject, stop }: SubjectProp) {
               style={styles.modalButton}
               onPress={handleCloseModal}
             >
-              <TextMedium style={styles.modalButtonText}>Proceed</TextMedium>
+              <Text style={styles.modalButtonText}>Proceed</Text>
             </TouchableOpacity>
           </View>
         </View>
