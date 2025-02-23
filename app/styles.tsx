@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
   math: {
     width: "100%",
     height: "45%",
-    marginTop: '-25%'
   },
   boy: {
     width: "50%",

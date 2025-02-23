@@ -17,8 +17,6 @@ import { RFPercentage } from "react-native-responsive-fontsize";
       alignItems: 'center',
       paddingVertical: '10%',
       paddingHorizontal: '2%',
-      borderWidth: 1,
-      borderColor: '#38bfe7', 
       borderBottomLeftRadius: 100,
       borderBottomRightRadius: 100,
       backgroundColor: '#FDDA0D'
@@ -69,8 +67,6 @@ import { RFPercentage } from "react-native-responsive-fontsize";
       alignItems:'center',
       gap: 10,
       height: 800,
-      borderWidth: 1,
-      borderColor: '#38bfe7',
       borderTopLeftRadius: 40,
       borderTopRightRadius: 40
     },

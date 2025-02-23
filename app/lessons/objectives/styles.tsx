@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(10),
     paddingVertical: 10,
     color: '#38bfe7',
-    textShadowColor: 'rgb(250, 250, 250)',
-    textShadowOffset: {width: 7, height: 7},
-    textShadowRadius: 5
+    // textShadowColor: 'rgb(250, 250, 250)',
+    // textShadowOffset: {width: 7, height: 7},
+    // textShadowRadius: 5
   },
   subtitle: {
     fontSize: RFPercentage(8),

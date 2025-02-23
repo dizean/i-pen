@@ -5,6 +5,7 @@ import {
   Alert,
   Image,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import { Text} from "@/context/FontContent";
 import { useRouter } from "expo-router";
@@ -147,7 +148,7 @@ export default function ContentPage() {
     setCurrentImage(images[randomIndex]);
   }, []);
   return (
-    <View style={styles.view}>
+    <ImageBackground source={require('../../assets/images/bgblue.jpg')} style={styles.view}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
@@ -214,6 +215,6 @@ export default function ContentPage() {
           })}
         </View>
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
