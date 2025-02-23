@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView } from "react-native";
 import styles from "../../styles";
 import { Text } from '@/context/FontContent';
+import { RFPercentage } from "react-native-responsive-fontsize";
 const WoRegroup = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -43,7 +44,7 @@ const WoRegroup = () => {
         Start with the digits in the ones (O) column.
       </Text>
       <Text
-        style={[styles.text, styles.textcenter, { fontSize: 25 }]}
+        style={[styles.text, styles.textcenter, {fontSize: RFPercentage(5), color: 'gray'}]}
       >
         (2 × 4 = 8)
       </Text>
@@ -52,7 +53,7 @@ const WoRegroup = () => {
         Multiply 2 with the digit in tens (T) place.
       </Text>
       <Text
-        style={[styles.text, styles.textcenter, { fontSize: 25 }]}
+        style={[styles.text, styles.textcenter, {fontSize: RFPercentage(5), color: 'gray'}]}
       >
         (2 × 1 = 2)
       </Text>
@@ -61,7 +62,7 @@ const WoRegroup = () => {
         Now, multiply 2 with the digit in hundreds (H) place.
       </Text>
       <Text
-        style={[styles.text, styles.textcenter, { fontSize: 25 }]}
+        style={[styles.text, styles.textcenter, {fontSize: RFPercentage(5), color: 'gray'}]}
       >
         (2 × 0 = 0)
       </Text>
@@ -70,7 +71,7 @@ const WoRegroup = () => {
         Now multiply 2 with the digit in thousands (Th) place.
       </Text>
       <Text
-        style={[styles.text, styles.textcenter, { fontSize: 25 }]}
+        style={[styles.text, styles.textcenter, {fontSize: RFPercentage(5), color: 'gray'}]}
       >
         (2 × 3 = 6)
       </Text>
@@ -78,9 +79,9 @@ const WoRegroup = () => {
       <Text style={styles.text}>
         Therefore, the product of
       </Text>
-      <Text style={{ fontSize: 25, textAlign: "center" }}>
+      <Text style={{ textAlign: "center", fontSize: RFPercentage(5), color: 'gray' }}>
         3014 x 2 =
-        <Text style={[styles.highlight, { fontSize: 25 }]}>
+        <Text style={[ styles.highlight, { fontSize: RFPercentage(5), }]}>
           {" "}
           6028.
         </Text>

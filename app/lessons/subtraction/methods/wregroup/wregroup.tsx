@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView } from "react-native";
 import styles from "../../styles";
 import { Text } from '@/context/FontContent';
+import { RFPercentage } from "react-native-responsive-fontsize";
 const WRegroup = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -40,7 +41,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
           (12 - 8 = 4 ).
@@ -56,7 +57,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
           (15 - 7 = 8 ).
@@ -72,7 +73,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
           (10 - 6 = 4 )
@@ -86,7 +87,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
           (7 - 3 = 4)
@@ -95,9 +96,9 @@ const WRegroup = () => {
       <Text style={styles.text}>
         Therefore, the difference between the two given numbers is
       </Text>
-      <Text style={{ fontSize: 25, textAlign: "center" }}>
+      <Text style={{ textAlign: "center", fontSize: RFPercentage(5), color: 'gray' }}>
         8162 - 3678 =
-        <Text style={[styles.highlight, { fontSize: 25 }]}>
+        <Text style={[ styles.highlight, { fontSize: RFPercentage(5), }]}>
           {" "}
           4484.
         </Text>

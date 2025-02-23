@@ -144,7 +144,7 @@ export default function Test({ subject, stop }: SubjectProp) {
         }
       }
       questions.push({
-        question: `What is ${num1} ${operation} ${num2}?`,
+        question: `${num1} ${operation} ${num2}`,
         correctAnswer,
         options: Array.from(options).sort(() => Math.random() - 0.5),
       });
@@ -240,13 +240,27 @@ export default function Test({ subject, stop }: SubjectProp) {
   };
 
   const playBeepSound = async () => {
-    const { sound } = await Audio.Sound.createAsync(beepSound);
-    await sound.playAsync();
+    try {
+          const { sound } = await Audio.Sound.createAsync(beepSound, { shouldPlay: true });
+          sound.setOnPlaybackStatusUpdate((status) => {
+            if (
+              status &&
+              (status as AVPlaybackStatusSuccess).didJustFinish
+            ) {
+              sound.unloadAsync();
+            }
+          });
+        } catch (error) {
+          console.error("Error playing correct sound:", error);
+        }
   };
 
   const speak = (message: string) => {
-    Speech.speak(message, { voice: 'en-us-x-iol-local',
-      rate: .9, volume: 0.9 });
+    if (grade === '2' || grade === '3'){
+         Speech.speak(message, { voice: 'en-us-x-iol-local' });
+       }else{
+         Speech.speak(message, {voice: 'en-us-x-iol-local', rate: 0.8, volume: 1 });
+       }
   };
   const resetStateForNextQuestion = () => {
     setAnswerSelected(null);
@@ -312,6 +326,7 @@ export default function Test({ subject, stop }: SubjectProp) {
     }
   };
   const handleCloseModal = () => {
+    setShowResultsModal(false)
     router.push("/content/content");
     Speech.stop()
   };
@@ -444,7 +459,7 @@ export default function Test({ subject, stop }: SubjectProp) {
           Let us test what you have learned.
         </Text>
         <Text style={styles.question}>
-          {currentQuestionData.question}
+        What is {"\n"}{currentQuestionData.question}?
         </Text>
         <Text style={styles.timer}>Time Remaining: {timer}s</Text>
         <View style={styles.optionsContainer}>
@@ -475,14 +490,14 @@ export default function Test({ subject, stop }: SubjectProp) {
       <Text style={[styles.title]}>
         Let`s Practice!
       </Text>
-      <Text style={[styles.title, { fontSize: 50 }]}>
-        Let us test what you have learneds
-      </Text>
+      {/* <Text style={[styles.title, { fontSize: 50 }]}>
+        Let us test what you have learned.
+      </Text> */}
       <Text style={styles.text}>
-        Select the first addend then count the steps for the correct answer.
+        Select the first number then count the steps for the correct answer.
       </Text>
       <Text style={styles.problem}>
-        Solve: {startNumber} {lineOperation} {steps}
+        Solve{`\n`}{startNumber} {lineOperation} {steps}
       </Text>
       <Text style={styles.timer}>Time Remaining: {timer}s</Text>
       <View style={styles.numberLineContainer}>

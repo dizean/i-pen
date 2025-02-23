@@ -30,6 +30,9 @@ export default function ContentPage() {
   } = useUser();
   const bgSoundRef = useRef<Audio.Sound | null>(null);
   useEffect(()=>{
+    if(username){
+     setUser( username.split(" ")[0],grade)
+    }
     const fetchData = async () =>{
         try{
           const query = await getUserByName(String(username), Number(grade));
@@ -197,6 +200,11 @@ export default function ContentPage() {
                   isAvailable
                     ? (() => {
                       stopBgMusic();
+                      if(item.route === "Select Grade"){
+                        setPostTestScore(0);
+                        setPreTestScore(0);
+                        setUser(null, null)
+                      }
                       router.push({pathname: item.route as any,params: { topic: item.topic }});
                   
                   })

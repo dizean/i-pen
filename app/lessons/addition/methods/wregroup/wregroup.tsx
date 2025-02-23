@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, ScrollView } from 'react-native';
 import styles from '../../styles';
 import { Text } from '@/context/FontContent';
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 const WRegroup = () => {
   return (
@@ -34,7 +35,7 @@ const WRegroup = () => {
       <Text style={styles.text}>
       Start with the digits in the ones (O) place. 
       </Text>
-      <Text style={[ styles.text, styles.textcenter, {fontSize: 25}]}>(5 + 5 = 10).</Text>
+      <Text style={[ styles.text, styles.textcenter,  {fontSize: RFPercentage(5), color: 'gray'}]}>(5 + 5 = 10).</Text>
       <Text style={styles.text}>
       Here the sum is 10. 
       The tens digit of the sum, that is, 1, will be carried to the preceding column.
@@ -43,7 +44,7 @@ const WRegroup = () => {
       <Text style={styles.text}>
       Add the digits in the tens (T) column along with the carryover 1. 
       </Text>
-      <Text style={[ styles.text, styles.textcenter, {fontSize: 25}]}>1 (carry-over) + 7 + 6 = 14.</Text>
+      <Text style={[ styles.text, styles.textcenter,  {fontSize: RFPercentage(5), color: 'gray'}]}>1 (carry-over) + 7 + 6 = 14.</Text>
       <Text style={styles.text}>
       Here the sum is 14. 
       The tens digit of the sum, that is, 1, will be carried to the hundreds column.
@@ -52,7 +53,7 @@ const WRegroup = () => {
       <Text style={styles.text}>
       Now, add the digits in the hundreds (H) place along with the carryover digit 1.
       </Text>
-      <Text style={[ styles.text, styles.textcenter, {fontSize: 25}]}>1 (carry-over) + 4 + 8 = 13.</Text>
+      <Text style={[ styles.text, styles.textcenter, {fontSize: RFPercentage(5), color: 'gray'}]}>1 (carry-over) + 4 + 8 = 13.</Text>
       <Text style={styles.text}>
       Here the sum is 13. 
       The tens digit of the sum, that is, 1, will be carried to the thousands column.
@@ -61,13 +62,13 @@ const WRegroup = () => {
       <Text style={styles.text}>
       Now, add the digits in the thousands place (Th) along with the carryover digit 1. 
       </Text>
-      <Text style={[ styles.text, styles.textcenter, {fontSize: 25}]}>1 (carry-over) + 3 + 2 = 6.</Text>
+      <Text style={[ styles.text, styles.textcenter,  {fontSize: RFPercentage(5), color: 'gray'}]}>1 (carry-over) + 3 + 2 = 6.</Text>
     <Text style={styles.text}>Step 5:</Text>
     <Text style={styles.text}>
       Therefore, the sum of
     </Text>
-    <Text style={{fontSize: 25, textAlign: 'center'}}>3475 - 2865 = 
-        <Text style={[ styles.highlight,{fontSize: 25}]}> 6340.</Text>
+    <Text style={ {fontSize: RFPercentage(5), color: 'gray', textAlign: 'center'}}>3475 - 2865 = 
+        <Text style={[ styles.highlight, {fontSize: RFPercentage(5)}]}> 6340.</Text>
       </Text>
     </ScrollView>
   );

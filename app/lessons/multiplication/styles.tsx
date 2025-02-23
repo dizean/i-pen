@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   subtitle: {
-    fontSize: RFPercentage(12),
+    fontSize: RFPercentage(11),
     paddingVertical: 5,
     color: '#38bfe7',
-    textShadowColor: 'rgb(250, 250, 250)',
-    textShadowOffset: {width: 7, height: 7},
-    textShadowRadius: 5
+    // textShadowColor: 'rgb(250, 250, 250)',
+    // textShadowOffset: {width: 7, height: 7},
+    // textShadowRadius: 5
   },
   sectiontititle: {
     fontSize: RFPercentage(8),

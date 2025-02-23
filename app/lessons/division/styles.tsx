@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(12),
     paddingVertical: 5,
     color: '#38bfe7',
-    textShadowColor: 'rgb(250, 250, 250)',
-    textShadowOffset: {width: 7, height: 7},
-    textShadowRadius: 5
+    // textShadowColor: 'rgb(250, 250, 250)',
+    // textShadowOffset: {width: 7, height: 7},
+    // textShadowRadius: 5
   },
   sectiontititle: {
     fontSize: RFPercentage(8),

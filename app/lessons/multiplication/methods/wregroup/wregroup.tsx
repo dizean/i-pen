@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView } from "react-native";
 import styles from "../../styles";
 import { Text } from '@/context/FontContent';
+import { RFPercentage } from "react-native-responsive-fontsize";
 const WRegroup = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -43,7 +44,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
          8 × 8 = 64 
@@ -58,7 +59,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
          8 × 6 = 48 + 6 = 54.
@@ -74,7 +75,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
           8 × 4 = 32 + 5 = 37
@@ -88,7 +89,7 @@ const WRegroup = () => {
           style={[
             styles.text,
             styles.textcenter,
-            { fontSize: 25 },
+            {fontSize: RFPercentage(5), color: 'gray'}
           ]}
         >
           8 × 2 = 16 + 3 = 19
@@ -97,9 +98,9 @@ const WRegroup = () => {
       <Text style={styles.text}>
       Therefore, the product of
       </Text>
-      <Text style={{ fontSize: 25, textAlign: "center" }}>
+      <Text style={{ textAlign: "center", fontSize: RFPercentage(5), color: 'gray' }}>
       2468 × 8 = 
-        <Text style={[styles.highlight, { fontSize: 25 }]}>
+      <Text style={[ styles.highlight, { fontSize: RFPercentage(5), }]}>
           {" "}
           19744.
         </Text>

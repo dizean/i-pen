@@ -61,7 +61,6 @@ export default function Introduction() {
       Alert.alert("Error", "Please enter your name.");
       return;
     }
-    
     setUser(nameInput, grade)
     try {
       const existingUser = await getUserByName(nameInput, Number(grade));
@@ -77,7 +76,7 @@ export default function Introduction() {
           router.push('/content/content');
         }
       } else {
-        await insertUser(nameInput.trim(), Number(grade));
+        await insertUser(nameInput, Number(grade));
         stopBgMusic();
         router.push("/test/test");
       }

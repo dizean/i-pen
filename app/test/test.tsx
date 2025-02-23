@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Modal, ImageBackground, Animated, Pressable } from "react-native";
+import { View, TouchableOpacity, Modal, ImageBackground, Animated, Pressable, ScrollView } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRouter } from "expo-router";
@@ -175,7 +175,7 @@ export default function Test() {
         }
       }
       questions.push({
-        question: `What is ${num1} ${operation} ${num2}?`,
+        question:  `${num1} ${operation} ${num2}`,
         correctAnswer,
         options: Array.from(options).sort(() => Math.random() - 0.5),
       });
@@ -373,12 +373,12 @@ export default function Test() {
 useEffect(()=>{
     const fetchData = async () =>{
         try{
+          console.log(username,grade)
           const query = await getUserByName(String(username), Number(grade));
+          console.log(query, 'sa test ni')
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
           setDonepretest(query?.pretestDone ?? "false")
-          const firstName = String(username).split(" ")[0];
-          setUser(firstName, grade)
         }
         catch(err){
           console.log(err)
@@ -387,7 +387,6 @@ useEffect(()=>{
     fetchData()
   },[preTestScore,donepretest])
   const handleCloseModal = (score: number) => {
-    console.log(donepretest)
     try{
       if (donepretest === "true")  {
         console.log('tapos na prestest', preTestScore)
@@ -396,9 +395,12 @@ useEffect(()=>{
         console.log('way pa ka pretest', preTestScore)
         const insertquery = updateScores(String(username), score, 0);
       }
+      const firstName = String(username).split(" ")[0];
+      setUser(firstName, grade)
       router.push({ pathname: "/content/content", params: { score } });
       setTimer(-1);
       Speech.stop();
+      setShowResultsModal(false)
     }
     catch(err){
       console.log(err)
@@ -409,6 +411,7 @@ useEffect(()=>{
   const currentQuestionData = questions[currentQuestion];
   return (
     <View style={styles.container}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
       <View style={styles.wrapper}>
         {preTestScore === null || preTestScore === 0 ? (
           <Text style={[styles.title, { fontSize: RFPercentage(12) }]}>
@@ -419,12 +422,8 @@ useEffect(()=>{
             Post - Test
           </Text>
         )}
-
-        {/* <Text style={[styles.title, { fontSize: RFPercentage(3.5)  }]}>
-          Let us test what you know.
-        </Text> */}
         <Text style={[styles.question,{ fontSize: RFPercentage(8)  }]}>
-          {currentQuestionData.question}
+        What is {"\n"} {currentQuestionData.question} ?
         </Text>
         <Text style={styles.timer}>Time Remaining: {timer}s</Text>
         <View style={styles.optionsContainer}>
@@ -446,6 +445,7 @@ useEffect(()=>{
         </View>
         <Text style={styles.score}>Current Score: {score}</Text>
       </View>
+      </ScrollView>
       <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>

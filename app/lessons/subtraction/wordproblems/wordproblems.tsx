@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, ScrollView } from 'react-native';
 import styles from '../styles';
-import * as Text from "@/context/FontContent";
+import { Text } from '@/context/FontContent';
 const WordProblem = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: '#38bfe7',
-    textShadowColor: 'rgb(250, 250, 250)',
-    textShadowOffset: {width: 7, height: 7},
-    textShadowRadius: 5
+    // textShadowColor: 'rgb(250, 250, 250)',
+    // textShadowOffset: {width: 7, height: 7},
+    // textShadowRadius: 5
   },
   videoContainer: {
     width: "100%",
@@ -115,9 +115,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Font',
     fontWeight: '100',
     color: "#fff",
-    textShadowColor: '#38bfe7',
-    textShadowOffset: {width:4, height:4},
-    textShadowRadius: 5
+    // textShadowColor: '#38bfe7',
+    // textShadowOffset: {width:4, height:4},
+    // textShadowRadius: 5
   },
 });
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView } from "react-native";
 import styles from "../../styles";
 import { Text } from '@/context/FontContent';
+import { RFPercentage } from "react-native-responsive-fontsize";
 const WoRegroup = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -38,7 +39,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (6 - 2 = 4)
@@ -51,7 +52,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (5 - 3 = 2)
@@ -64,7 +65,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (7 - 6 = 1)
@@ -77,7 +78,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (8 - 5 = 3)
@@ -90,7 +91,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (4 - 2 = 2)
@@ -99,9 +100,9 @@ const WoRegroup = () => {
       <Text style={styles.text}>
         Therefore, the difference between the two given numbers is
       </Text>
-      <Text style={{ fontSize: 25, textAlign: "center" }}>
+      <Text style={{ textAlign: "center", fontSize: RFPercentage(5), color: 'gray' }}>
         48756 - 25632 =
-        <Text style={[ styles.highlight, { fontSize: 25 }]}>
+        <Text style={[ styles.highlight, { fontSize: RFPercentage(5), }]}>
           {" "}
           23124.
         </Text>

@@ -70,9 +70,14 @@ const styles = StyleSheet.create({
     color: "#F57F17",
   },
   problem: {
-    fontSize: 20,
-    marginBottom: 20,
+    fontSize: RFPercentage(8),
     textAlign: "center",
+    color: "#38bfe7",
+    fontWeight: "600",
+    borderWidth: 12,
+    borderColor: "#38bfe7",
+    padding: 10,
+    borderRadius: 10
   },
   numberLineContainer: {
     flexDirection: "row",
@@ -98,7 +103,8 @@ const styles = StyleSheet.create({
     borderColor: "#38bfe7",
   },
   numberText: {
-    fontSize: 18,
+    fontSize: RFPercentage(5),
+    color:'white'
   },
   selectedStartingNumber: {
     backgroundColor: "#fbc02d",

@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ScrollView } from "react-native";
 import styles from "../../styles";
 import { Text } from '@/context/FontContent';
+import { RFPercentage } from "react-native-responsive-fontsize";
 const WoRegroup = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -42,7 +43,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (4 + 3 = 7)
@@ -55,7 +56,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+           {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (3 + 2 = 5)
@@ -68,7 +69,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (2 + 1 = 3)
@@ -81,7 +82,7 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (1 + 1 = 2)
@@ -94,16 +95,16 @@ const WoRegroup = () => {
         style={[
           styles.text,
           styles.textcenter,
-          { fontSize: 25 },
+          {fontSize: RFPercentage(5), color: 'gray'}
         ]}
       >
         (1 + 2 = 3)
       </Text>
       <Text style={styles.text}>Step 6:</Text>
       <Text style={styles.text}>Therefore, the sum of</Text>
-      <Text style={{ fontSize: 25, textAlign: "center" }}>
+      <Text style={{ textAlign: "center", fontSize: RFPercentage(5), color: 'gray' }}>
         11234 + 21123 =
-        <Text style={[ styles.highlight, { fontSize: 25 }]}>
+        <Text style={[ styles.highlight, { fontSize: RFPercentage(5), }]}>
           {" "}
           32357.
         </Text>
