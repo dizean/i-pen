@@ -103,14 +103,6 @@ export default function Selection() {
     { image: require("../../assets/images/4.png"), grade: 4 },
     { image: require("../../assets/images/6.png"), grade: 6 },
   ];
-  
-  const gradesbg = [
-    require("../../assets/images/gr3.jpg"),
-    require("../../assets/images/gr5.jpg"),
-    require("../../assets/images/gr2.jpg"),
-    require("../../assets/images/gr4.jpg"),
-    require("../../assets/images/gr6.jpg"),
-  ];
   const  backgroundcolors = [
     '#01c59f',
     '#f77c57',
