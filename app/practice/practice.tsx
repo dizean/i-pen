@@ -127,7 +127,7 @@ export default function Test({ subject, stop }: SubjectProp) {
               break;
           }
           correctAnswer = num1 / num2;
-          operation = "/"
+          operation = "÷"
           break;
         default:
           correctAnswer = 0;

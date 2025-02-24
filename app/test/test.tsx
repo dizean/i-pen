@@ -74,17 +74,17 @@ export default function Test() {
           case 4:
             num1 = Math.floor(Math.random() * 21) + 10;
             num2 = Math.floor(Math.random() * 21) + 10;
-            operations = ["+", "-", "*", "/"];
+            operations = ["+", "-", "*", "÷"];
             break;
           case 5:
             num1 = Math.floor(Math.random() * 31) + 20;
             num2 = Math.floor(Math.random() * 31) + 20;
-            operations = [ "/"];
+            operations =["+", "-", "*", "÷"];
             break;
           case 6:
             num1 = Math.floor(Math.random() * 51) + 30;
             num2 = Math.floor(Math.random() * 51) + 30;
-            operations = [ "/"];
+            operations = ["+", "-", "*", "÷"];
             break;
           default:
             throw new Error("Invalid grade level");

@@ -218,10 +218,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   problemText: {
-    fontSize: 50,
+    fontSize: RFPercentage(12),
     textAlign: "center",
-    color: "#5d4037",
-    padding: 10,
+    color: "#38bfe7",
   },
   numberRow: {
     flexDirection: "row",
@@ -276,6 +275,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: RFPercentage(12),
-    paddingVertical: 20
+    paddingVertical: 20,
+    color: '#38bfe7'
   },
 });

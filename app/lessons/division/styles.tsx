@@ -55,9 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   text: {
-    fontSize: RFPercentage(5),
-    lineHeight: 35,
-    paddingVertical: 5,
+    fontSize: RFPercentage(6),
     color: '#38bfe7',
   },
   image: {

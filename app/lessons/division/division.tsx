@@ -11,6 +11,9 @@ import Parts from "./parts/parts";
 import * as Speech from 'expo-speech'
 import { Text } from "@/context/FontContent";
 import { RFPercentage } from "react-native-responsive-fontsize";
+import MakeEqual from "./methods/makeequal/makeequal";
+import Array from "./methods/array/array";
+import RepeatedSubtraction from "./methods/repeatedsubtraction/repeatedsubtraction";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
     const [isPracticeComplete, setIsPracticeComplete] = useState(false);
@@ -21,7 +24,7 @@ export default function Subtraction() {
       if (speechRef.current) {
         speechRef.current.stopSpeech();
       }
-      if (currentSection < 4) {
+      if (currentSection < 7) {
         setCurrentSection(currentSection + 1);
       }
     };
@@ -67,7 +70,10 @@ export default function Subtraction() {
       {currentSection === 1 && <Objectives />} 
       {currentSection === 2 && <Introduction />} 
       {currentSection === 3 && <Parts />} 
-      {currentSection === 4 && <Test subject="division" stop={stopAll}/>} 
+      {currentSection === 4 && <MakeEqual />} 
+      {currentSection === 5 && <Array />} 
+      {currentSection === 6 && <RepeatedSubtraction />} 
+      {currentSection === 7 && <Test subject="division" stop={stopAll}/>} 
       
       </ScrollView>
       
@@ -90,7 +96,7 @@ export default function Subtraction() {
           currentSection={currentSection}
           ref={speechRef} 
         />
-        {currentSection !== 4 ? (
+        {currentSection !== 7 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handleNext}
