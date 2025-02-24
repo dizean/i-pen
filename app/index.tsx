@@ -19,7 +19,7 @@ export default function App() {
   });
 
   const route = useRouter();
-  const [done, setDone] = useState(true);
+  const [done, setDone] = useState(false);
 
   const speak = () => {
     const welcomeMessage =
