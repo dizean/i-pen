@@ -19,7 +19,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [grade, setGrade] = useState<string | null>(null);
   const [preTestScore, setPreTestScoreState] = useState<number | null>(null);
   const [postTestScore, setPostTestScoreState] = useState<number | null>(null);
-  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [selectedImage, setSelectedImageState] = useState<number | null>(null);
 
   const setUser = (username: string | null, grade: string | null) => {
     setUsername(username);
@@ -33,7 +33,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const setPostTestScore = (score: number) => {
     setPostTestScoreState(score);
   };
-
+  const setSelectedImage = (index: number) => {
+    setSelectedImageState(index);
+  };
   return (
     <UserContext.Provider
       value={{
@@ -45,9 +47,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser,
         setPreTestScore,
         setPostTestScore,
-        setSelectedImage(selectedImage) {
-          
-        },
+        setSelectedImage
       }}
     >
       {children}

@@ -6,6 +6,7 @@ interface User {
   pretestscore: number | 0;
   posttestscore: number | 0;
   pretestDone: string;
+  image: number
 }
 const db = SQLite.openDatabase(
   { name: 'myDatabase.db', location: 'default' },
@@ -28,7 +29,8 @@ export const initDatabase = () => {
         grade INTEGER,
         pretestscore INTEGER,
         posttestscore INTEGER,
-        pretestDone TEXT
+        pretestDone TEXT,
+        image INTEGER
       );`,
       [],
       () => console.log('Users table created'),
@@ -40,12 +42,13 @@ export const initDatabase = () => {
 // Function to insert a user
 export const insertUser = (username: string, grade: number) => {
   return new Promise((resolve, reject) => {
-    const bool = "false"
+    const bool = "false";
+    const randomNumber = Math.floor(Math.random() * 10);
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO Users (username, grade, pretestDone) VALUES (?, ?, ?);`,
-        [username, grade, bool],
-        (_, results) =>{ resolve(results); console.log("success")},
+        `INSERT INTO Users (username, grade, pretestDone, image) VALUES (?, ?, ?, ?);`,
+        [username, grade, bool, randomNumber],
+        (_, results) =>{ resolve(results); console.log(results)},
         (_, error) => {reject(error); console.log(error)}
       );
     });
@@ -70,13 +73,13 @@ export const getUserByName = (username: string, grade: number): Promise<User | n
 };
 
 // Function to update pretest or posttest scores
-export const updateScores = (username: string, pretest: number, posttest: number) => {
+export const updateScores = (username: string, pretest: number, posttest: number, grade: number) => {
   return new Promise((resolve, reject) => {
     console.log(username,pretest,posttest)
     db.transaction((tx) => {
       tx.executeSql(
-        `UPDATE Users SET pretestDone = ?, pretestscore = ?, posttestscore = ? WHERE username = ?;`,
-        ["true",pretest, posttest, username],
+        `UPDATE Users SET pretestDone = ?, pretestscore = ?, posttestscore = ? WHERE username = ? AND grade = ?;`,
+        ["true",pretest, posttest, username,grade],
         (_, results) => {resolve(results); console.log(results)},
         (_, error) => reject(error)
       );

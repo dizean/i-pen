@@ -30,15 +30,14 @@ export default function ContentPage() {
   } = useUser();
   const bgSoundRef = useRef<Audio.Sound | null>(null);
   useEffect(()=>{
-    // if(username){
-    //  setUser( username.split(" ")[0],grade)
-    // }
     const fetchData = async () =>{
         try{
           const query = await getUserByName(String(username), Number(grade));
-          console.log(query, 'sa content')
+          
+          console.log('cpmyemy query', query)
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
+          setSelectedImage(query?.image)
         }
         catch(err){
           console.log(err)
@@ -157,11 +156,11 @@ export default function ContentPage() {
         <View style={styles.headerSection}>
           <Image
             style={{
-              width: "50%",
+              width: "70%",
               height: "50%",
-              backgroundColor: 'red'
+              resizeMode: 'center'
             }}
-            source={currentImage}
+            source={images[selectedImage]}
           />
 
           <View style={styles.namewrap}>
@@ -179,7 +178,7 @@ export default function ContentPage() {
             <Text style={styles.scoreValue}>{postTestScore || 0}</Text>
           </View>
         </View>
-        <ScrollView style={{height: 1000}}>
+        <ScrollView style={{height: 1100}}>
         <View style={styles.gridContainer}>
           {gridItems.map((item, index) => {
             const isLastInUnevenRow =

@@ -373,9 +373,7 @@ export default function Test() {
 useEffect(()=>{
     const fetchData = async () =>{
         try{
-          console.log(username,grade)
           const query = await getUserByName(String(username), Number(grade));
-          console.log(query, 'sa test ni')
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
           setDonepretest(query?.pretestDone ?? "false")
@@ -389,14 +387,12 @@ useEffect(()=>{
   const handleCloseModal = (score: number) => {
     try{
       if (donepretest === "true")  {
-        console.log('tapos na prestest', preTestScore)
-        const insertquery = updateScores(String(username), Number(preTestScore), score);
+        const insertquery = updateScores(String(username), Number(preTestScore), score, Number(grade));
       }else{
+        const insertquery = updateScores(String(username), score, 0,Number(grade));
         console.log('way pa ka pretest', preTestScore)
-        const insertquery = updateScores(String(username), score, 0);
       }
-      const firstName = String(username).split(" ")[0];
-      setUser(firstName, grade)
+      setUser(username, grade)
       router.push({ pathname: "/content/content", params: { score } });
       setTimer(-1);
       Speech.stop();
@@ -455,7 +451,6 @@ useEffect(()=>{
               contentFit="fill"
               transition={1000}
             />
-            <Text style={styles.modalTitle}>Congratulations!</Text>
             <Text style={styles.modalText}>
               Your final score is {score}/{questions.length}.
             </Text>

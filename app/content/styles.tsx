@@ -7,7 +7,7 @@ import { RFPercentage } from "react-native-responsive-fontsize";
     },
     headerSection: {
       width: '100%',
-      height: '30%',
+      height: '25%',
       display: 'flex',
       alignItems: 'center',
       paddingTop: '5%',
@@ -30,13 +30,11 @@ import { RFPercentage } from "react-native-responsive-fontsize";
     namewrap:{
       width: '100%',
       height: '50%',
-      backgroundColor: 'rgba(219, 219, 219, 0.55)'
       
     },
     scoreSection: {
       width: '100%',
       height: '10%',
-      backgroundColor: 'rgba(158, 33, 33, 0.43)'
     },
     scoreCard: {
       width: '100%',
@@ -63,7 +61,7 @@ import { RFPercentage } from "react-native-responsive-fontsize";
       display: 'flex',
       justifyContent: 'space-evenly',
       alignItems:'center',
-      gap: 5,
+      gap: 10,
       height: '100%',
       borderTopLeftRadius: 40,
       borderTopRightRadius: 40

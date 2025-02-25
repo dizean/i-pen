@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     fontSize: RFPercentage(8),
   },
   modalText: {
-    fontSize: RFPercentage(5.5),
+    fontSize: RFPercentage(6),
     textAlign: "center",
   },
   modalButton: {

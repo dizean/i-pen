@@ -61,10 +61,10 @@ export default function Introduction() {
       Alert.alert("Error", "Please enter your name.");
       return;
     }
-    setUser(nameInput, grade)
+    setUser(nameInput.trim(), grade)
+    console.log('introducytoj', nameInput.trim(), grade)
     try {
-      const existingUser = await getUserByName(nameInput, Number(grade));
-      console.log('existing user', existingUser);
+      const existingUser = await getUserByName(nameInput.trim(), Number(grade));
       if (existingUser) {
         stopBgMusic();
         if(existingUser.pretestDone === "false"){
@@ -76,7 +76,7 @@ export default function Introduction() {
           router.push('/content/content');
         }
       } else {
-        await insertUser(nameInput, Number(grade));
+        await insertUser(nameInput.trim(), Number(grade));
         stopBgMusic();
         router.push("/test/test");
       }
