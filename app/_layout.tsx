@@ -9,6 +9,7 @@ export default function RootLayout() {
         <Stack.Screen name="selection/selection" options={{ headerShown: false }} />
         <Stack.Screen name="introduction/introduction" options={{ headerShown: false }} />
         <Stack.Screen name="content/content" options={{ headerShown: false }} />
+        <Stack.Screen name="library/library" options={{ headerShown: false }} />
         <Stack.Screen name="test/test" options={{ headerShown: false }} />
         <Stack.Screen name="lessons/objectives/objectives" options={{ headerShown: false }} />
         {/* COUNTING NUMBERS */}

@@ -30,13 +30,13 @@ export default function ContentPage() {
   } = useUser();
   const bgSoundRef = useRef<Audio.Sound | null>(null);
   useEffect(()=>{
-    if(username){
-     setUser( username.split(" ")[0],grade)
-    }
+    // if(username){
+    //  setUser( username.split(" ")[0],grade)
+    // }
     const fetchData = async () =>{
         try{
           const query = await getUserByName(String(username), Number(grade));
-          console.log(query)
+          console.log(query, 'sa content')
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
         }
@@ -121,8 +121,8 @@ export default function ContentPage() {
       requiredGrade: "4",
     },
     {
-      topic: "",
-      title: "Post Test",
+      topic: ``,
+      title: `Post Test`,
       route: '/test/test',
       requiredGrade: "2",
     },
@@ -153,16 +153,13 @@ export default function ContentPage() {
   return (
     <ImageBackground source={require('../../assets/images/bgblue.jpg')} style={styles.view}>
       <ScrollView
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        style={styles.scrollView}
       >
         <View style={styles.headerSection}>
           <Image
             style={{
-              width: "100%",
-              height: "70%",
-              resizeMode: "center",
+              width: "50%",
+              height: "50%",
+              backgroundColor: 'red'
             }}
             source={currentImage}
           />
@@ -182,6 +179,7 @@ export default function ContentPage() {
             <Text style={styles.scoreValue}>{postTestScore || 0}</Text>
           </View>
         </View>
+        <ScrollView style={{height: 1000}}>
         <View style={styles.gridContainer}>
           {gridItems.map((item, index) => {
             const isLastInUnevenRow =
@@ -213,15 +211,15 @@ export default function ContentPage() {
                 disabled={!isAvailable}
               >
                 <Text style={styles.buttonText}>
-                  {!isAvailable ? "(Unavailable)" : `${item.title}`}
+                  {!isAvailable ? `(Lesson ${'\n'} not Available)` : `${item.title}${'\n'}`}
+                  {isAvailable && `${item.topic}`}
                 </Text>
-                {isAvailable && item.topic !== "" && (
-                  <Text style={styles.buttonText}>{item.topic}</Text>
-                )}
+               
               </TouchableOpacity>
             );
           })}
         </View>
+        </ScrollView>
       </ScrollView>
     </ImageBackground>
   );

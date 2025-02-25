@@ -3,42 +3,40 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 
   const styles = StyleSheet.create({
     view: {
-      flex: 1,
-      height: 1000,
       backgroundColor: '#38bfe7',
-    },
-    scrollView: {
-      height: 1000
     },
     headerSection: {
       width: '100%',
-      height: 350,
+      height: '30%',
       display: 'flex',
       alignItems: 'center',
-      paddingVertical: '10%',
-      paddingHorizontal: '2%',
+      paddingTop: '5%',
       borderBottomLeftRadius: 100,
       borderBottomRightRadius: 100,
       backgroundColor: '#FDDA0D'
     },
     headerText: {
+      textAlign: 'center',
       color: "#FFFFF0",
+      height: '70%',
       fontSize: RFPercentage(8),
-      textAlign: 'center'
     },
     headerTextName: {
       color: "#FFFFF0",
       fontSize: RFPercentage(5),
-      textAlign: 'center'
+      textAlign: 'center',
+      height: '30%',
     },
     namewrap:{
       width: '100%',
-      height: '30%',
+      height: '50%',
+      backgroundColor: 'rgba(219, 219, 219, 0.55)'
       
     },
     scoreSection: {
       width: '100%',
-      height: 100,
+      height: '10%',
+      backgroundColor: 'rgba(158, 33, 33, 0.43)'
     },
     scoreCard: {
       width: '100%',
@@ -65,13 +63,13 @@ import { RFPercentage } from "react-native-responsive-fontsize";
       display: 'flex',
       justifyContent: 'space-evenly',
       alignItems:'center',
-      gap: 10,
-      height: 800,
+      gap: 5,
+      height: '100%',
       borderTopLeftRadius: 40,
       borderTopRightRadius: 40
     },
     fullWidthGridItem: {
-      width: "100%",
+      // width: "100%",
     },
     disabledGridItem: {
       backgroundColor: "#ccc", 
@@ -81,9 +79,8 @@ import { RFPercentage } from "react-native-responsive-fontsize";
     gridItem: {
       backgroundColor: "#FDDA0D",
       width: "100%",
-      height: '15%',
+      height: '25%',
       justifyContent: "center",
-      padding: '2%',
       elevation: 3,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 2 },

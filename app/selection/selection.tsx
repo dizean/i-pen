@@ -146,7 +146,11 @@ export default function Selection() {
     <ImageBackground style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.optionsContainer}>
-          <TouchableOpacity style={styles.optionButton}>
+          <TouchableOpacity style={styles.optionButton}  
+          onPress={()=>{
+            stopBgMusic();
+            router.push('/library/library')
+            }}>
           <ImageBackground
                 source={require('../../assets/images/cloud.jpg')}
                 resizeMode="cover"

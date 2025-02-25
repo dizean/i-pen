@@ -97,5 +97,24 @@ export const deleteUser = (username: string) => {
     });
   });
 };
+export const fetchData = (): Promise<any[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        `SELECT * FROM Users`,
+        [],
+        (_, results) => {
+          let users: any[] = [];
+          for (let i = 0; i < results.rows.length; i++) {
+            users.push(results.rows.item(i));
+          }
+          resolve(users);
+        },
+        (_, error) => reject(error)
+      );
+    });
+  });
+};
+
 
 export default db;
