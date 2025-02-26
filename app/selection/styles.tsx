@@ -24,9 +24,9 @@ const styles = StyleSheet.create({
   },
   title: {
     width: '100%',
-    fontSize: RFPercentage(6.5),
+    fontSize: RFPercentage(7.5),
     color: "#fff", 
-    paddingLeft: '14%',
+    textAlign: 'center',
     textShadowColor: "#FDDA0D", // Border color
     textShadowOffset: { width: 2, height: 2 }, // Position of shadow
     textShadowRadius: 3, // Blur effect

@@ -7,10 +7,11 @@ import {
   Animated,
   Easing,
   TextInput,
+  BackHandler,
 } from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Audio, AVPlaybackStatusSuccess } from "expo-av";
 import { getUserByName, initDatabase, insertUser } from "@/database/dbservice";
 import { Text } from "@/context/FontContent";
@@ -21,13 +22,6 @@ export default function Introduction() {
   const [nameInput, setNameInput] = useState("");
   const bgSoundRef = useRef<Audio.Sound | null>(null);
   const bgMusic = require("../../assets/audio/bgmusic2.mp3");
-  useEffect(() => {
-      playbgmusic();
-    
-      return () => {
-        stopBgMusic(); // Cleanup when unmounting
-      };
-    }, []);
   const playbgmusic=async()=>{
     try {
       if (bgSoundRef.current) {
@@ -56,6 +50,24 @@ export default function Introduction() {
       bgSoundRef.current = null;
     }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+      playbgmusic();
+      return () => stopBgMusic(); // Stops music when navigating away
+    }, [])
+  );
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      stopBgMusic();
+      return false; // Allow default back behavior
+    };
+
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
+  }, []);
   const handleSetUsername = async() => {
     if (nameInput.trim() === "") {
       Alert.alert("Error", "Please enter your name.");

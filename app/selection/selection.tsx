@@ -6,12 +6,14 @@ import {
   Animated,
   Text,
   Easing,
+  BackHandler,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import { useRoute } from "@react-navigation/native";
 import styles from "./styles";
 import { Audio, AVPlaybackStatusSuccess } from "expo-av";
+import { RFPercentage } from "react-native-responsive-fontsize";
 interface RouteParams {
   username?: string;
 }
@@ -23,13 +25,6 @@ export default function Selection() {
   const bgSoundRef = useRef<Audio.Sound | null>(null);
   // const { username } = (route.params as RouteParams) || {};
   const bgMusic = require("../../assets/audio/bgmusic.mp3");
-  useEffect(() => {
-    playbgmusic();
-  
-    return () => {
-      stopBgMusic(); // Cleanup when unmounting
-    };
-  }, []);
   const playbgmusic=async()=>{
     try {
       if (bgSoundRef.current) {
@@ -59,6 +54,24 @@ export default function Selection() {
       bgSoundRef.current = null;
     }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+      playbgmusic();
+      return () => stopBgMusic(); // Stops music when navigating away
+    }, [])
+  );
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      stopBgMusic();
+      return false; // Allow default back behavior
+    };
+
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
+  }, []);
   const navigateToGrade = (grade: string) => {
     setUser(username, grade);
     router.push("/introduction/introduction");
@@ -169,7 +182,7 @@ export default function Selection() {
                 alignItems: 'center'
               }}
             >
-              {"Please Choose Your Grade".split(" ").map((word, index) => (
+              {"Student Archive".split(" ").map((word, index) => (
                 <Animated.Text
                   key={index}
                   style={[

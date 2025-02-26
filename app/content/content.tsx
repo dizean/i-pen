@@ -6,9 +6,10 @@ import {
   Image,
   ScrollView,
   ImageBackground,
+  BackHandler,
 } from "react-native";
 import { Text} from "@/context/FontContent";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRoute } from "@react-navigation/native";
@@ -45,13 +46,6 @@ export default function ContentPage() {
     }
     fetchData()
   },[preTestScore,postTestScore])
-  useEffect(() => {
-      playbgmusic();
-    
-      return () => {
-        stopBgMusic(); 
-      };
-    }, []);
   useEffect(() => {
     if (!selectedImage) {
       const randomIndex = Math.floor(Math.random() * images.length);
@@ -94,6 +88,24 @@ export default function ContentPage() {
       bgSoundRef.current = null;
     }
   };
+  useFocusEffect(
+      React.useCallback(() => {
+        playbgmusic();
+        return () => stopBgMusic(); // Stops music when navigating away
+      }, [])
+    );
+  
+    useEffect(() => {
+      const handleBackPress = () => {
+        stopBgMusic();
+        return false; // Allow default back behavior
+      };
+  
+      BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+      return () => {
+        BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+      };
+    }, []);
   const gridItems = [
     {
       topic: "Addition",
