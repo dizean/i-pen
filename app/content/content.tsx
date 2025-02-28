@@ -34,8 +34,6 @@ export default function ContentPage() {
     const fetchData = async () =>{
         try{
           const query = await getUserByName(String(username), Number(grade));
-          
-          console.log('cpmyemy query', query)
           setPreTestScore(query?.pretestscore ?? 0);
           setPostTestScore(query?.posttestscore ?? 0);
           setSelectedImage(query?.image)
