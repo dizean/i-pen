@@ -9,6 +9,7 @@ import { Image } from "expo-image";
 import { Text } from "@/context/FontContent";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { getUserByName, updateScores } from "@/database/dbservice";
+import questions from "./questions";
 interface Question {
   question: string;
   correctAnswer: number;
@@ -53,135 +54,92 @@ export default function Test() {
   }, [timer, isTimerPaused, isProcessing, currentQuestion]);
 
   const generateQuestions = (count: number): Question[] => {
-    const questions: Question[] = [];
+    const questionPool: Question[] = [];
     const questionSet = new Set<string>();
-    while (questions.length < count) {
-      let num1: number = 0;
-      let num2: number = 0;
-      let operations: string[] = [];
-      if (grade !== null) {
-        switch (+grade) {
-          case 2:
-            num1 = Math.floor(Math.random() * 8) + 1;
-            num2 = Math.floor(Math.random() * 8) + 1;
-            operations = ["+", "-"];
-            break;
-          case 3:
-            num1 = Math.floor(Math.random() * 11) + 5;
-            num2 = Math.floor(Math.random() * 11) + 5;
-            operations = ["+", "-", "*"];
-            break;
-          case 4:
-            num1 = Math.floor(Math.random() * 21) + 10;
-            num2 = Math.floor(Math.random() * 21) + 10;
-            operations = ["+", "-", "*", "÷"];
-            break;
-          case 5:
-            num1 = Math.floor(Math.random() * 31) + 20;
-            num2 = Math.floor(Math.random() * 31) + 20;
-            operations =["+", "-", "*", "÷"];
-            break;
-          case 6:
-            num1 = Math.floor(Math.random() * 51) + 30;
-            num2 = Math.floor(Math.random() * 51) + 30;
-            operations = ["+", "-", "*", "÷"];
-            break;
-          default:
-            throw new Error("Invalid grade level");
-        }
-      } else {
-        console.error("Grade is null");
-        continue;
-      }
-      const operation =
-        operations[Math.floor(Math.random() * operations.length)];
-      let correctAnswer: number;
-      if (operation === "+") {
-        correctAnswer = num1 + num2;
-      } else if (operation === "-") {
-        if (num2 > num1) {
-          [num1, num2] = [num2, num1];
-        }
-        correctAnswer = num1 - num2;
-      } else if (operation === "*") {
-        switch (+grade) {
-          case 3:
-            num1 = Math.floor(Math.random() * 5) + 1;
-            num2 = Math.floor(Math.random() * 5) + 1;
-            break;
-          case 4:
-            num1 = Math.floor(Math.random() * 6) + 5;
-            num2 = Math.floor(Math.random() * 6) + 5;
-            break;
-          case 5:
-            num1 = Math.floor(Math.random() * 11) + 10;
-            num2 = Math.floor(Math.random() * 6) + 5;
-            break;
-          case 6:
-            num1 = Math.floor(Math.random() * 16) + 15;
-            num2 = Math.floor(Math.random() * 11) + 10;
-            break;
-        }
-        num1 = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
-        num2 = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
-        correctAnswer = num1 * num2;
-      } else {
-        switch (+grade) {
-          case 4:
-            while (num1 % num2 !== 0) {
-              num1 = Math.floor(Math.random() * 15) + 1;
-              num2 = Math.floor(Math.random() * 5) + 2;
-            }
-            if (num1 > 40) {
-              num1 = 40;
-            }
-            break;
-          case 5:
-            while (num1 % num2 !== 0) {
-              num1 = Math.floor(Math.random() * 30) + 10;
-              num2 = Math.floor(Math.random() * 10) + 5;
-            }
-            if (num1 > 80) {
-              num1 = 80;
-            }
-            break;
-          case 6:
-            while (num1 % num2 !== 0) {
-              num1 = Math.floor(Math.random() * 50) + 20;
-              num2 = Math.floor(Math.random() * 15) + 5;
-            }
-            if (num1 > 100) {
-              num1 = 100;
-            }
-            break;
-        }
-        correctAnswer = num1 / num2;
-      }
-      const questionText = `${num1} ${operation} ${num2}`;
-
-    if (questionSet.has(questionText)) {
-      continue; // Skip duplicate question
+  
+    if (grade === null) {
+      console.error("Grade is null");
+      return [];
     }
-    
-    questionSet.add(questionText);
-      const options = new Set<number>();
-      options.add(correctAnswer);
-      while (options.size < 4) {
-        const randomOffset = Math.floor(Math.random() * 5) + 1;
-        const randomSign = Math.random() < 0.5 ? -1 : 1;
-        const randomOption = correctAnswer + randomOffset * randomSign;
-        if (randomOption >= 0) {
-          options.add(randomOption);
+  
+    let num1Min: number, num1Max: number, num2Min: number, num2Max: number;
+    let operations: string[] = [];
+  
+    switch (+grade) {
+      case 2:
+        num1Min = num2Min = 1;
+        num1Max = num2Max = 8;
+        operations = ["+", "-"];
+        break;
+      case 3:
+        num1Min = num2Min = 5;
+        num1Max = num2Max = 15;
+        operations = ["+", "-", "*"];
+        break;
+      case 4:
+        num1Min = num2Min = 10;
+        num1Max = num2Max = 30;
+        operations = ["+", "-", "*", "÷"];
+        break;
+      case 5:
+        num1Min = num2Min = 20;
+        num1Max = num2Max = 50;
+        operations = ["+", "-", "*", "÷"];
+        break;
+      case 6:
+        num1Min = num2Min = 30;
+        num1Max = num2Max = 80;
+        operations = ["+", "-", "*", "÷"];
+        break;
+      default:
+        throw new Error("Invalid grade level");
+    }
+    for (let num1 = num1Min; num1 <= num1Max; num1++) {
+      for (let num2 = num2Min; num2 <= num2Max; num2++) {
+        for (const operation of operations) {
+          let correctAnswer: number | null = null;
+  
+          if (operation === "+") {
+            correctAnswer = num1 + num2;
+          } else if (operation === "-") {
+            if (num2 > num1) continue; 
+            correctAnswer = num1 - num2;
+          } else if (operation === "*") {
+            correctAnswer = num1 * num2;
+          } else if (operation === "÷") {
+            if (num2 === 0 || num1 % num2 !== 0) continue; 
+            correctAnswer = num1 / num2;
+          }
+  
+          if (correctAnswer !== null) {
+            const questionText = `${num1} ${operation} ${num2}`;
+            if (!questionSet.has(questionText)) {
+              questionSet.add(questionText);
+              const options = new Set<number>();
+              options.add(correctAnswer);
+              while (options.size < 4) {
+                const randomOffset = Math.floor(Math.random() * 5) + 1;
+                const randomSign = Math.random() < 0.5 ? -1 : 1;
+                const randomOption = correctAnswer + randomOffset * randomSign;
+                if (randomOption >= 0) {
+                  options.add(randomOption);
+                }
+              }
+  
+              questionPool.push({
+                question: questionText,
+                correctAnswer,
+                options: Array.from(options).sort(() => Math.random() - 0.5),
+              });
+            }
+          }
         }
       }
-      questions.push({
-        question:  `${num1} ${operation} ${num2}`,
-        correctAnswer,
-        options: Array.from(options).sort(() => Math.random() - 0.5),
-      });
     }
-    return questions;
+    questionPool.sort(() => Math.random() - 0.5);
+    return questionPool.slice(0, count);
   };
+  
   const playBeepSound = async () => {
     try {
       const { sound } = await Audio.Sound.createAsync(beepSound, { shouldPlay: true });
@@ -309,15 +267,15 @@ export default function Test() {
     setIsTimerPaused(true);
     setIsProcessing(true);
     try {
-      const { sound } = await Audio.Sound.createAsync(cheerSound, { shouldPlay: true });
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (
-          status &&
-          (status as AVPlaybackStatusSuccess).didJustFinish
-        ) {
-          sound.unloadAsync();
-        }
-      });
+      // const { sound } = await Audio.Sound.createAsync(cheerSound, { shouldPlay: true });
+      // sound.setOnPlaybackStatusUpdate((status) => {
+      //   if (
+      //     status &&
+      //     (status as AVPlaybackStatusSuccess).didJustFinish
+      //   ) {
+      //     sound.unloadAsync();
+      //   }
+      // });
       setShowResultsModal(true);
       if(finalScore > 2){
         setTimeout(() => {
@@ -445,12 +403,12 @@ useEffect(()=>{
       <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            <Image
+            {/* <Image
               source={require("../../assets/images/confetti.gif")}
               style={styles.backgroundGif}
               contentFit="fill"
               transition={1000}
-            />
+            /> */}
             <Text style={styles.modalText}>
               Your final score is {score}/{questions.length}.
             </Text>

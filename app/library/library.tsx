@@ -36,9 +36,11 @@ export default function Library() {
       </Text>
 
       {/* Table Header */}
-      <View style={{ flexDirection: "row", borderBottomWidth: 1, padding: 5 }}>
-        <Text style={{ flex: 1, fontSize: RFPercentage(5) }}>Grade</Text>
-        <Text style={{ flex: 3, fontSize: RFPercentage(5) }}>Name</Text>
+      <View style={{ flexDirection: "row", alignItems:'center', borderBottomWidth: 1, padding: 2 }}>
+        <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>Grade</Text>
+        <Text style={{ flex: 3, fontSize: RFPercentage(3) }}>Name</Text>
+        <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>Pre Test Score</Text>
+        <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>Post Test Score</Text>
       </View>
 
       {/* Table Content */}
@@ -49,17 +51,23 @@ export default function Library() {
               key={index}
               style={{
                 flexDirection: "row",
-                padding: 35,
+                padding: 10,
                 borderBottomWidth: 0.5,
                 alignItems: "center",
               }}
               onPress={() => gotoContent(user.username, user.grade, user.pretestDone)}
             >
-              <Text style={{ flex: 1, fontSize: RFPercentage(5) }}>
+              <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>
                 {user.grade}
               </Text>
-              <Text style={{ flex: 3, fontSize: RFPercentage(5) }}>
+              <Text style={{ flex: 3, fontSize: RFPercentage(3) }}>
                 {user.username}
+              </Text>
+              <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>
+                {user.pretestscore}
+              </Text>
+              <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>
+                {user.posttestscore}
               </Text>
             </TouchableOpacity>
           ))

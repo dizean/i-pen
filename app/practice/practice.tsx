@@ -29,156 +29,95 @@ export default function Test({ subject, stop }: SubjectProp) {
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const {grade}= useUser();
-  const [lineOperation, setLineOperation] = useState('')
-  const generateQuestions = (count: number) => {
-    const questions = [];
-    for (let i = 0; i < count; i++) {
-      let num1 = Math.floor(Math.random() * 10);
-      let num2 = Math.floor(Math.random() * (10 - num1));
-      if (grade !== null) {
-        switch (+grade) {
-          case 2:
-            num1 = Math.floor(Math.random() * 8) + 1;
-            num2 = Math.floor(Math.random() * 8) + 1;
-            break;
-          case 3:
-            num1 = Math.floor(Math.random() * 11) + 5;
-            num2 = Math.floor(Math.random() * 11) + 5;
-            break;
-          case 4:
-            num1 = Math.floor(Math.random() * 21) + 10;
-            num2 = Math.floor(Math.random() * 21) + 10;
-            break;
-          case 5:
-            num1 = Math.floor(Math.random() * 31) + 20;
-            num2 = Math.floor(Math.random() * 31) + 20;
-            break;
-          case 6:
-            num1 = Math.floor(Math.random() * 51) + 30;
-            num2 = Math.floor(Math.random() * 51) + 30;
-            break;
-          default:
-            throw new Error("Invalid grade level");
-        }
-      } else {
-        console.error("Grade is null");
-        continue;
-      }
-      let correctAnswer: number;
-      let operation = "";
-      switch (subject) {
-        case "addition":
-          correctAnswer = num1 + num2;
-          operation = "+"
-          break;
-        case "subtraction":
-          if (num2 > num1) {
-            [num1, num2] = [num2, num1];
+  const generateQuestions = (count: number): Question[] => {
+    const questionPool: Question[] = [];
+    const questionSet = new Set<string>();
+  
+    if (grade === null) {
+      console.error("Grade is null");
+      return [];
+    }
+  
+    let num1Min: number, num1Max: number, num2Min: number, num2Max: number;
+    let operations: string[] = [];
+  
+    switch (subject) {
+      case 'addition':
+        num1Min = num2Min = 1;
+        num1Max = num2Max = 8;
+        operations = ["+"];
+        break;
+      case 'subtraction':
+        num1Min = num2Min = 5;
+        num1Max = num2Max = 15;
+        operations = ["-"];
+        break;
+      case 'multiplication':
+        num1Min = num2Min = 10;
+        num1Max = num2Max = 30;
+        operations = ["*"];
+        break;
+      case 'division':
+        num1Min = num2Min = 20;
+        num1Max = num2Max = 50;
+        operations = ["÷"];
+        break;
+      default:
+        throw new Error("Invalid grade level");
+    }
+    for (let num1 = num1Min; num1 <= num1Max; num1++) {
+      for (let num2 = num2Min; num2 <= num2Max; num2++) {
+        for (const operation of operations) {
+          let correctAnswer: number | null = null;
+  
+          if (operation === "+") {
+            correctAnswer = num1 + num2;
+          } else if (operation === "-") {
+            if (num2 > num1) continue; 
+            correctAnswer = num1 - num2;
+          } else if (operation === "*") {
+            correctAnswer = num1 * num2;
+          } else if (operation === "÷") {
+            if (num2 === 0 || num1 % num2 !== 0) continue; 
+            correctAnswer = num1 / num2;
           }
-          correctAnswer = num1 - num2;
-          operation = "-"
-          break;
-        case "multiplication":
-          switch (+grade) {
-            case 3:
-              num1 = Math.floor(Math.random() * 5) + 1;
-              num2 = Math.floor(Math.random() * 5) + 1;
-              break;
-            case 4:
-              num1 = Math.floor(Math.random() * 6) + 5;
-              num2 = Math.floor(Math.random() * 6) + 5;
-              break;
-            case 5:
-              num1 = Math.floor(Math.random() * 11) + 10;
-              num2 = Math.floor(Math.random() * 6) + 5;
-              break;
-            case 6:
-              num1 = Math.floor(Math.random() * 16) + 15;
-              num2 = Math.floor(Math.random() * 11) + 10;
-              break;
+  
+          if (correctAnswer !== null) {
+            const questionText = `${num1} ${operation} ${num2}`;
+            if (!questionSet.has(questionText)) {
+              questionSet.add(questionText);
+              const options = new Set<number>();
+              options.add(correctAnswer);
+              while (options.size < 4) {
+                const randomOffset = Math.floor(Math.random() * 5) + 1;
+                const randomSign = Math.random() < 0.5 ? -1 : 1;
+                const randomOption = correctAnswer + randomOffset * randomSign;
+                if (randomOption >= 0) {
+                  options.add(randomOption);
+                }
+              }
+  
+              questionPool.push({
+                question: questionText,
+                correctAnswer,
+                options: Array.from(options).sort(() => Math.random() - 0.5),
+              });
+            }
           }
-          num1 = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
-          num2 = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
-          correctAnswer = num1 * num2;
-          operation = "*"
-          break;
-        case "division":
-          switch (+grade) {
-            case 4:
-              num2 = Math.floor(Math.random() * 10 + 1);
-              num1 = num2 * Math.floor(Math.random() * 5 + 1);
-              if (num1 > 40) {
-                num1 = 40;
-              }
-              break;
-            case 5:
-              num2 = Math.floor(Math.random() * 10) + 5;
-              num1 = num2 * (Math.floor(Math.random() * 10) + 1);
-              if (num1 > 80) {
-                num1 = 80;
-              }
-              break;
-            case 6:
-              num2 = Math.floor(Math.random() * (20 - 8 + 1)) + 8;
-              num1 = num2 * Math.floor(Math.random() * 15 + 1);
-              if (num1 > 100) {
-                num1 = 100;
-              }
-              break;
-          }
-          correctAnswer = num1 / num2;
-          operation = "÷"
-          break;
-        default:
-          correctAnswer = 0;
-      }
-      setLineOperation(operation)
-      const options = new Set<number>();
-      options.add(correctAnswer);
-      while (options.size < 4) {
-        const randomOffset = Math.floor(Math.random() * 5) + 1;
-        const randomSign = Math.random() < 0.5 ? -1 : 1;
-        const randomOption = correctAnswer + randomOffset * randomSign;
-        if (randomOption >= 0) {
-          options.add(randomOption);
         }
       }
-      questions.push({
-        question: `${num1} ${operation} ${num2}`,
-        correctAnswer,
-        options: Array.from(options).sort(() => Math.random() - 0.5),
-      });
     }
-    return questions;
+  
+    // **Shuffle questions to ensure randomness**
+    questionPool.sort(() => Math.random() - 0.5);
+  
+    // **Return only the requested number of unique questions**
+    return questionPool.slice(0, count);
   };
-  const generateProblems = () => {
-    const problems = [];
-    for (let i = 0; i < 3; i++) {
-      let startNumber = Math.floor(Math.random() * 15) + 1;
-      let steps = Math.floor(Math.random() * 5) + 1;
-      while (startNumber % steps !== 0) {
-        startNumber = Math.floor(Math.random() * 15) + 1;
-        steps = Math.floor(Math.random() * 5) + 1;
-      }
-      problems.push({ startNumber, steps });
-    }
-    return problems;
-  };
-  const [problems] = useState(generateProblems());
-  const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
-  const [currentSelection, setCurrentSelection] = useState<number | null>(null);
-  const [currentSecondSelection, setCurrentSecondSelection] = useState<
-    number | null
-  >(null);
-  const [feedback, setFeedback] = useState("");
-  const [isAnswering, setIsAnswering] = useState(false);
-  const [secondSelectionCorrect, setSecondSelectionCorrect] = useState<
-    boolean | null
-  >(null);
+
   const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
   const [wrongAnswer, setWrongAnswer] = useState<number | null>(null);
   const [answerSelected, setAnswerSelected] = useState<number | null>(null);
-  const numberLine = Array.from({ length: 20 }, (_, i) => i + 1);
   const [questionss, setQuestions] = useState<Question[]>([]);
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [timer, setTimer] = useState(15);
@@ -197,7 +136,7 @@ export default function Test({ subject, stop }: SubjectProp) {
   }, [stop]);
   
   useEffect(() => {
-    const questions = generateQuestions(7);
+    const questions = generateQuestions(10);
     setQuestions(questions);
   }, []);
   useEffect(() => {
@@ -217,8 +156,7 @@ export default function Test({ subject, stop }: SubjectProp) {
   }, [timer, isTimerPaused, isProcessing, score]);
   const handleTimeout = () => {
     if (isProcessing) return;
-    setIsProcessing(true);
-    if (currentPractice === subject) {
+    setIsProcessing(true);{
       const currentQuestionData = questionss[currentQuestion];
       setCorrectAnswer(currentQuestionData.correctAnswer);
       playWrongSound(String(currentQuestionData.correctAnswer), 0);
@@ -233,10 +171,7 @@ export default function Test({ subject, stop }: SubjectProp) {
         }
         setIsProcessing(false);
       }, 2600);
-    } else if (currentPractice === "line") {
-      moveToNextNumberLineQuestion();
-      setIsProcessing(false);
-    }
+    } 
   };
 
   const playBeepSound = async () => {
@@ -360,87 +295,6 @@ export default function Test({ subject, stop }: SubjectProp) {
     }, 2600);
   };
   
-  const handleNumberLineSelection = (number: number) => {
-    if (isProcessing) return;
-    let { startNumber, steps } = problems[currentProblemIndex];
-  
-    if (currentSelection === null) {
-      if (number === startNumber) {
-        setCurrentSelection(startNumber);
-      }
-    } else {
-      let expectedAnswer: number;
-      switch (subject) {
-        case "addition":
-          expectedAnswer = startNumber + steps;
-          break;
-        case "subtraction":
-          if (steps > startNumber) {
-            [startNumber, steps] = [steps, startNumber];
-          }
-          expectedAnswer = startNumber - steps;
-          break;  
-        case "multiplication":
-          expectedAnswer = startNumber * steps;
-          expectedAnswer = Math.min(Math.max(expectedAnswer, 1), 20);
-          break;
-        case "division":
-          if (startNumber % steps === 0) { 
-            expectedAnswer = startNumber / steps;
-          } else {
-            steps = Math.floor(startNumber / 2);
-            expectedAnswer = startNumber / steps;
-          }
-          expectedAnswer = Math.min(Math.max(expectedAnswer, 1), 20);
-          break;
-        default:
-          expectedAnswer = 0;
-      }
-      setIsAnswering(true);
-      setIsTimerPaused(false);
-      setCurrentSecondSelection(number);
-      setCorrectAnswer(expectedAnswer);
-      setSecondSelectionCorrect(number === expectedAnswer);
-  
-      if (number === expectedAnswer) {
-        setScore((prev) => {
-          const newScore = prev + 1;
-          if (currentProblemIndex === problems.length - 1) {
-            cheer(newScore);
-          }
-          return newScore;
-        });
-        playCorrectSound(String(number));
-        setIsTimerPaused(true);
-      } else {
-        setWrongAnswer(currentSecondSelection);
-        playWrongSound(String(expectedAnswer), currentSecondSelection);
-        setIsTimerPaused(true);
-      }
-  
-      setTimeout(() => {
-        moveToNextNumberLineQuestion();
-      }, 1500);
-    }
-  };
-
-  const moveToNextNumberLineQuestion = () => {
-    if (currentProblemIndex < problems.length - 1) {
-      setCurrentProblemIndex((prev) => prev + 1);
-      setCurrentSelection(null);
-      setCurrentSecondSelection(null);
-      setCorrectAnswer(null);
-      setSecondSelectionCorrect(null);
-      setFeedback("");
-      setIsAnswering(false);
-      resetStateForNextQuestion();
-    } else {
-      setFeedback("You've completed all the questions!");
-      setIsTimerPaused(true);
-      setShowResultsModal(true);
-    }
-  };
-
   if (currentPractice === subject) {
     const currentQuestionData = questionss[currentQuestion];
     if (!currentQuestionData) {
@@ -480,50 +334,7 @@ export default function Test({ subject, stop }: SubjectProp) {
           ))}
         </View>
         <Text style={styles.score}>Current Score: {score}</Text>
-      </View>
-    );
-  }
-
-  let { startNumber, steps } = problems[currentProblemIndex];
-  return (
-    <View style={styles.container}>
-      <Text style={[styles.title]}>
-        Let`s Practice!
-      </Text>
-      {/* <Text style={[styles.title, { fontSize: 50 }]}>
-        Let us test what you have learned.
-      </Text> */}
-      <Text style={styles.text}>
-        Select the first number then count the steps for the correct answer.
-      </Text>
-      <Text style={styles.problem}>
-        Solve{`\n`}{startNumber} {lineOperation} {steps}
-      </Text>
-      <Text style={styles.timer}>Time Remaining: {timer}s</Text>
-      <View style={styles.numberLineContainer}>
-        {numberLine.map((num) => (
-          <TouchableOpacity
-            key={num}
-            style={[
-              styles.number,
-              num === currentSelection ? styles.selectedOption : null,
-              num === currentSecondSelection
-                ? secondSelectionCorrect
-                  ? styles.correctOption
-                  : styles.wrongOption
-                : num === correctAnswer
-                ? styles.correctOption
-                : null,
-            ]}
-            onPress={() => handleNumberLineSelection(num)}
-            disabled={isAnswering}
-          >
-            <Text style={styles.numberText}>{num}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-      <Text style={styles.score}>Current Score: {score}</Text>
-      <Modal visible={showResultsModal} transparent={true} animationType="fade">
+        <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>
@@ -549,6 +360,7 @@ export default function Test({ subject, stop }: SubjectProp) {
           </View>
         </View>
       </Modal>
-    </View>
-  );
+      </View>
+    );
+  }
 }
