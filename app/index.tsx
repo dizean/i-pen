@@ -19,7 +19,7 @@ export default function App() {
   });
 
   const route = useRouter();
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
 
   const speak = () => {
     const welcomeMessage =
@@ -35,6 +35,7 @@ export default function App() {
   const stopSpeaking = () => {
     Speech.stop();
     setDone(true);
+    route.push("/selection/selection");
   };
 
   // Ensure fonts are loaded before running useEffect
@@ -83,9 +84,8 @@ export default function App() {
           </View>
           <TouchableOpacity
             style={[styles.button, !done && { backgroundColor: "gray" }]}
-            disabled={!done}
+            // disabled={!done}
             onPress={() => {
-              route.push("/selection/selection");
               stopSpeaking();
             }}
           >
