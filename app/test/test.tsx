@@ -35,7 +35,7 @@ export default function Test() {
   const correctSound = require("../../assets/audio/correct.mp3");
   const cheerSound = require("../../assets/audio/cheer.mp3");
   useEffect(() => {
-    const generatedQuestions = generateQuestions(3);
+    const generatedQuestions = generateQuestions();
     setQuestions(generatedQuestions);
   }, []);
   useEffect(() => {
@@ -53,8 +53,7 @@ export default function Test() {
     return () => clearTimeout(countdown);
   }, [timer, isTimerPaused, isProcessing, currentQuestion]);
 
-  const generateQuestions = (count: number): Question[] => {
-    const questionPool: Question[] = [];
+  const generateQuestions = (): Question[] => {
     const questionSet = new Set<string>();
   
     if (grade === null) {
@@ -68,12 +67,12 @@ export default function Test() {
     switch (+grade) {
       case 2:
         num1Min = num2Min = 1;
-        num1Max = num2Max = 8;
+        num1Max = num2Max = 10;
         operations = ["+", "-"];
         break;
       case 3:
         num1Min = num2Min = 5;
-        num1Max = num2Max = 15;
+        num1Max = num2Max = 20;
         operations = ["+", "-", "*"];
         break;
       case 4:
@@ -82,64 +81,70 @@ export default function Test() {
         operations = ["+", "-", "*", "÷"];
         break;
       case 5:
-        num1Min = num2Min = 20;
-        num1Max = num2Max = 50;
+        num1Min = num2Min = 15;
+        num1Max = num2Max = 60;
         operations = ["+", "-", "*", "÷"];
         break;
       case 6:
-        num1Min = num2Min = 30;
-        num1Max = num2Max = 80;
+        num1Min = num2Min = 20;
+        num1Max = num2Max = 90;
         operations = ["+", "-", "*", "÷"];
         break;
       default:
         throw new Error("Invalid grade level");
     }
-    for (let num1 = num1Min; num1 <= num1Max; num1++) {
-      for (let num2 = num2Min; num2 <= num2Max; num2++) {
-        for (const operation of operations) {
-          let correctAnswer: number | null = null;
   
-          if (operation === "+") {
-            correctAnswer = num1 + num2;
-          } else if (operation === "-") {
-            if (num2 > num1) continue; 
-            correctAnswer = num1 - num2;
-          } else if (operation === "*") {
-            correctAnswer = num1 * num2;
-          } else if (operation === "÷") {
-            if (num2 === 0 || num1 % num2 !== 0) continue; 
-            correctAnswer = num1 / num2;
-          }
+    const operationQuestions: Record<string, Question[]> = {};
+    operations.forEach(op => (operationQuestions[op] = []));
   
-          if (correctAnswer !== null) {
-            const questionText = `${num1} ${operation} ${num2}`;
-            if (!questionSet.has(questionText)) {
-              questionSet.add(questionText);
-              const options = new Set<number>();
-              options.add(correctAnswer);
-              while (options.size < 4) {
-                const randomOffset = Math.floor(Math.random() * 5) + 1;
-                const randomSign = Math.random() < 0.5 ? -1 : 1;
-                const randomOption = correctAnswer + randomOffset * randomSign;
-                if (randomOption >= 0) {
-                  options.add(randomOption);
-                }
-              }
+    while (operations.some(op => operationQuestions[op].length < 2)) {
+      let num1 = Math.floor(Math.random() * (num1Max - num1Min + 1)) + num1Min;
+    let num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
+      const operation = operations[Math.floor(Math.random() * operations.length)];
+      
+      let correctAnswer: number | null = null;
+      if (operation === "+") {
+        correctAnswer = num1 + num2;
+      } else if (operation === "-") {
+        if (num2 > num1) continue;
+        correctAnswer = num1 - num2;
+      } else if (operation === "*") {
+        correctAnswer = num1 * num2;
+      }else if (operation === "÷") {
+        do {
+          num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
+          num1 = num2 * Math.floor(Math.random() * (num1Max / num2) + 2);
+        } while (num1 % num2 !== 0 || num1 / num2 === 1);
   
-              questionPool.push({
-                question: questionText,
-                correctAnswer,
-                options: Array.from(options).sort(() => Math.random() - 0.5),
-              });
+        correctAnswer = num1 / num2;
+      }
+      
+      if (correctAnswer !== null) {
+        const questionText = `${num1} ${operation} ${num2}`;
+        if (!questionSet.has(questionText) && operationQuestions[operation].length < 2) {
+          questionSet.add(questionText);
+          const options = new Set<number>();
+          options.add(correctAnswer);
+          while (options.size < 4) {
+            const randomOffset = Math.floor(Math.random() * 5) + 1;
+            const randomSign = Math.random() < 0.5 ? -1 : 1;
+            const randomOption = correctAnswer + randomOffset * randomSign;
+            if (randomOption >= 0) {
+              options.add(randomOption);
             }
           }
+          operationQuestions[operation].push({
+            question: questionText,
+            correctAnswer,
+            options: Array.from(options).sort(() => Math.random() - 0.5),
+          });
         }
       }
     }
-    questionPool.sort(() => Math.random() - 0.5);
-    return questionPool.slice(0, count);
+    
+    return Object.values(operationQuestions).flat().sort(() => Math.random() - 0.5);
   };
-  
+
   const playBeepSound = async () => {
     try {
       const { sound } = await Audio.Sound.createAsync(beepSound, { shouldPlay: true });
@@ -266,18 +271,11 @@ export default function Test() {
   const cheer = async (finalScore: number) => {
     setIsTimerPaused(true);
     setIsProcessing(true);
+    const totalQuestions = questions.length;
+    const passingScore = Math.ceil(totalQuestions * 0.25);
     try {
-      // const { sound } = await Audio.Sound.createAsync(cheerSound, { shouldPlay: true });
-      // sound.setOnPlaybackStatusUpdate((status) => {
-      //   if (
-      //     status &&
-      //     (status as AVPlaybackStatusSuccess).didJustFinish
-      //   ) {
-      //     sound.unloadAsync();
-      //   }
-      // });
       setShowResultsModal(true);
-      if(finalScore > 2){
+      if(finalScore > passingScore){
         setTimeout(() => {
           Speech.speak(
             `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,

@@ -188,5 +188,8 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 3, // For Android shadow
   },
+  speaking:{
+    backgroundColor: 'gray'
+  }
 });
 export default styles;

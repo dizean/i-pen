@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, TouchableOpacity, Modal } from "react-native";
 import styles from "./styles";
 import { Audio, AVPlaybackStatusSuccess } from "expo-av";
@@ -66,47 +66,15 @@ export default function Test({ subject, stop }: SubjectProp) {
         operations = ["-"];
         break;
       case "multiplication":
-        switch(+grade){
-          case 3:
-            num1Min = num2Min = 1;
-            num1Max = num2Max = 10;
-            break;
-          case 4:
-            num1Min = num2Min = 3;
-            num1Max = num2Max = 12;
-            break;
-          case 5:
-            num1Min = num2Min = 5;
-            num1Max = num2Max = 12;
-            break;
-          case 6:
-            num1Min = num2Min = 5;
-            num1Max = num2Max = 15;
-            break;
-        }
         operations = ["*"];
         break;
       case "division":
-        switch(+grade){
-          case 4:
-            num1Min = num2Min = 1;
-            num1Max = num2Max = 15;
-            break;
-          case 5:
-            num1Min = num2Min = 3;
-            num1Max = num2Max = 25;
-            break;
-          case 6:
-            num1Min = num2Min = 5;
-            num1Max = num2Max = 40;
-            break;
-        }
         operations = ["/"];
         break;
       default:
         throw new Error("Invalid subject");
     }
-    
+
     for (let num1 = num1Min; num1 <= num1Max; num1++) {
       for (let num2 = num2Min; num2 <= num2Max; num2++) {
         for (const operation of operations) {
@@ -120,9 +88,9 @@ export default function Test({ subject, stop }: SubjectProp) {
           } else if (subject === "multiplication") {
             correctAnswer = num1 * num2;
           } else if (subject === "division") {
-            if (num2 === 0) continue; 
+            if (num2 === 0) continue;
             const quotient = Math.floor(Math.random() * 5) + 3;
-            num1 = num2 * quotient; 
+            num1 = num2 * quotient;
             correctAnswer = num1 / num2;
           }
 
@@ -167,6 +135,7 @@ export default function Test({ subject, stop }: SubjectProp) {
   const wrongSound = require("../../assets/audio/wrong.mp3");
   const correctSound = require("../../assets/audio/correct.mp3");
   const cheerSound = require("../../assets/audio/cheer.mp3");
+  const [speaking, setSpeaking] = useState(true);
   useEffect(() => {
     if (stop) {
       setIsTimerPaused(true);
@@ -175,9 +144,22 @@ export default function Test({ subject, stop }: SubjectProp) {
   }, [stop]);
 
   useEffect(() => {
-    const questions = generateQuestions(10);
+    const questions = generateQuestions(4);
     setQuestions(questions);
   }, []);
+    useEffect(() => {
+      if (questionss.length > 0) {
+        let questionText = questionss[currentQuestion].question;
+        if (questionText.includes("-")) {
+          questionText = questionText.replace(/-/g, " minus ");
+        } else if (questionText.includes("*")) {
+          questionText = questionText.replace(/\*/g, " times ");
+        } else if (questionText.includes("/")) {
+          questionText = questionText.replace(/\//g, " divided by ");
+        }
+        speak(questionText);
+      }
+    }, [currentQuestion, questionss]);
   useEffect(() => {
     if (isTimerPaused || timer === 0) {
       if (timer === 0 && !isProcessing) {
@@ -185,14 +167,14 @@ export default function Test({ subject, stop }: SubjectProp) {
       }
       return;
     }
-
-    const countdown = setTimeout(() => {
-      setTimer((prev) => prev - 1);
-      playBeepSound();
-    }, 1000);
-
-    return () => clearTimeout(countdown);
-  }, [timer, isTimerPaused, isProcessing, score]);
+    if (!speaking){
+      const countdown = setTimeout(() => {
+        setTimer((prev) => prev - 1);
+        playBeepSound();
+      }, 1000);
+      return () => clearTimeout(countdown);
+    }
+  }, [timer, isTimerPaused, isProcessing, score, speaking]);
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
@@ -204,7 +186,6 @@ export default function Test({ subject, stop }: SubjectProp) {
         setCurrentQuestion((prev) => prev + 1);
         resetStateForNextQuestion();
       } else {
-        cheer(score);
         setTimer(-1);
       }
       setIsProcessing(false);
@@ -228,12 +209,29 @@ export default function Test({ subject, stop }: SubjectProp) {
 
   const speak = (message: string) => {
     if (grade === "2" || grade === "3") {
-      Speech.speak(message, { voice: "en-us-x-iol-local" });
+      Speech.speak(message, { 
+        voice: "en-us-x-iol-local", 
+        onDone:()=>{setSpeaking(false)}, 
+        onStart:()=>setSpeaking(true)
+      } );
     } else {
       Speech.speak(message, {
         voice: "en-us-x-iol-local",
-        rate: 0.8,
-        volume: 1,
+        onDone:()=>{setSpeaking(false)}, 
+        onStart:()=>setSpeaking(true)
+      });
+    }
+  };
+  const speakResult = (message: string) => {
+    if (grade === "2" || grade === "3") {
+      Speech.speak(message, { 
+        voice: "en-us-x-iol-local", 
+        onDone:()=>{setSpeaking(false)}, 
+      } );
+    } else {
+      Speech.speak(message, {
+        voice: "en-us-x-iol-local",
+        onDone:()=>setSpeaking(false),
       });
     }
   };
@@ -254,7 +252,7 @@ export default function Test({ subject, stop }: SubjectProp) {
           sound.unloadAsync();
         }
       });
-      speak(`Correct!${answer} is the answer.`);
+      speakResult(`Correct!${answer} is the answer.`);
     } catch (error) {
       console.error("Error playing correct sound:", error);
     }
@@ -275,7 +273,7 @@ export default function Test({ subject, stop }: SubjectProp) {
         selected === 0
           ? `Time's up! The correct answer is ${answer}.`
           : `Incorrect! The correct answer is ${answer}.`;
-      speak(message);
+          speakResult(message);
     } catch (error) {
       console.error("Error playing correct sound:", error);
     }
@@ -283,67 +281,78 @@ export default function Test({ subject, stop }: SubjectProp) {
   const cheer = async (finalScore: number) => {
     setIsTimerPaused(true);
     setIsProcessing(true);
+    const totalQuestions = questionss.length;
+    const passingScore = Math.ceil(totalQuestions * 0.25);
     try {
-      // const { sound } = await Audio.Sound.createAsync(cheerSound, {
-      //   shouldPlay: true,
-      // });
-      // sound.setOnPlaybackStatusUpdate((status) => {
-      //   if (status && (status as AVPlaybackStatusSuccess).didJustFinish) {
-      //     sound.unloadAsync();
-      //   }
-      // });
-      setShowResultsModal(true);
-      speak(`Congratulations! Your final score is ${finalScore} out of 10.`);
+      if (finalScore > passingScore) {
+        setTimeout(() => {
+          Speech.speak(
+            `Congratulations! Your final score is ${finalScore} out of ${totalQuestions}.`,
+            {
+              voice: "en-us-x-iol-local",
+            }
+          );
+        }, 3000);
+      } else {
+        setTimeout(() => {
+          Speech.speak(
+            `Your final score is ${finalScore} out of ${totalQuestions}. Better Luck Next Time`,
+            {
+              voice: "en-us-x-iol-local",
+            }
+          );
+        }, 3000);
+      }
     } catch (error) {
       console.error("Error playing correct sound:", error);
     }
   };
   const handleCloseModal = () => {
+    Speech.stop();
     setShowResultsModal(false);
     router.push("/content/content");
-    Speech.stop();
   };
   const handleAdditionAnswer = (selectedAnswer: number) => {
-      if (answerSelected !== null || isProcessing) return;
-      setIsProcessing(true);
-      setAnswerSelected(selectedAnswer);
-      setIsTimerPaused(true);
-      const currentQuestionData = questionss[currentQuestion];
-      const isCorrect = selectedAnswer === currentQuestionData.correctAnswer;
-  
-      if (isCorrect) {
-        setScore((prev) => {
-          const newScore = prev + 1;
-          if (currentQuestion === questionss.length - 1) {
-            setTimeout(() => {
-              cheer(newScore);
-            }, 2000);
-          }
-          return newScore;
-        });
-        setCorrectAnswer(selectedAnswer);
-        playCorrectSound(String(selectedAnswer));
-      } else {
-        setCorrectAnswer(currentQuestionData.correctAnswer);
-        setWrongAnswer(selectedAnswer);
-        playWrongSound(String(currentQuestionData.correctAnswer), selectedAnswer);
+    if (answerSelected !== null || isProcessing) return;
+    setIsProcessing(true);
+    setAnswerSelected(selectedAnswer);
+    setIsTimerPaused(true);
+    const currentQuestionData = questionss[currentQuestion];
+    const isCorrect = selectedAnswer === currentQuestionData.correctAnswer;
+    if (isCorrect) {
+      setScore((prev) => {
+        const newScore = prev + 1;
         if (currentQuestion === questionss.length - 1) {
           setTimeout(() => {
-            cheer(score);
+            cheer(newScore);
           }, 2000);
         }
+        return newScore;
+      });
+      setCorrectAnswer(selectedAnswer);
+      playCorrectSound(String(selectedAnswer));
+    } else {
+      setCorrectAnswer(currentQuestionData.correctAnswer);
+      setWrongAnswer(selectedAnswer);
+      playWrongSound(String(currentQuestionData.correctAnswer), selectedAnswer);
+      if (currentQuestion === questionss.length - 1) {
+        setTimeout(() => {
+          cheer(score);
+        }, 2000);
       }
-  
-      setTimeout(() => {
-        if (currentQuestion < questionss.length - 1) {
-          setCurrentQuestion((prev) => prev + 1);
-          resetStateForNextQuestion();
-        } else {
-          // setShowResultsModal(true);
-        }
-        setIsProcessing(false);
-      }, 2600);
-    };
+    }
+    setTimeout(() => {
+      if (currentQuestion < questionss.length - 1) {
+        setCurrentQuestion((prev) => prev + 1);
+        setSpeaking(true)
+        resetStateForNextQuestion();
+      } else {
+        cheer(score);
+        setShowResultsModal(true);
+      }
+      setIsProcessing(false);
+    }, 2600);
+  };
 
   if (currentPractice === subject) {
     const currentQuestionData = questionss[currentQuestion];
@@ -372,9 +381,10 @@ export default function Test({ subject, stop }: SubjectProp) {
                 answerSelected === option && styles.selectedOption,
                 correctAnswer === option && styles.correctOption,
                 wrongAnswer === option && styles.wrongOption,
+                speaking && styles.speaking
               ]}
               onPress={() => handleAdditionAnswer(option)}
-              disabled={answerSelected !== null}
+              disabled={answerSelected !== null || speaking}
             >
               <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>
@@ -392,7 +402,7 @@ export default function Test({ subject, stop }: SubjectProp) {
                 Congratulations for completing Lesson 1
               </Text>
               <Text style={styles.modalText}>
-                Your final score is {score}/10.
+                Your final score is {score}/{questionss.length}.
               </Text>
               <View style={styles.images}>
                 <Image
