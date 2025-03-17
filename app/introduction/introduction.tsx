@@ -22,27 +22,23 @@ export default function Introduction() {
   const [nameInput, setNameInput] = useState("");
   const bgSoundRef = useRef<Audio.Sound | null>(null);
   const bgMusic = require("../../assets/audio/bgmusic2.mp3");
-  const playbgmusic=async()=>{
+  const playbgmusic = async () => {
     try {
       if (bgSoundRef.current) {
         return;
       }
-      const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
-      bgSoundRef.current = sound;
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (
-          status &&
-          (status as AVPlaybackStatusSuccess).didJustFinish
-        ) {
-          sound.unloadAsync();
-          bgSoundRef.current = null;
-        }
+      const { sound } = await Audio.Sound.createAsync(bgMusic, {
+        shouldPlay: true,
+        volume: 0.8,
+        isLooping: true, // Ensures continuous play
       });
-      await sound.playAsync(); 
+  
+      bgSoundRef.current = sound;
+      await sound.playAsync();
     } catch (error) {
-      console.error("Error playing correct sound:", error);
+      console.error("Error playing background music:", error);
     }
-  }
+  };
   const stopBgMusic = async () => {
     if (bgSoundRef.current) {
       await bgSoundRef.current.stopAsync();

@@ -34,6 +34,7 @@ export default function Test() {
   const wrongSound = require("../../assets/audio/wrong.mp3");
   const correctSound = require("../../assets/audio/correct.mp3");
   const cheerSound = require("../../assets/audio/cheer.mp3");
+  const [speaking, setSpeaking] = useState(true);
   useEffect(() => {
     const generatedQuestions = generateQuestions();
     setQuestions(generatedQuestions);
@@ -45,13 +46,14 @@ export default function Test() {
       }
       return;
     }
-    const countdown = setTimeout(() => {
-      setTimer((prev) => prev - 1);
-      playBeepSound();
-    }, 1000);
-
-    return () => clearTimeout(countdown);
-  }, [timer, isTimerPaused, isProcessing, currentQuestion]);
+    if (!speaking){
+      const countdown = setTimeout(() => {
+        setTimer((prev) => prev - 1);
+        playBeepSound();
+      }, 1000);
+      return () => clearTimeout(countdown);
+    }
+  }, [timer, isTimerPaused, isProcessing, currentQuestion,speaking]);
 
   const generateQuestions = (): Question[] => {
     const questionSet = new Set<string>();
@@ -97,7 +99,7 @@ export default function Test() {
     const operationQuestions: Record<string, Question[]> = {};
     operations.forEach(op => (operationQuestions[op] = []));
   
-    while (operations.some(op => operationQuestions[op].length < 2)) {
+    while (operations.some(op => operationQuestions[op].length < 15)) {
       let num1 = Math.floor(Math.random() * (num1Max - num1Min + 1)) + num1Min;
     let num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
       const operation = operations[Math.floor(Math.random() * operations.length)];
@@ -121,7 +123,7 @@ export default function Test() {
       
       if (correctAnswer !== null) {
         const questionText = `${num1} ${operation} ${num2}`;
-        if (!questionSet.has(questionText) && operationQuestions[operation].length < 2) {
+        if (!questionSet.has(questionText) && operationQuestions[operation].length < 15) {
           questionSet.add(questionText);
           const options = new Set<number>();
           options.add(correctAnswer);
@@ -162,12 +164,34 @@ export default function Test() {
   };
   const speak = (message: string) => {
     if (grade === '2' || grade === '3'){
-      Speech.speak(message, { voice: 'en-us-x-iol-local' });
+     Speech.speak(message, { 
+             voice: "en-us-x-iol-local", 
+             onDone:()=>{setSpeaking(false)}, 
+             onStart:()=>setSpeaking(true),
+             rate: 0.8
+           } );
     }else{
-      Speech.speak(message, {voice: 'en-us-x-iol-local', rate: 0.8, volume: 1 });
+      Speech.speak(message, {
+              voice: "en-us-x-iol-local",
+              onDone:()=>{setSpeaking(false)}, 
+              onStart:()=>setSpeaking(true)
+            });
     }
     
   };
+  // const speakResult = (message: string) => {
+  //     if (grade === "2" || grade === "3") {
+  //       Speech.speak(message, { 
+  //         voice: "en-us-x-iol-local", 
+  //         onDone:()=>{setSpeaking(false)}, 
+  //       } );
+  //     } else {
+  //       Speech.speak(message, {
+  //         voice: "en-us-x-iol-local",
+  //         onDone:()=>setSpeaking(false),
+  //       });
+  //     }
+  //   };
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
@@ -220,6 +244,7 @@ export default function Test() {
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prev) => prev + 1);
+        setSpeaking(true)
         resetStateForNextQuestion();
       } else {
         // setShowResultsModal(true);
@@ -387,9 +412,10 @@ useEffect(()=>{
                 answerSelected === option && styles.selectedOption,
                 correctAnswer === option && styles.correctOption,
                 wrongAnswer === option && styles.wrongOption,
+                speaking && styles.speaking
               ]}
               onPress={() => handleAnswer(option)}
-              disabled={answerSelected !== null}
+              disabled={answerSelected !== null || speaking}
             >
               <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>

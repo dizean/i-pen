@@ -144,7 +144,7 @@ export default function Test({ subject, stop }: SubjectProp) {
   }, [stop]);
 
   useEffect(() => {
-    const questions = generateQuestions(4);
+    const questions = generateQuestions(10);
     setQuestions(questions);
   }, []);
     useEffect(() => {
@@ -212,7 +212,8 @@ export default function Test({ subject, stop }: SubjectProp) {
       Speech.speak(message, { 
         voice: "en-us-x-iol-local", 
         onDone:()=>{setSpeaking(false)}, 
-        onStart:()=>setSpeaking(true)
+        onStart:()=>setSpeaking(true),
+        rate: 0.8
       } );
     } else {
       Speech.speak(message, {
@@ -347,7 +348,6 @@ export default function Test({ subject, stop }: SubjectProp) {
         setSpeaking(true)
         resetStateForNextQuestion();
       } else {
-        cheer(score);
         setShowResultsModal(true);
       }
       setIsProcessing(false);

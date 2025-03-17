@@ -58,27 +58,23 @@ export default function ContentPage() {
     
   },[]);
   const bgMusic = require("../../assets/audio/bgmusic3.mp3");
-  const playbgmusic=async()=>{
-    try {
-      if (bgSoundRef.current) {
-        return;
-      }
-      const { sound } = await Audio.Sound.createAsync(bgMusic, { shouldPlay: true, volume: .8 });
-      bgSoundRef.current = sound;
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (
-          status &&
-          (status as AVPlaybackStatusSuccess).didJustFinish
-        ) {
-          sound.unloadAsync();
-          bgSoundRef.current = null;
-        }
-      });
-      await sound.playAsync(); 
-    } catch (error) {
-      console.error("Error playing correct sound:", error);
-    }
-  }
+   const playbgmusic = async () => {
+     try {
+       if (bgSoundRef.current) {
+         return;
+       }
+       const { sound } = await Audio.Sound.createAsync(bgMusic, {
+         shouldPlay: true,
+         volume: 0.8,
+         isLooping: true, // Ensures continuous play
+       });
+   
+       bgSoundRef.current = sound;
+       await sound.playAsync();
+     } catch (error) {
+       console.error("Error playing background music:", error);
+     }
+   };
   const stopBgMusic = async () => {
     if (bgSoundRef.current) {
       await bgSoundRef.current.stopAsync();
