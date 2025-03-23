@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Modal, ImageBackground, Animated, Pressable, ScrollView } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Modal,
+  ImageBackground,
+  Animated,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRouter } from "expo-router";
@@ -17,8 +25,14 @@ interface Question {
 }
 
 export default function Test() {
-  const { username, setUser, grade, preTestScore, setPreTestScore, setPostTestScore } =
-    useUser();
+  const {
+    username,
+    setUser,
+    grade,
+    preTestScore,
+    setPreTestScore,
+    setPostTestScore,
+  } = useUser();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState<number | null>(null);
@@ -46,26 +60,26 @@ export default function Test() {
       }
       return;
     }
-    if (!speaking){
+    if (!speaking) {
       const countdown = setTimeout(() => {
         setTimer((prev) => prev - 1);
         playBeepSound();
       }, 1000);
       return () => clearTimeout(countdown);
     }
-  }, [timer, isTimerPaused, isProcessing, currentQuestion,speaking]);
+  }, [timer, isTimerPaused, isProcessing, currentQuestion, speaking]);
 
   const generateQuestions = (): Question[] => {
     const questionSet = new Set<string>();
-  
+
     if (grade === null) {
       console.error("Grade is null");
       return [];
     }
-  
+
     let num1Min: number, num1Max: number, num2Min: number, num2Max: number;
     let operations: string[] = [];
-  
+
     switch (+grade) {
       case 2:
         num1Min = num2Min = 1;
@@ -95,15 +109,16 @@ export default function Test() {
       default:
         throw new Error("Invalid grade level");
     }
-  
+
     const operationQuestions: Record<string, Question[]> = {};
-    operations.forEach(op => (operationQuestions[op] = []));
-  
-    while (operations.some(op => operationQuestions[op].length < 15)) {
+    operations.forEach((op) => (operationQuestions[op] = []));
+
+    while (operations.some((op) => operationQuestions[op].length < 1)) {
       let num1 = Math.floor(Math.random() * (num1Max - num1Min + 1)) + num1Min;
-    let num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
-      const operation = operations[Math.floor(Math.random() * operations.length)];
-      
+      let num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
+      const operation =
+        operations[Math.floor(Math.random() * operations.length)];
+
       let correctAnswer: number | null = null;
       if (operation === "+") {
         correctAnswer = num1 + num2;
@@ -112,18 +127,21 @@ export default function Test() {
         correctAnswer = num1 - num2;
       } else if (operation === "*") {
         correctAnswer = num1 * num2;
-      }else if (operation === "÷") {
+      } else if (operation === "÷") {
         do {
           num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
           num1 = num2 * Math.floor(Math.random() * (num1Max / num2) + 2);
         } while (num1 % num2 !== 0 || num1 / num2 === 1);
-  
+
         correctAnswer = num1 / num2;
       }
-      
+
       if (correctAnswer !== null) {
         const questionText = `${num1} ${operation} ${num2}`;
-        if (!questionSet.has(questionText) && operationQuestions[operation].length < 15) {
+        if (
+          !questionSet.has(questionText) &&
+          operationQuestions[operation].length < 1
+        ) {
           questionSet.add(questionText);
           const options = new Set<number>();
           options.add(correctAnswer);
@@ -143,18 +161,18 @@ export default function Test() {
         }
       }
     }
-    
-    return Object.values(operationQuestions).flat().sort(() => Math.random() - 0.5);
-  };
 
+    return Object.values(operationQuestions)
+      .flat()
+      .sort(() => Math.random() - 0.5);
+  };
   const playBeepSound = async () => {
     try {
-      const { sound } = await Audio.Sound.createAsync(beepSound, { shouldPlay: true });
+      const { sound } = await Audio.Sound.createAsync(beepSound, {
+        shouldPlay: true,
+      });
       sound.setOnPlaybackStatusUpdate((status) => {
-        if (
-          status &&
-          (status as AVPlaybackStatusSuccess).didJustFinish
-        ) {
+        if (status && (status as AVPlaybackStatusSuccess).didJustFinish) {
           sound.unloadAsync();
         }
       });
@@ -163,41 +181,37 @@ export default function Test() {
     }
   };
   const speak = (message: string) => {
-    if (grade === '2' || grade === '3'){
-     Speech.speak(message, { 
-             voice: "en-us-x-iol-local", 
-             onDone:()=>{setSpeaking(false)}, 
-             onStart:()=>setSpeaking(true),
-             rate: 0.8
-           } );
-    }else{
+    if (grade === "2" || grade === "3") {
       Speech.speak(message, {
-              voice: "en-us-x-iol-local",
-              onDone:()=>{setSpeaking(false)}, 
-              onStart:()=>setSpeaking(true)
-            });
+        voice: "en-us-x-iol-local",
+        onDone: () => {
+          setSpeaking(false);
+        },
+        onStart: () => setSpeaking(true),
+        rate: 0.8,
+      });
+    } else {
+      Speech.speak(message, {
+        voice: "en-us-x-iol-local",
+        onDone: () => {
+          setSpeaking(false);
+        },
+        onStart: () => setSpeaking(true),
+      });
     }
-    
   };
-  // const speakResult = (message: string) => {
-  //     if (grade === "2" || grade === "3") {
-  //       Speech.speak(message, { 
-  //         voice: "en-us-x-iol-local", 
-  //         onDone:()=>{setSpeaking(false)}, 
-  //       } );
-  //     } else {
-  //       Speech.speak(message, {
-  //         voice: "en-us-x-iol-local",
-  //         onDone:()=>setSpeaking(false),
-  //       });
-  //     }
-  //   };
+  const [result, setResult] = useState({
+    modal: false,
+    correct: false,
+  });
   const handleTimeout = () => {
     if (isProcessing) return;
     setIsProcessing(true);
+    setSpeaking(true);
     const currentQuestionData = questions[currentQuestion];
     setCorrectAnswer(currentQuestionData.correctAnswer);
     playWrongSound(String(currentQuestionData.correctAnswer), 0);
+    setResult({ modal: true, correct: false });
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prev) => prev + 1);
@@ -206,8 +220,10 @@ export default function Test() {
         cheer(score);
         setTimer(-1);
       }
+      
+      setResult({ modal: false, correct: false });
       setIsProcessing(false);
-    }, 2600);
+    }, 3000);
   };
 
   const handleAnswer = (selectedAnswer: number) => {
@@ -234,6 +250,7 @@ export default function Test() {
       setCorrectAnswer(currentQuestionData.correctAnswer);
       setWrongAnswer(selectedAnswer);
       playWrongSound(String(currentQuestionData.correctAnswer), selectedAnswer);
+      
       if (currentQuestion === questions.length - 1) {
         setTimeout(() => {
           cheer(score);
@@ -244,13 +261,14 @@ export default function Test() {
     setTimeout(() => {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion((prev) => prev + 1);
-        setSpeaking(true)
+        setSpeaking(true);
         resetStateForNextQuestion();
       } else {
         // setShowResultsModal(true);
       }
+      setResult({...result,modal:false})
       setIsProcessing(false);
-    }, 2600);
+    }, 3000);
   };
 
   const resetStateForNextQuestion = () => {
@@ -262,13 +280,13 @@ export default function Test() {
   };
 
   const playCorrectSound = async (answer: string) => {
+    setResult({ modal: true, correct: true });
     try {
-      const { sound } = await Audio.Sound.createAsync(correctSound, { shouldPlay: true });
+      const { sound } = await Audio.Sound.createAsync(correctSound, {
+        shouldPlay: true,
+      });
       sound.setOnPlaybackStatusUpdate((status) => {
-        if (
-          status &&
-          (status as AVPlaybackStatusSuccess).didJustFinish
-        ) {
+        if (status && (status as AVPlaybackStatusSuccess).didJustFinish) {
           sound.unloadAsync();
         }
       });
@@ -277,13 +295,13 @@ export default function Test() {
     }
   };
   const playWrongSound = async (answer: string, selected: any) => {
+    setResult({ modal: true, correct: false });
     try {
-      const { sound } = await Audio.Sound.createAsync(wrongSound, { shouldPlay: true });
+      const { sound } = await Audio.Sound.createAsync(wrongSound, {
+        shouldPlay: true,
+      });
       sound.setOnPlaybackStatusUpdate((status) => {
-        if (
-          status &&
-          (status as AVPlaybackStatusSuccess).didJustFinish
-        ) {
+        if (status && (status as AVPlaybackStatusSuccess).didJustFinish) {
           sound.unloadAsync();
         }
       });
@@ -300,12 +318,12 @@ export default function Test() {
     const passingScore = Math.ceil(totalQuestions * 0.25);
     try {
       setShowResultsModal(true);
-      if(finalScore > passingScore){
+      if (finalScore > passingScore) {
         setTimeout(() => {
           Speech.speak(
             `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
             {
-              voice: 'en-us-x-iol-local',
+              voice: "en-us-x-iol-local",
               onDone: () => {
                 setSpeekDone(true);
                 Speech.stop();
@@ -316,12 +334,12 @@ export default function Test() {
             }
           );
         }, 3000);
-      }else{
+      } else {
         setTimeout(() => {
           Speech.speak(
             `Your final score is ${finalScore} out of ${questions.length}. Better Luck Next Time`,
             {
-              voice: 'en-us-x-iol-local',
+              voice: "en-us-x-iol-local",
               onDone: () => {
                 setSpeekDone(true);
                 Speech.stop();
@@ -351,78 +369,87 @@ export default function Test() {
     }
   }, [currentQuestion, questions]);
   const [donepretest, setDonepretest] = useState("false");
-useEffect(()=>{
-    const fetchData = async () =>{
-        try{
-          const query = await getUserByName(String(username), Number(grade));
-          setPreTestScore(query?.pretestscore ?? 0);
-          setPostTestScore(query?.posttestscore ?? 0);
-          setDonepretest(query?.pretestDone ?? "false")
-        }
-        catch(err){
-          console.log(err)
-        }
-    }
-    fetchData()
-  },[preTestScore,donepretest])
-  const handleCloseModal = (score: number) => {
-    try{
-      if (donepretest === "true")  {
-        const insertquery = updateScores(String(username), Number(preTestScore), score, Number(grade));
-      }else{
-        const insertquery = updateScores(String(username), score, 0,Number(grade));
-        console.log('way pa ka pretest', preTestScore)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const query = await getUserByName(String(username), Number(grade));
+        setPreTestScore(query?.pretestscore ?? 0);
+        setPostTestScore(query?.posttestscore ?? 0);
+        setDonepretest(query?.pretestDone ?? "false");
+      } catch (err) {
+        console.log(err);
       }
-      setUser(username, grade)
+    };
+    fetchData();
+  }, [preTestScore, donepretest]);
+  const handleCloseModal = (score: number) => {
+    try {
+      if (donepretest === "true") {
+        const insertquery = updateScores(
+          String(username),
+          Number(preTestScore),
+          score,
+          Number(grade)
+        );
+      } else {
+        const insertquery = updateScores(
+          String(username),
+          score,
+          0,
+          Number(grade)
+        );
+        console.log("way pa ka pretest", preTestScore);
+      }
+      setUser(username, grade);
       router.push({ pathname: "/content/content", params: { score } });
       setTimer(-1);
       Speech.stop();
-      setShowResultsModal(false)
+      setShowResultsModal(false);
+    } catch (err) {
+      console.log(err);
     }
-    catch(err){
-      console.log(err)
-    }
-    
   };
   if (questions.length === 0) return null;
   const currentQuestionData = questions[currentQuestion];
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}>
-      <View style={styles.wrapper}>
-        {preTestScore === null || preTestScore === 0 ? (
-          <Text style={[styles.title, { fontSize: RFPercentage(12) }]}>
-            Pre - Test
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      >
+        <View style={styles.wrapper}>
+          {preTestScore === null || preTestScore === 0 ? (
+            <Text style={[styles.title, { fontSize: RFPercentage(12) }]}>
+              Pre - Test
+            </Text>
+          ) : (
+            <Text style={[styles.title, { fontSize: RFPercentage(12) }]}>
+              Post - Test
+            </Text>
+          )}
+          <Text style={[styles.question, { fontSize: RFPercentage(8) }]}>
+            What is {"\n"} {currentQuestionData.question} ?
           </Text>
-        ) : (
-          <Text style={[styles.title, { fontSize: RFPercentage(12)}]}>
-            Post - Test
-          </Text>
-        )}
-        <Text style={[styles.question,{ fontSize: RFPercentage(8)  }]}>
-        What is {"\n"} {currentQuestionData.question} ?
-        </Text>
-        <Text style={styles.timer}>Time Remaining: {timer}s</Text>
-        <View style={styles.optionsContainer}>
-          {currentQuestionData.options.map((option) => (
-            <TouchableOpacity
-              key={option}
-              style={[
-                styles.optionButton,
-                answerSelected === option && styles.selectedOption,
-                correctAnswer === option && styles.correctOption,
-                wrongAnswer === option && styles.wrongOption,
-                speaking && styles.speaking
-              ]}
-              onPress={() => handleAnswer(option)}
-              disabled={answerSelected !== null || speaking}
-            >
-              <Text style={styles.optionText}>{option}</Text>
-            </TouchableOpacity>
-          ))}
+          <Text style={styles.timer}>Time Remaining: {timer}s</Text>
+          <View style={styles.optionsContainer}>
+            {currentQuestionData.options.map((option) => (
+              <TouchableOpacity
+                key={option}
+                style={[
+                  styles.optionButton,
+                  answerSelected === option && styles.selectedOption,
+                  correctAnswer === option && styles.correctOption,
+                  wrongAnswer === option && styles.wrongOption,
+                  speaking && styles.speaking,
+                ]}
+                onPress={() => handleAnswer(option)}
+                disabled={answerSelected !== null || speaking}
+              >
+                <Text style={styles.optionText}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <Text style={styles.score}>Current Score: {score}</Text>
         </View>
-        <Text style={styles.score}>Current Score: {score}</Text>
-      </View>
       </ScrollView>
       <Modal visible={showResultsModal} transparent={true} animationType="fade">
         <View style={styles.modalOverlay}>
@@ -444,18 +471,31 @@ useEffect(()=>{
                 transition={1000}
               />
             </View>
-            {speekDone &&
-             <TouchableOpacity
-             style={styles.modalButton}
-             onPress={() => handleCloseModal(score)}
-             disabled={!speekDone}
-           >
-             <Text style={styles.modalButtonText}>Proceed</Text>
-           </TouchableOpacity>
-            }
+            {speekDone && (
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => handleCloseModal(score)}
+                disabled={!speekDone}
+              >
+                <Text style={styles.modalButtonText}>Proceed</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </Modal>
+      {result.modal && (
+        <Modal visible={result.modal} transparent={true} animationType="fade">
+              <Image
+                source={
+                  result.correct
+                    ? require("../../assets/images/checked.png")
+                    : require("../../assets/images/no.png")
+                }
+                style={[styles.gif,{backgroundColor: 'none'}]}
+                contentFit="scale-down"
+              />
+        </Modal>
+      )}
     </View>
   );
 }
