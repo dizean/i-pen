@@ -429,6 +429,9 @@ export default function Test() {
           <Text style={[styles.question, { fontSize: RFPercentage(8) }]}>
             What is {"\n"} {currentQuestionData.question} ?
           </Text>
+          <Text style={[styles.count]}>
+          Question {currentQuestion + 1}/{questions.length} {"\n"}
+        </Text>
           <Text style={styles.timer}>Time Remaining: {timer}s</Text>
           <View style={styles.optionsContainer}>
             {currentQuestionData.options.map((option) => (

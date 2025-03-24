@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     textAlign: "center",
     alignSelf: "center", // Center horizontally
-    marginVertical: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
@@ -158,6 +157,12 @@ const styles = StyleSheet.create({
   },
   speaking:{
     backgroundColor: 'gray'
+  },
+  count:{
+    fontSize: RFPercentage(4),
+    textAlign: 'center',
+    padding: '2%',
+    color: "gray"
   }
 });
 
