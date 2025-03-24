@@ -113,7 +113,7 @@ export default function Test() {
     const operationQuestions: Record<string, Question[]> = {};
     operations.forEach((op) => (operationQuestions[op] = []));
 
-    while (operations.some((op) => operationQuestions[op].length < 1)) {
+    while (operations.some((op) => operationQuestions[op].length < 15)) {
       let num1 = Math.floor(Math.random() * (num1Max - num1Min + 1)) + num1Min;
       let num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
       const operation =
@@ -140,7 +140,7 @@ export default function Test() {
         const questionText = `${num1} ${operation} ${num2}`;
         if (
           !questionSet.has(questionText) &&
-          operationQuestions[operation].length < 1
+          operationQuestions[operation].length < 15
         ) {
           questionSet.add(questionText);
           const options = new Set<number>();
