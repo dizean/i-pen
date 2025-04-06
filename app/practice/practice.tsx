@@ -66,7 +66,7 @@ export default function Test({ subject, stop }: SubjectProp) {
         operations = ["-"];
         break;
       case "multiplication":
-        operations = ["*"];
+        operations = ["x"];
         break;
       case "division":
         operations = ["/"];

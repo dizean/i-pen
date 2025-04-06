@@ -89,22 +89,22 @@ export default function Test() {
       case 3:
         num1Min = num2Min = 5;
         num1Max = num2Max = 20;
-        operations = ["+", "-", "*"];
+        operations = ["+", "-", "x"];
         break;
       case 4:
         num1Min = num2Min = 10;
         num1Max = num2Max = 30;
-        operations = ["+", "-", "*", "÷"];
+        operations = ["+", "-", "x", "÷"];
         break;
       case 5:
         num1Min = num2Min = 15;
         num1Max = num2Max = 60;
-        operations = ["+", "-", "*", "÷"];
+        operations = ["+", "-", "x", "÷"];
         break;
       case 6:
         num1Min = num2Min = 20;
         num1Max = num2Max = 90;
-        operations = ["+", "-", "*", "÷"];
+        operations = ["+", "-", "x", "÷"];
         break;
       default:
         throw new Error("Invalid grade level");
@@ -113,7 +113,7 @@ export default function Test() {
     const operationQuestions: Record<string, Question[]> = {};
     operations.forEach((op) => (operationQuestions[op] = []));
 
-    while (operations.some((op) => operationQuestions[op].length < 15)) {
+    while (operations.some((op) => operationQuestions[op].length < 1)) {
       let num1 = Math.floor(Math.random() * (num1Max - num1Min + 1)) + num1Min;
       let num2 = Math.floor(Math.random() * (num2Max - num2Min + 1)) + num2Min;
       const operation =
@@ -125,7 +125,7 @@ export default function Test() {
       } else if (operation === "-") {
         if (num2 > num1) continue;
         correctAnswer = num1 - num2;
-      } else if (operation === "*") {
+      } else if (operation === "x") {
         correctAnswer = num1 * num2;
       } else if (operation === "÷") {
         do {
@@ -140,7 +140,7 @@ export default function Test() {
         const questionText = `${num1} ${operation} ${num2}`;
         if (
           !questionSet.has(questionText) &&
-          operationQuestions[operation].length < 15
+          operationQuestions[operation].length < 1
         ) {
           questionSet.add(questionText);
           const options = new Set<number>();
