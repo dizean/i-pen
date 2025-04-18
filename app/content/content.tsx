@@ -2,18 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   TouchableOpacity,
-  Alert,
   Image,
   ScrollView,
   ImageBackground,
   BackHandler,
 } from "react-native";
-import { Text} from "@/context/FontContent";
+import { Text } from "@/context/FontContent";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useUser } from "@/context/UserContext";
 import styles from "./styles";
 import { useRoute } from "@react-navigation/native";
-import { Audio, AVPlaybackStatusSuccess } from "expo-av";
+import { Audio } from "expo-av";
 import { getUserByName } from "@/database/dbservice";
 interface RouteParams {
   score: number;
@@ -21,60 +20,63 @@ interface RouteParams {
 export default function ContentPage() {
   const router = useRouter();
   const route = useRoute();
-    const { score } = (route.params as RouteParams) || {};
+  const { score } = (route.params as RouteParams) || {};
   const {
-    username, setUser,
+    username,
+    setUser,
     grade,
-    preTestScore,setPreTestScore,
-    postTestScore, setPostTestScore,
-    selectedImage,setSelectedImage
+    preTestScore,
+    setPreTestScore,
+    postTestScore,
+    setPostTestScore,
+    selectedImage,
+    setSelectedImage,
   } = useUser();
   const bgSoundRef = useRef<Audio.Sound | null>(null);
-  useEffect(()=>{
-    const fetchData = async () =>{
-        try{
-          const query = await getUserByName(String(username), Number(grade));
-          setPreTestScore(query?.pretestscore ?? 0);
-          setPostTestScore(query?.posttestscore ?? 0);
-          setSelectedImage(query?.image)
-        }
-        catch(err){
-          console.log(err)
-        }
-    }
-    fetchData()
-  },[preTestScore,postTestScore])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const query = await getUserByName(String(username), Number(grade));
+        setPreTestScore(query?.pretestscore ?? 0);
+        setPostTestScore(query?.posttestscore ?? 0);
+        setSelectedImage(query?.image);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [preTestScore, postTestScore]);
   useEffect(() => {
     if (!selectedImage) {
       const randomIndex = Math.floor(Math.random() * images.length);
       setSelectedImage(images[randomIndex]);
     }
   }, []);
-  const effectiveGrade = grade ?? "0";
-  useEffect(()=>{
-    if(preTestScore === 0 || preTestScore ===null){
-      setPreTestScore(score)
+  let scrollHeight = 0;
+  const effectiveGrade = String(grade ?? "0");
+  useEffect(() => {
+    if (preTestScore === 0 || preTestScore === null) {
+      setPreTestScore(score);
     }
-    
-  },[]);
+  }, []);
   const bgMusic = require("../../assets/audio/bgmusic3.mp3");
-   const playbgmusic = async () => {
-     try {
-       if (bgSoundRef.current) {
-         return;
-       }
-       const { sound } = await Audio.Sound.createAsync(bgMusic, {
-         shouldPlay: true,
-         volume: 0.8,
-         isLooping: true, // Ensures continuous play
-       });
-   
-       bgSoundRef.current = sound;
-       await sound.playAsync();
-     } catch (error) {
-       console.error("Error playing background music:", error);
-     }
-   };
+  const playbgmusic = async () => {
+    try {
+      if (bgSoundRef.current) {
+        return;
+      }
+      const { sound } = await Audio.Sound.createAsync(bgMusic, {
+        shouldPlay: true,
+        volume: 0.8,
+        isLooping: true, // Ensures continuous play
+      });
+
+      bgSoundRef.current = sound;
+      await sound.playAsync();
+    } catch (error) {
+      console.error("Error playing background music:", error);
+    }
+  };
   const stopBgMusic = async () => {
     if (bgSoundRef.current) {
       await bgSoundRef.current.stopAsync();
@@ -83,23 +85,23 @@ export default function ContentPage() {
     }
   };
   useFocusEffect(
-      React.useCallback(() => {
-        playbgmusic();
-        return () => stopBgMusic(); // Stops music when navigating away
-      }, [])
-    );
-  
-    useEffect(() => {
-      const handleBackPress = () => {
-        stopBgMusic();
-        return false; // Allow default back behavior
-      };
-  
-      BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-      return () => {
-        BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-      };
-    }, []);
+    React.useCallback(() => {
+      playbgmusic();
+      return () => stopBgMusic(); // Stops music when navigating away
+    }, [])
+  );
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      stopBgMusic();
+      return false; // Allow default back behavior
+    };
+
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
+  }, []);
   const gridItems = [
     {
       topic: "Addition",
@@ -128,13 +130,13 @@ export default function ContentPage() {
     {
       topic: ``,
       title: `Post Test`,
-      route: '/test/test',
+      route: "/test/test",
       requiredGrade: "2",
     },
     {
       topic: "",
       title: "Select Grade",
-      route: '/selection/selection',
+      route: "/selection/selection",
       requiredGrade: "2",
     },
   ];
@@ -150,22 +152,19 @@ export default function ContentPage() {
     require("../../assets/images/hen.png"),
     require("../../assets/images/sheep.png"),
   ];
-  const [currentImage, setCurrentImage] = useState(images[0]);
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * images.length);
-    setCurrentImage(images[randomIndex]);
-  }, []);
   return (
-    <ImageBackground source={require('../../assets/images/bgblue.jpg')} style={styles.view}>
-      <ScrollView
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ImageBackground
+        source={require("../../assets/images/bgblue.jpg")}
+        style={styles.view}
       >
         <View style={styles.headerSection}>
           <Image
             style={{
-              width: "70%",
-              height: "50%",
-              resizeMode: 'center'
+              width: "50%",
+              height: 200,
             }}
+            resizeMode="center"
             source={images[selectedImage]}
           />
 
@@ -184,48 +183,42 @@ export default function ContentPage() {
             <Text style={styles.scoreValue}>{postTestScore || 0}</Text>
           </View>
         </View>
-        <ScrollView style={{height: 1100}}>
         <View style={styles.gridContainer}>
           {gridItems.map((item, index) => {
-            const isLastInUnevenRow =
-              index === gridItems.length - 1 && gridItems.length % 2 !== 0;
-
             const isAvailable = effectiveGrade >= item.requiredGrade;
+            if (!isAvailable) return null;
             return (
               <TouchableOpacity
                 key={index}
-                style={[
-                  styles.gridItem,
-                  isLastInUnevenRow && styles.fullWidthGridItem,
-                  !isAvailable && styles.disabledGridItem,
-                ]}
+                style={[styles.gridItem]}
                 onPress={
                   isAvailable
-                    ? (() => {
-                      stopBgMusic();
-                      if(item.route === "Select Grade"){
-                        setPostTestScore(0);
-                        setPreTestScore(0);
-                        setUser(null, null)
+                    ? () => {
+                        stopBgMusic();
+                        if (item.route === "Select Grade") {
+                          setPostTestScore(0);
+                          setPreTestScore(0);
+                          setUser(null, null);
+                        }
+                        router.push({
+                          pathname: item.route as any,
+                          params: { topic: item.topic },
+                        });
                       }
-                      router.push({pathname: item.route as any,params: { topic: item.topic }});
-                  
-                  })
                     : undefined
                 }
                 disabled={!isAvailable}
               >
                 <Text style={styles.buttonText}>
-                  {!isAvailable ? `(Lesson ${'\n'} not Available)` : `${item.title}${'\n'}`}
+                  {item.title}
+                  {"\n"}
                   {isAvailable && `${item.topic}`}
                 </Text>
-               
               </TouchableOpacity>
             );
           })}
         </View>
-        </ScrollView>
-      </ScrollView>
-    </ImageBackground>
+      </ImageBackground>
+    </ScrollView>
   );
 }
