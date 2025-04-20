@@ -19,25 +19,29 @@ export default function Subtraction() {
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
   const router = useRouter();
   const speechRef = useRef<{ stopSpeech: () => void } | null>(null);
-
+  const sectionRef = useRef<any>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const handleSpeechToggle = () => {
+    if (sectionRef.current) {
+      sectionRef.current.toggleSpeech();
+      setIsSpeaking((prev) => !prev);
+    }
+  };
+  const stopCurrentSpeech = () => {
+    if (sectionRef.current) {
+      sectionRef.current.stopSpeech();
+    }
+    setIsSpeaking(false);
+  };
   const handleNext = () => {
-    if (speechRef.current) {
-      speechRef.current.stopSpeech();
-    }
-    if (currentSection < 7) {
-      setCurrentSection(currentSection + 1);
-    }
+    stopCurrentSpeech();
+    if (currentSection < 11) setCurrentSection((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    if (speechRef.current) {
-      speechRef.current.stopSpeech();
-    }
-    if (currentSection > 1) {
-      setCurrentSection(currentSection - 1);
-    }
+    stopCurrentSpeech();
+    if (currentSection > 1) setCurrentSection((prev) => prev - 1);
   };
-
   const handlePracticeComplete = () => {
     setIsPracticeComplete(true);
     setCurrentSection(6);
@@ -52,28 +56,7 @@ export default function Subtraction() {
   };
   return (
     <>
-      <ImageBackground
-        source={require("../../../assets/images/bluebgcut.png")}
-        style={{ flex: 1, backgroundColor: "#000" }}
-      >
-        <ImageBackground
-          source={require("../../../assets/images/bluebgcut.png")}
-        >
-          <TouchableOpacity
-            style={{
-              width: "100%",
-              paddingHorizontal: "5%",
-              paddingVertical: "5%",
-              borderBottomWidth: 1,
-              borderColor: "#38bfe7",
-            }}
-            onPress={() => router.push("/content/content")}
-          >
-            <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-              <AntDesign name="home" size={40} color="#38bfe7" />
-            </Text>
-          </TouchableOpacity>
-        </ImageBackground>
+      <ImageBackground style={{ flex: 1, backgroundColor: "#fff" }}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {currentSection === 1 && <Objectives />}
           {currentSection === 2 && <Introduction />}
@@ -85,8 +68,7 @@ export default function Subtraction() {
         </ScrollView>
       </ImageBackground>
       <ImageBackground
-        source={require("../../../assets/images/bluebgcut.png")}
-        style={styles.fixedButtonContainer}
+        style={[styles.fixedButtonContainer, { backgroundColor: "white" }]}
       >
         {currentSection !== 1 ? (
           <TouchableOpacity

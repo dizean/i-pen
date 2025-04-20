@@ -34,20 +34,27 @@ const styles = StyleSheet.create({
     color: "#1a237e",
   },
   container: {
-    
     gap: 5
+  },
+  playnav:{
+    paddingBottom: "5%",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    backgroundColor: "white",
+    top: 0, 
+    zIndex: 9999
   },
   title: {
     fontSize: 50,
     paddingVertical: 5
   },
   subtitle: {
-    fontSize: RFPercentage(12),
+    fontSize: RFPercentage(10),
     paddingVertical: 5,
-    color: '#38bfe7',
-    // textShadowColor: 'rgb(250, 250, 250)',
-    // textShadowOffset: {width: 7, height: 7},
-    // textShadowRadius: 5
+    color: '#38bfe7'
   },
   sectiontititle: {
     fontSize: RFPercentage(8),
@@ -57,7 +64,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: RFPercentage(6),
     paddingVertical: 5,
-    color: '#38bfe7',
+    color: '#4f4f4f',
   },
   image: {
     width: '100%',

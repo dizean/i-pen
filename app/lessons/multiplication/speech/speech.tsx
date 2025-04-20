@@ -105,7 +105,7 @@ const getTextListForSection = (currentSection: number) => {
           ];
     case 5:
         return [
-            "Methods in Solving multiplication Problem",
+            "Methods in Solving multiplication Problem ",
             "multiplication Without Regrouping",
            `Multiplication of two numbers without regrouping involves smaller numbers where there is no need to take a carry-over to the next higher place value.`,
             "Example:",

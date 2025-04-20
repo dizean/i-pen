@@ -1,11 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { ScrollView, TouchableOpacity, ImageBackground } from "react-native";
 import { useRouter } from "expo-router";
 import styles from "./styles";
 import Examples from "../examples/examples";
@@ -19,35 +13,36 @@ import WordProblem from "./wordproblems/wordproblems";
 import SpeechComponent from "./speech/speech";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import VideoPlayer from "../video/video";
-// import Test from "./practice/practice";
 import Objectives from "../objectives/objectives";
 import Test from "@/app/practice/practice";
-import { Text } from "@/context/FontContent";
-import { RFPercentage } from "react-native-responsive-fontsize";
 export default function Addition() {
   const [currentSection, setCurrentSection] = useState(1);
   const [isPracticeComplete, setIsPracticeComplete] = useState(false);
   const router = useRouter();
   const speechRef = useRef<{ stopSpeech: () => void } | null>(null);
-
+  const sectionRef = useRef<any>(null);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const handleSpeechToggle = () => {
+    if (sectionRef.current) {
+      sectionRef.current.toggleSpeech();
+      setIsSpeaking((prev) => !prev);
+    }
+  };
+  const stopCurrentSpeech = () => {
+    if (sectionRef.current) {
+      sectionRef.current.stopSpeech();
+    }
+    setIsSpeaking(false);
+  };
   const handleNext = () => {
-    if (speechRef.current) {
-      speechRef.current.stopSpeech();
-    }
-    if (currentSection < 11) {
-      setCurrentSection(currentSection + 1);
-    }
+    stopCurrentSpeech();
+    if (currentSection < 11) setCurrentSection((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    if (speechRef.current) {
-      speechRef.current.stopSpeech();
-    }
-    if (currentSection > 1) {
-      setCurrentSection(currentSection - 1);
-    }
+    stopCurrentSpeech();
+    if (currentSection > 1) setCurrentSection((prev) => prev - 1);
   };
-
   const handlePracticeComplete = () => {
     setIsPracticeComplete(true);
     setCurrentSection(6);
@@ -63,32 +58,12 @@ export default function Addition() {
   };
   return (
     <>
-      <ImageBackground
-        source={require("../../../assets/images/bgyellowcut.png")}
-        style={{ flex: 1, backgroundColor: "#FDDA0D" }}
-      >
-        <ImageBackground
-          source={require("../../../assets/images/bgyellowcut.png")}
-        >
-          <TouchableOpacity
-            style={{
-              width: "100%",
-              paddingHorizontal: "5%",
-              paddingVertical: "5%",
-              borderBottomWidth: 1,
-              borderColor: "#38bfe7",
-            }}
-            onPress={() => router.push("/content/content")}
-          >
-            <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-              <AntDesign name="home" size={40} color="#38bfe7" />
-            </Text>
-          </TouchableOpacity>
-        </ImageBackground>
+      <ImageBackground style={{ flex: 1, backgroundColor: "#fff" }}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {currentSection === 1 && <Objectives />}
           {currentSection === 2 && <VideoPlayer />}
-          {currentSection === 3 && <Introduction />}
+          {currentSection === 3 && <Introduction ref={sectionRef} />}
+
           {currentSection === 4 && <Parts />}
           {currentSection === 5 && (
             <Examples onComplete={handlePracticeComplete} />
@@ -101,10 +76,7 @@ export default function Addition() {
           {currentSection === 11 && <Test subject="addition" stop={stopAll} />}
         </ScrollView>
       </ImageBackground>
-      <ImageBackground
-        source={require("../../../assets/images/bgyellowcut.png")}
-        style={styles.fixedButtonContainer}
-      >
+      <ImageBackground style={[styles.fixedButtonContainer, { backgroundColor: "white" }]}>
         {currentSection !== 1 ? (
           <TouchableOpacity
             style={styles.button}
@@ -118,7 +90,6 @@ export default function Addition() {
             <AntDesign name="home" size={30} color="#38bfe7" />
           </TouchableOpacity>
         )}
-        <SpeechComponent currentSection={currentSection} ref={speechRef} />
         {currentSection !== 11 ? (
           <TouchableOpacity
             style={styles.button}

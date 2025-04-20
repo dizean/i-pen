@@ -1,50 +1,111 @@
-import React from 'react';
-import {  View } from 'react-native';
-import styles from '../styles';
-import { Text } from '@/context/FontContent';
-const Parts = () => {
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { View, TouchableOpacity, ImageBackground } from "react-native";
+import * as Speech from "expo-speech";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import styles from "../styles";
+import { Text } from "@/context/FontContent";
+import { Image } from "expo-image";
+const Parts = forwardRef((props, ref) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const router = useRouter();
+  const content = [
+    { id: 1, text: "Parts of Addition", styling: styles.subtitle },
+    { id: 2, text: "Addends", styling: styles.sectiontititle },
+    { id: 3, text: "The numbers that are added together are known as the addends.", styling: styles.text },
+    { id: 4, text: "Addition Symbol", styling: styles.sectiontititle },
+    { id: 5, text: "The addition symbol (+) is placed between the addends", styling: styles.text },
+    { id: 6, text: "The Sum", styling: styles.sectiontititle },
+    { id: 7, text: "The final result obtained after adding the addends is known as the sum.", styling: styles.text },
+  ];  
+  useImperativeHandle(ref, () => ({
+    toggleSpeech: () => handleSpeechToggle(),
+    stopSpeech: () => stopSpeaking(),
+  }));
+
+  useEffect(() => {
+    return () => {
+      Speech.stop();
+    };
+  }, []);
+
+  const handleSpeechToggle = () => {
+    if (isSpeaking) {
+      stopSpeaking();
+    } else {
+      startSpeaking();
+    }
+  };
+  const startSpeaking = () => {
+    setIsSpeaking(true);
+    setCurrentIndex(0);
+    Speech.speak(content[0].text, { onDone: () => speakNext(1) });
+  };
+
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+    setCurrentIndex(-1);
+  };
+
+  const speakNext = (index: number) => {
+    if (index < content.length) {
+      setCurrentIndex(index);
+      Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
+    } else {
+      setIsSpeaking(false);
+      setCurrentIndex(-1);
+    }
+  };
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>Parts of Addition</Text>
-      <Text style={styles.sectiontititle}>Addends</Text>
-      <Text style={styles.textcenter}>
-        <Text style={styles.text}>
-          <Text style={styles.highlight}>1</Text> 
-          <Text> + </Text>
-          <Text style={styles.highlight}>1</Text>
-        <Text> = </Text>
-        <Text> ? </Text>
-        </Text>
-      </Text>
-      <Text style={styles.text}>The numbers that are added are known as the addends.</Text>
-      <Text style={styles.sectiontititle}>Addition Symbol</Text>
-      <Text style={styles.textcenter}>
-        <Text style={styles.text}>
-        <Text>1</Text>
-        <Text style={styles.highlight}> + </Text>
-        <Text>1</Text>
-        <Text> = </Text>
-        <Text> ? </Text>
-        </Text>
-      </Text>
-      <Text style={styles.text}>
-        There is the addition symbol (+) which is placed in between the addends.
-      </Text>
-      <Text style={styles.sectiontititle}>Sum</Text>
-      <Text style={styles.textcenter}>
-        <Text style={styles.text}>
-        <Text>1</Text>
-        <Text> + </Text>
-        <Text>1</Text>
-        <Text style={styles.highlight}> = </Text>
-        <Text> ? </Text>
-        </Text>
-      </Text>
-        
-      <Text style={styles.text}>
-        The final result obtained after adding the addends is known as the sum.
-      </Text>
+    <View>
+      <ImageBackground style={styles.playnav}>
+        <TouchableOpacity
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => router.push("/content/content")}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={40} color="#38bfe7" />
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleSpeechToggle}>
+          {isSpeaking ? (
+            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+          ) : (
+            <AntDesign name="play" size={40} color="#38bfe7" />
+          )}
+        </TouchableOpacity>
+      </ImageBackground>
+      <View style={styles.container}>
+        {content.map((line, index) => (
+          <View key={index}>
+            <Text
+              style={[
+                line.styling,
+                index === currentIndex
+                  ? { marginBottom: 10, color: "#FFA500" }
+                  : { marginBottom: 10 },
+              ]}
+            >
+              {line.text}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <Image
+        contentFit="contain"
+        source={require("../../../../assets/images/ADD.png")}
+        style={[styles.image, { height: 200 }]}
+      />
     </View>
   );
-};
+});
 export default Parts;

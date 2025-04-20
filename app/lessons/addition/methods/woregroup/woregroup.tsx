@@ -1,116 +1,124 @@
-import React from "react";
-import { Image, ScrollView } from "react-native";
-import styles from "../../styles";
-import { Text } from '@/context/FontContent';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { View, TouchableOpacity, ImageBackground } from "react-native";
+import * as Speech from "expo-speech";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
 import { RFPercentage } from "react-native-responsive-fontsize";
-const WoRegroup = () => {
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Title */}
-      <Text style={styles.subtitle}>Methods in Solving Addition Problem</Text>
-      <Text style={styles.sectiontititle}>Addition Without Regrouping</Text>
+import styles from "../../styles";
+import { Text } from "@/context/FontContent";
+import { Image } from "expo-image";
+const WoRegroup = forwardRef((props, ref) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const router = useRouter();
+  const content = [
+    { id: 1, text: "Methods in Solving Addition Problems", styling: styles.subtitle },
+    { id: 2, text: "Addition Without Regrouping", styling: styles.sectiontititle },
+    { id: 3, text: "The addition in which the sum of the digits is less than or equal to 9 in each column is called addition without regrouping.", styling: styles.text },
+    { id: 4, text: "Let us understand how to add two or more numbers without regrouping with the help of an example.", styling: styles.text },
+    { id: 5, text: "Example:", styling: styles.text },
+    { id: 6, text: "Add 11234 and 21123", styling: styles.text },
+    { id: 7, text: "Solution:", styling: styles.text },
+    { id: 8, text: "Step 1:", styling: styles.text },
+    { id: 9, text: "Start with the digits in the ones (O) column.", styling: styles.text },
+    { id: 10, text: "(4 + 3 = 7).", styling: styles.text },
+    { id: 11, text: "Step 2:", styling: styles.text },
+    { id: 12, text: "Move to the digits in the tens (T) column.", styling: styles.text },
+    { id: 13, text: "(3 + 2 = 5)", styling: styles.text },
+    { id: 14, text: "Step 3:", styling: styles.text },
+    { id: 15, text: "Now add the digits in the hundreds (H) column.", styling: styles.text },
+    { id: 16, text: "(2 + 1 = 3)", styling: styles.text },
+    { id: 17, text: "Step 4:", styling: styles.text },
+    { id: 18, text: " After this, add the digits in the thousands (Th) column.", styling: styles.text },
+    { id: 19, text: "(1 + 1 = 2).", styling: styles.text },
+    { id: 20, text: "Step 5:", styling: styles.text },
+    { id: 21, text: "Finally, add the digits in the ten thousands (T-th) column.", styling: styles.text },
+    { id: 22, text: "(1 + 2 = 3)", styling: styles.text },
+    { id: 23, text: "Step 6:", styling: styles.text },
+    { id: 24, text: "Hence,", styling: styles.text },
+    { id: 25, text: "11234 + 21123 = 32357", styling: styles.text }
+  ];  
+  useImperativeHandle(ref, () => ({
+    toggleSpeech: () => handleSpeechToggle(),
+    stopSpeech: () => stopSpeaking(),
+  }));
+  
+  useEffect(() => {
+    return () => {
+      Speech.stop(); 
+    };
+  }, []);
+  
+  const handleSpeechToggle = () => {
+    if (isSpeaking) {
+      stopSpeaking();
+    } else {
+      startSpeaking();
+    }
+  };
+  const startSpeaking = () => {
+    setIsSpeaking(true);
+    setCurrentIndex(0); 
+    Speech.speak(content[0].text, { onDone: () => speakNext(1) });
+  };
 
-      {/* Section 1 */}
-      <Text style={styles.text}>
-        The addition in which the sum of the digits is less than or equal to 9
-        in each column is called addition without regrouping.
-      </Text>
-      <Text style={styles.text}>
-        Let us understand how to add two or more numbers without regrouping with
-        the help of an example.
-      </Text>
-      <Text style={styles.text}>Example:</Text>
-      <Text style={styles.text}>
-        Add
-        <Text > 11234</Text> and
-        <Text > 21123</Text>
-      </Text>
-      <Text style={styles.text}>Solution:</Text>
-      {/* Section 2 */}
-      <Text style={styles.text}>
-        We will use the following given steps and try to relate them with the
-        following figure.
-      </Text>
-      <Image
-        source={require("../../../../../assets/images/woregroup1.png")}
-        style={styles.image}
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+    setCurrentIndex(-1); 
+  };
+
+  const speakNext = (index: number) => {
+    if (index < content.length) {
+      setCurrentIndex(index); 
+      Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
+    } else {
+      setIsSpeaking(false);
+      setCurrentIndex(-1);
+    }
+  };
+  return (
+    <View>
+      <ImageBackground
+        style={styles.playnav}
+      >
+        <TouchableOpacity
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => router.push("/content/content")}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={40} color="#38bfe7" />
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleSpeechToggle}>
+          {isSpeaking ? (
+            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+          ) : (
+            <AntDesign name="play" size={40} color="#38bfe7" />
+          )}
+        </TouchableOpacity>
+      </ImageBackground>
+      <View style={styles.container}>
+        {content.map((line, index) => (
+          <Text
+            key={index}
+            style={[
+              line.styling,
+              index === currentIndex
+                ? { marginBottom: 10, color: "#FFA500", }
+                : { marginBottom: 10 },
+            ]}
+          >
+            {line.text}
+          </Text>
+        ))}
+        <Image source={require('../../../../../assets/images/woregroup1.png')}
+        style={[styles.image, {height:200}]}
       />
-      <Text style={styles.text}>Step 1:</Text>
-      <Text style={styles.text}>
-        Start with the digits in the ones (O) column.
-      </Text>
-      <Text
-        style={[
-          styles.text,
-          styles.textcenter,
-          {fontSize: RFPercentage(5), color: 'gray'}
-        ]}
-      >
-        (4 + 3 = 7)
-      </Text>
-      <Text style={styles.text}>Step 2:</Text>
-      <Text style={styles.text}>
-        Move to the digits in the tens (T) column.
-      </Text>
-      <Text
-        style={[
-          styles.text,
-          styles.textcenter,
-           {fontSize: RFPercentage(5), color: 'gray'}
-        ]}
-      >
-        (3 + 2 = 5)
-      </Text>
-      <Text style={styles.text}>Step 3:</Text>
-      <Text style={styles.text}>
-        Now add the digits in the hundreds (H) column.
-      </Text>
-      <Text
-        style={[
-          styles.text,
-          styles.textcenter,
-          {fontSize: RFPercentage(5), color: 'gray'}
-        ]}
-      >
-        (2 + 1 = 3)
-      </Text>
-      <Text style={styles.text}>Step 4:</Text>
-      <Text style={styles.text}>
-        After this, add the digits in the thousands (Th) column.
-      </Text>
-      <Text
-        style={[
-          styles.text,
-          styles.textcenter,
-          {fontSize: RFPercentage(5), color: 'gray'}
-        ]}
-      >
-        (1 + 1 = 2)
-      </Text>
-      <Text style={styles.text}>Step 5:</Text>
-      <Text style={styles.text}>
-        Finally, add the digits in the ten thousands (T-th) column.
-      </Text>
-      <Text
-        style={[
-          styles.text,
-          styles.textcenter,
-          {fontSize: RFPercentage(5), color: 'gray'}
-        ]}
-      >
-        (1 + 2 = 3)
-      </Text>
-      <Text style={styles.text}>Step 6:</Text>
-      <Text style={styles.text}>Therefore, the sum of</Text>
-      <Text style={{ textAlign: "center", fontSize: RFPercentage(5), color: 'gray' }}>
-        11234 + 21123 =
-        <Text style={[ styles.highlight, { fontSize: RFPercentage(5), }]}>
-          {" "}
-          32357.
-        </Text>
-      </Text>
-    </ScrollView>
+      </View>
+    </View>
   );
-};
+});
 
 export default WoRegroup;

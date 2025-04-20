@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     width: '30%',
   },
   gridContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
     gap: 20,
   },
   gridItem: {

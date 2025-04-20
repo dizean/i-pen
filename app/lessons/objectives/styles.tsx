@@ -12,6 +12,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginTop: 25,
     paddingHorizontal: 10,
+  },playnav:{
+    paddingBottom: "5%",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    backgroundColor: "white",
+    top: 0, 
+    zIndex: 9999
   },
   fixedButtonContainer: {
     width: '100%',

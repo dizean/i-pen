@@ -1,54 +1,110 @@
-import React, { useState } from 'react';
-import {ScrollView, TouchableOpacity } from 'react-native';
-import styles from '../styles';
-import { Text } from '@/context/FontContent';
-import { Image } from 'expo-image';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { View, TouchableOpacity, ImageBackground } from "react-native";
+import * as Speech from "expo-speech";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import styles from "../styles";
+import { Text } from "@/context/FontContent";
+import { Image } from "expo-image";
+const Introduction = forwardRef((props, ref) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const router = useRouter();
+  const content = [
+    { id: 1, text: "What is Multiplication?", styling: styles.subtitle },
+    { id: 2, text: "In math, multiplication is the method of finding the product of two or more numbers.", styling: styles.text },
+    { id: 3, text: "It is a primary arithmetic operation that is used quite often in real life. ", styling: styles.text },
+    { id: 2, text: "Multiplication is used when we need to combine groups of equal sizes.", styling: styles.text },
+    { id: 3, text: "Multiplication is an operation that represents the basic idea of repeated addition of the same number.", styling: styles.text },
+    { id: 3, text: "Multiplication is used to simplify the task of repeated addition of the same number.", styling: styles.text },
+    { id: 4, text: "Multiplication Symbol", styling: styles.sectiontititle },
+    { id: 5, text: "The multiplication symbol is one of the commonly used math symbols.", styling: styles.text },
+    { id: 6, text: "Apart from the cross symbol, multiplication is also denoted by the mid-line dot operator, and by the asterisk sign.", styling: styles.text },
+  ];
+  useImperativeHandle(ref, () => ({
+    toggleSpeech: () => handleSpeechToggle(),
+    stopSpeech: () => stopSpeaking(),
+  }));
+  
+  useEffect(() => {
+    return () => {
+      Speech.stop(); 
+    };
+  }, []);
+  
+  const handleSpeechToggle = () => {
+    if (isSpeaking) {
+      stopSpeaking();
+    } else {
+      startSpeaking();
+    }
+  };
+  const startSpeaking = () => {
+    setIsSpeaking(true);
+    setCurrentIndex(0); 
+    Speech.speak(content[0].text, { onDone: () => speakNext(1) });
+  };
 
-const Introduction = () => {
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+    setCurrentIndex(-1); 
+  };
+
+  const speakNext = (index: number) => {
+    if (index < content.length) {
+      setCurrentIndex(index); 
+      Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
+    } else {
+      setIsSpeaking(false);
+      setCurrentIndex(-1);
+    }
+  };
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.subtitle}>
-        Introduction
-      </Text>
-      <Text style={styles.sectiontititle}>
-        What is Multiplication?
-      </Text>
-      <Text style={styles.text}>
-      In math, <Text>multiplication</Text> is the method of finding the product of two or more numbers. 
-      </Text>
-      <Text style={styles.text}>
-      It is a primary arithmetic operation that is used quite often in real life. 
-      </Text>
-      <Text style={styles.text}>
-      Multiplication is used when we need to combine groups of equal sizes.
-      </Text>
-      <Text style={styles.text}>
-      <Text>Multiplication </Text>
-      is an operation that represents the basic idea of repeated addition of the same number. 
-      </Text>
-      <Text style={styles.text}>
-      <Text>Multiplication </Text>
-      is used to simplify the task of repeated addition of the same number.
-      </Text>
-      <Text style={styles.sectiontititle}>
-      Multiplication symbol
-      </Text>
-      <Text style={styles.text}>
-        The<Text> multiplication symbol </Text> 
-        is one of the commonly used math symbols. 
-      </Text>
-      <Text style={styles.text}>
-      Apart from the cross symbol<Text> (x) </Text>, multiplication is also denoted 
-      by the mid-line dot operator<Text> (⋅) </Text>, and by the asterisk sign 
-      <Text> (*) </Text>.
-      </Text>
-      <Image
+    <View>
+      <ImageBackground
+        style={styles.playnav}
+      >
+        <TouchableOpacity
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => router.push("/content/content")}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={40} color="#38bfe7" />
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleSpeechToggle}>
+          {isSpeaking ? (
+            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+          ) : (
+            <AntDesign name="play" size={40} color="#38bfe7" />
+          )}
+        </TouchableOpacity>
+      </ImageBackground>
+      <View style={styles.container}>
+        {content.map((line, index) => (
+          <Text
+            key={index}
+            style={[
+              line.styling,
+              index === currentIndex
+                ? { marginBottom: 10, color: "#FFA500", }
+                : { marginBottom: 10 },
+            ]}
+          >
+            {line.text}
+          </Text>
+        ))}
+        <Image
         contentFit='contain'
         source={require("../../../../assets/images/multiply.png")}
         style={[styles.image, {height:100}]}
       />
-    </ScrollView>
+      </View>
+    </View>
   );
-};
+});
 
 export default Introduction;

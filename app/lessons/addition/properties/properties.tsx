@@ -1,47 +1,132 @@
-import React from 'react';
-import {ScrollView } from 'react-native';
-import styles from '../styles';
-import { Text } from '@/context/FontContent';
-const Properties = () => {
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { View, TouchableOpacity, ImageBackground } from "react-native";
+import * as Speech from "expo-speech";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import styles from "../styles";
+import { Text } from "@/context/FontContent";
+import { Image } from "expo-image";
+
+const Properties = forwardRef((props, ref) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const router = useRouter();
+  const content = [
+    { id: 1, text: "Properties of Addition", styling: styles.subtitle },
+    { id: 2, text: "Commutative Property", styling: styles.sectiontititle },
+    { id: 3, text: "According to this property, the sum of two or more addends remains the same irrespective of the order of the addends.", styling: styles.text },
+    { id: 4, text: "Example :", styling: styles.text },
+    { id: 5, text: "Associative Property", styling: styles.sectiontititle },
+    { id: 6, text: "According to this property, the sum of three or more addends remains the same irrespective of the grouping of the addends.", styling: styles.text },
+    { id: 7, text: "Example :", styling: styles.text },
+    { id: 8, text: "Additive Identity Property", styling: styles.sectiontititle },
+    { id: 9, text: "According to this property of addition, if we add 0 to any number, the resultant sum is always the actual number.", styling: styles.text },
+    { id: 10, text: "Example :", styling: styles.text }
+  ];
+  useImperativeHandle(ref, () => ({
+    toggleSpeech: () => handleSpeechToggle(),
+    stopSpeech: () => stopSpeaking(),
+  }));
+
+  useEffect(() => {
+    return () => {
+      Speech.stop();
+    };
+  }, []);
+
+  const handleSpeechToggle = () => {
+    isSpeaking ? stopSpeaking() : startSpeaking();
+  };
+
+  const startSpeaking = () => {
+    setIsSpeaking(true);
+    setCurrentIndex(0);
+    Speech.speak(content[0].text, { onDone: () => speakNext(1) });
+  };
+
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+    setCurrentIndex(-1);
+  };
+
+  const speakNext = (index: number) => {
+    if (index < content.length) {
+      setCurrentIndex(index);
+      Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
+    } else {
+      setIsSpeaking(false);
+      setCurrentIndex(-1);
+    }
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {/* Title */}
-      <Text style={styles.subtitle}>Properties of Addition</Text>
-      <Text style={styles.sectiontititle}>Commutative Property</Text>
+    <View>
+      <ImageBackground style={styles.playnav}>
+        <TouchableOpacity
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => router.push("/content/content")}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={40} color="#38bfe7" />
+          </Text>
+        </TouchableOpacity>
 
-      {/* Section 1 */}
-      <Text style={styles.text}>
-      According to this property, the sum of two or 
-      more addends remains the same irrespective of the order of the addends.
-      </Text>
-      <Text style={styles.text}>Example :</Text>
-      <Text style={styles.text}>
-      8 + 7 = 7 + 8 = 15.
-      </Text>
+        <TouchableOpacity onPress={handleSpeechToggle}>
+          {isSpeaking ? (
+            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+          ) : (
+            <AntDesign name="play" size={40} color="#38bfe7" />
+          )}
+        </TouchableOpacity>
+      </ImageBackground>
 
-      {/* Section 2 */}
-      <Text style={styles.sectiontititle}>Associative Property</Text>
-      <Text style={styles.text}>
-      According to this property, the sum of three 
-      or more addends remains the same irrespective of the grouping of the addends. 
-      </Text>
-      <Text style={styles.text}>Example :</Text>
-      <Text style={styles.text}>
-      5 + (7 + 3) = (5 + 7) + 3 = 15. 
-        </Text>
+      <View style={styles.container}>
+        {content.map((line, index) => (
+          <View key={index}>
+            <Text
+              style={[
+                line.styling,
+                index === currentIndex
+                  ? { marginBottom: 10, color: "#FFA500" }
+                  : { marginBottom: 10 },
+              ]}
+            >
+              {line.text}
+            </Text>
 
-      {/* Section 4 */}
-      <Text style={styles.sectiontititle}>Additive Identity Property</Text>
-      <Text style={styles.text}>
-      According to this property of addition, if 
-      we add 0 to any number, the resultant sum is always the actual number. 
-      </Text>
-      <Text style={styles.text}>Example :</Text>
-      <Text style={styles.text}>
-      0 + 7 = 7.
-    </Text>
-    </ScrollView>
+            {index === 4 && (
+              <Image
+                source={require("../../../../assets/images/AddComm.png")}
+                style={{ height: 200, width: "100%" }}
+                contentFit="contain"
+              />
+            )}
+            {index === 7 && (
+              <Image
+                source={require("../../../../assets/images/AddAsso.png")}
+                style={{ height: 200, width: "100%" }}
+                contentFit="contain"
+              />
+            )}
+            {index === 9 && (
+              <Image
+                source={require("../../../../assets/images/AddIdentity.png")}
+                style={{ height: 200, width: "100%" }}
+                contentFit="contain"
+              />
+            )}
+          </View>
+        ))}
+      </View>
+    </View>
   );
-};
+});
 
 export default Properties;
