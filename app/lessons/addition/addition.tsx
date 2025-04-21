@@ -86,8 +86,8 @@ export default function Addition() {
             <AntDesign name="doubleleft" size={30} color="#38bfe7" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
-            <AntDesign name="home" size={30} color="#38bfe7" />
+          <TouchableOpacity disabled style={styles.button} onPress={handleReturnHome}>
+            {/* <AntDesign name="home" size={30} color="#38bfe7" /> */}
           </TouchableOpacity>
         )}
         {currentSection !== 11 ? (

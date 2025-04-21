@@ -44,22 +44,26 @@ const Properties = forwardRef((props, ref) => {
     isSpeaking ? stopSpeaking() : startSpeaking();
   };
 
-  const startSpeaking = () => {
+ const startSpeaking = () => {
     setIsSpeaking(true);
-    setCurrentIndex(0);
-    Speech.speak(content[0].text, { onDone: () => speakNext(1) });
+    setCurrentIndex(0); 
+    Speech.speak(content[0].text, {voice: 'en-us-x-iol-local',
+      rate: .9,
+      volume: 1.0, onDone: () => speakNext(1) });
   };
 
   const stopSpeaking = () => {
     Speech.stop();
     setIsSpeaking(false);
-    setCurrentIndex(-1);
+    setCurrentIndex(-1); 
   };
 
   const speakNext = (index: number) => {
     if (index < content.length) {
-      setCurrentIndex(index);
-      Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
+      setCurrentIndex(index); 
+      Speech.speak(content[index].text, {voice: 'en-us-x-iol-local',
+        rate: .9,
+        volume: 1.0, onDone: () => speakNext(index + 1) });
     } else {
       setIsSpeaking(false);
       setCurrentIndex(-1);
@@ -70,13 +74,17 @@ const Properties = forwardRef((props, ref) => {
     <View>
       <ImageBackground style={styles.playnav}>
         <TouchableOpacity
-          style={{ width: "50%", borderColor: "#38bfe7" }}
-          onPress={() => router.push("/content/content")}
-        >
-          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-            <AntDesign name="home" size={40} color="#38bfe7" />
-          </Text>
-        </TouchableOpacity>
+  style={{ width: "50%", borderColor: "#38bfe7" }}
+  onPress={() => {
+    stopSpeaking(); // stop speech first
+    router.push("/content/content"); // then navigate
+  }}
+>
+  <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+    <AntDesign name="home" size={40} color="#38bfe7" />
+  </Text>
+</TouchableOpacity>
+
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (

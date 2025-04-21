@@ -64,13 +64,17 @@ const Introduction = forwardRef((props, ref) => {
         style={styles.playnav}
       >
         <TouchableOpacity
-          style={{ width: "50%", borderColor: "#38bfe7" }}
-          onPress={() => router.push("/content/content")}
-        >
-          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-            <AntDesign name="home" size={40} color="#38bfe7" />
-          </Text>
-        </TouchableOpacity>
+  style={{ width: "50%", borderColor: "#38bfe7" }}
+  onPress={() => {
+    stopSpeaking(); // stop speech first
+    router.push("/content/content"); // then navigate
+  }}
+>
+  <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+    <AntDesign name="home" size={40} color="#38bfe7" />
+  </Text>
+</TouchableOpacity>
+
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
