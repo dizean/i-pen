@@ -48,7 +48,7 @@ const VideoPlayer: React.FC = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Watch and Sing the {topic} Song</Text>
+      <Text style={styles.title}>{topic} Song</Text>
       <View style={styles.videoContainer}>
         <Video
           ref={videoRef}
@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 10,
   },
   title: {
     fontSize: RFPercentage(9),

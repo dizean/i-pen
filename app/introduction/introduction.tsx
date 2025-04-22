@@ -70,7 +70,6 @@ export default function Introduction() {
       return;
     }
     setUser(nameInput.trim(), grade)
-    console.log('introducytoj', nameInput.trim(), grade)
     try {
       const existingUser = await getUserByName(nameInput.trim(), Number(grade));
       if (existingUser) {

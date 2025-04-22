@@ -110,22 +110,22 @@ const Objectives = forwardRef((props, ref) => {
     <View>
       <ImageBackground style={styles.playnav}>
         <TouchableOpacity
-          style={{ width: "50%", borderColor: "#38bfe7" }}
+          style={{ width: "50%", borderColor: "#fff" }}
           onPress={() => {
             stopSpeaking(); // stop speech first
             router.push("/content/content"); // then navigate
           }}
         >
           <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-            <AntDesign name="home" size={40} color="#38bfe7" />
+            <AntDesign name="home" size={50} color="#fff" />
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -135,7 +135,7 @@ const Objectives = forwardRef((props, ref) => {
             key={index}
             style={[
               line.styling,
-              index === currentIndex ? { color: "#FFA500" } : {},
+              index === currentIndex ? { color: "#FDDA0D" } : {},
             ]}
           >
             {line.text}

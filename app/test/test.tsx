@@ -17,7 +17,6 @@ import { Image } from "expo-image";
 import { Text } from "@/context/FontContent";
 import { RFPercentage } from "react-native-responsive-fontsize";
 import { getUserByName, updateScores } from "@/database/dbservice";
-import questions from "./questions";
 interface Question {
   question: string;
   correctAnswer: number;
@@ -89,22 +88,22 @@ export default function Test() {
       case 3:
         num1Min = num2Min = 5;
         num1Max = num2Max = 20;
-        operations = ["+", "-", "x"];
+        operations = ["+", "-", "×"];
         break;
       case 4:
         num1Min = num2Min = 10;
         num1Max = num2Max = 30;
-        operations = ["+", "-", "x", "÷"];
+        operations = ["+", "-", "×", "÷"];
         break;
       case 5:
         num1Min = num2Min = 15;
         num1Max = num2Max = 60;
-        operations = ["+", "-", "x", "÷"];
+        operations = ["+", "-", "×", "÷"];
         break;
       case 6:
         num1Min = num2Min = 20;
         num1Max = num2Max = 90;
-        operations = ["+", "-", "x", "÷"];
+        operations = ["+", "-", "×", "÷"];
         break;
       default:
         throw new Error("Invalid grade level");
@@ -125,7 +124,7 @@ export default function Test() {
       } else if (operation === "-") {
         if (num2 > num1) continue;
         correctAnswer = num1 - num2;
-      } else if (operation === "x") {
+      } else if (operation === "×") {
         correctAnswer = num1 * num2;
       } else if (operation === "÷") {
         do {
@@ -398,7 +397,6 @@ export default function Test() {
           0,
           Number(grade)
         );
-        console.log("way pa ka pretest", preTestScore);
       }
       setUser(username, grade);
       router.push({ pathname: "/content/content", params: { score } });

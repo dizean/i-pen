@@ -20,31 +20,31 @@ const WordProblem = forwardRef((props, ref) => {
   const content = [
     { id: 1, text: "Word Problems in Multiplication", styling: styles.subtitle },
     { id: 2, text: "Multiplication word problems can be easily solved by carefully observing the situation and identifying the solution.", styling: styles.text },
-    { id: 3, text: "Example :", styling: styles.text },
+    { id: 3, text: "Example :", styling: [styles.text, styles.steps] },
     { id: 4, text: "A box contains 245 fruits. Find the number of fruits in 4 such boxes using the multiplication formula.", styling: styles.text },
-    { id: 5, text: "Solution :", styling: styles.text },
+    { id: 5, text: "Solution :", styling: [styles.text, styles.steps] },
     { id: 6, text: "To solve such multiplication word problems the easiest way is to note down the given parameters and then solve.", styling: styles.text },
     { id: 7, text: "The total number of fruits in one box = 245", styling: styles.text },
     { id: 8, text: "The number of boxes = 4", styling: styles.text },
     { id: 9, text: "Let us multiply 245 by 4 using the steps given below and try to relate them with the following figure.", styling: styles.text },
-    { id: 10, text: "Step 1:", styling: styles.text },
+    { id: 10, text: "Step 1:", styling: [styles.text, styles.steps] },
     { id: 11, text: "Start with the digit in ones place.", styling: styles.text },
-    { id: 12, text: "4 × 5 = 20", styling: styles.text },
+    { id: 12, text: "4 × 5 = 20", styling: [styles.text, styles.formula] },
     { id: 13, text: "Now carry 2 to the tens column.", styling: styles.text },
-    { id: 14, text: "Step 2:", styling: styles.text },
+    { id: 14, text: "Step 2:", styling: [styles.text, styles.steps] },
     { id: 15, text: "Multiply 4 with the digit in tens place, that is,", styling: styles.text },
-    { id: 16, text: "4 × 4 = 16", styling: styles.text },
+    { id: 16, text: "4 × 4 = 16",styling: [styles.text, styles.formula] },
     { id: 17, text: "Now, add this to the carry-over from the previous step.", styling: styles.text },
-    { id: 18, text: "16 + 2 (carry-over from step 1) = 18", styling: styles.text },
+    { id: 18, text: "16 + 2 (carry-over from step 1) = 18",styling: [styles.text, styles.formula] },
     { id: 19, text: "From this, carry 1 to the hundreds column.", styling: styles.text },
-    { id: 20, text: "Step 3:", styling: styles.text },
+    { id: 20, text: "Step 3:", styling: [styles.text, styles.steps] },
     { id: 21, text: "Multiply 4 with the digit in hundreds place,", styling: styles.text },
-    { id: 22, text: "4 × 2 = 8", styling: styles.text },
-    { id: 23, text: "8 + 1 (carry-over from step 2) = 9", styling: styles.text },
-    { id: 24, text: "Step 4:", styling: styles.text },
+    { id: 22, text: "4 × 2 = 8",styling: [styles.text, styles.formula] },
+    { id: 23, text: "8 + 1 (carry-over from step 2) = 9",styling: [styles.text, styles.formula] },
+    { id: 24, text: "Step 4:", styling: [styles.text, styles.steps] },
     { id: 25, text: "Therefore,", styling: styles.text },
     { id: 26, text: "the product of 245 × 4 is", styling: styles.text },
-    { id: 27, text: "980", styling: styles.text }
+    { id: 27, text: "980",styling: [styles.text, styles.formula] },
   ];
   
   const imageIndexes = [9, 13, 19,26];
@@ -100,16 +100,16 @@ const WordProblem = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -120,7 +120,7 @@ const WordProblem = forwardRef((props, ref) => {
               style={[
                 line.styling,
                 index === currentIndex
-                  ? { marginBottom: 10, color: "#FFA500" }
+                  ? { marginBottom: 10, color: "#FDDA0D" }
                   : { marginBottom: 10 },
               ]}
             >

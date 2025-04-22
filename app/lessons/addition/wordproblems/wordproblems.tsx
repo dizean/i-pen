@@ -21,30 +21,30 @@ const WordProblem = forwardRef((props, ref) => {
     { id: 1, text: "Word Problems in Addition", styling: styles.subtitle },
     { id: 2, text: "The concept of the addition operation is used in our day-to-day activities. We should carefully observe the situation and identify the solution using the tips and tricks that follows addition.", styling: styles.text },
     { id: 3, text: "Let us understand how to solve addition word problems with the help of an interesting example.", styling: styles.text },
-    { id: 4, text: "Example :", styling: styles.text },
+    { id: 4, text: "Example :", styling: [styles.text, styles.steps] },
     { id: 5, text: "A soccer match had 4535 spectators in the first row and 2332 spectators in the second row. Using the concept of addition find the total number of spectators present in the match.", styling: styles.text },
-    { id: 6, text: "Solution :", styling: styles.text },
+    { id: 6, text: "Solution :", styling: [styles.text, styles.steps] },
     { id: 7, text: "The number of spectators in the first row is 4535.", styling: styles.text },
     { id: 8, text: "The number of spectators in the second row is 2332.", styling: styles.text },
     { id: 9, text: "We can get the total number of spectators if we add the given number of spectators in the two rows.", styling: styles.text },
     { id: 10, text: "Here 4535 and 2332 are the addends.", styling: styles.text },
     { id: 11, text: "Let us find the total number of spectators by adding these two numbers using the following steps.", styling: styles.text },
-    { id: 12, text: "Step 1:", styling: styles.text },
+    { id: 12, text: "Step 1:", styling: [styles.text, styles.steps] },
     { id: 13, text: "Add the digits in the ones (O) place.", styling: styles.text },
-    { id: 14, text: "(5 + 2 = 7)", styling: styles.text },
-    { id: 15, text: "Step 2:", styling: styles.text },
+    { id: 14, text: "5 + 2 = 7", styling: [styles.text, styles.formula] },
+    { id: 15, text: "Step 2:", styling: [styles.text, styles.steps] },
     { id: 16, text: "Add the digits in the tens (T) place.", styling: styles.text },
-    { id: 17, text: "(3 + 3 = 6)", styling: styles.text },
-    { id: 18, text: "Step 3:", styling: styles.text },
+    { id: 17, text: "3 + 3 = 6", styling: [styles.text, styles.formula] },
+    { id: 18, text: "Step 3:", styling: [styles.text, styles.steps] },
     { id: 19, text: "Add the digits in the hundreds (H) place.", styling: styles.text },
-    { id: 20, text: "(5 + 3 = 8)", styling: styles.text },
-    { id: 21, text: "Step 4:", styling: styles.text },
+    { id: 20, text: "5 + 3 = 8", styling: [styles.text, styles.formula] },
+    { id: 21, text: "Step 4:", styling: [styles.text, styles.steps] },
     { id: 22, text: "Add the digits in the thousands (Th) place.", styling: styles.text },
-    { id: 23, text: "(4 + 2 = 6)", styling: styles.text },
-    { id: 24, text: "Step 5:", styling: styles.text },
-    { id: 25, text: "4535 + 2332 = 6867", styling: styles.text },
+    { id: 23, text: "4 + 2 = 6",styling: [styles.text, styles.formula] },
+    { id: 24, text: "Step 5", styling: [styles.text, styles.steps] },
+    { id: 25, text: "4535 + 2332 = 6867", styling: [styles.text, styles.formula] },
     { id: 26, text: "Therefore, the total number of spectators present in the match is", styling: styles.text },
-    { id: 27, text: "6867.", styling: styles.text },
+    { id: 27, text: "6867.", styling: [styles.text, styles.formula] },
   ];  
   useImperativeHandle(ref, () => ({
     toggleSpeech: () => handleSpeechToggle(),
@@ -98,16 +98,16 @@ const WordProblem = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -119,7 +119,7 @@ const WordProblem = forwardRef((props, ref) => {
               style={[
                 line.styling,
                 index === currentIndex
-                  ? { marginBottom: 10, color: "#FFA500" }
+                  ? { marginBottom: 10, color: "#FDDA0D" }
                   : { marginBottom: 10 },
               ]}
             >

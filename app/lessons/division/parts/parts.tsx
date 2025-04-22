@@ -1,63 +1,121 @@
-import React from 'react';
-import {  Image, View } from 'react-native';
-import { Text } from '@/context/FontContent';
-import styles from '../styles';
-const Parts = () => {
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import { View, TouchableOpacity, ImageBackground } from "react-native";
+import * as Speech from "expo-speech";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { useRouter } from "expo-router";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import styles from "../styles";
+import { Text } from "@/context/FontContent";
+import { Image } from "expo-image";
+const Parts = forwardRef((props, ref) => {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(-1);
+  const router = useRouter();
+  const content = [
+    { id: 1, text: "Parts of Division Quotient", styling: styles.subtitle },
+    { id: 2, text: "Dividend", styling: styles.sectiontititle },
+    { id: 3, text: "Dividend is the number that will be divided.", styling: styles.text },
+    { id: 4, text: "Divisor", styling: styles.sectiontititle },
+    { id: 5, text: "A number by which another number is to be divided.", styling: styles.text },
+    { id: 6, text: "Quotient", styling: styles.sectiontititle },
+    { id: 7, text: "Quotient is the result obtained by dividing one quantity by another.", styling: styles.text },
+    { id: 7, text: "Division Symbol", styling: styles.sectiontititle },
+    { id: 7, text: "The Division symbol connects the entire expression.", styling: styles.text },
+  ];  
+  useImperativeHandle(ref, () => ({
+    toggleSpeech: () => handleSpeechToggle(),
+    stopSpeech: () => stopSpeaking(),
+  }));
+
+  useEffect(() => {
+    return () => {
+      Speech.stop();
+    };
+  }, []);
+
+  const handleSpeechToggle = () => {
+    if (isSpeaking) {
+      stopSpeaking();
+    } else {
+      startSpeaking();
+    }
+  };
+const startSpeaking = () => {
+    setIsSpeaking(true);
+    setCurrentIndex(0); 
+    Speech.speak(content[0].text, {voice: 'en-us-x-iol-local',
+      rate: .9,
+      volume: 1.0, onDone: () => speakNext(1) });
+  };
+
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+    setCurrentIndex(-1); 
+  };
+
+  const speakNext = (index: number) => {
+    if (index < content.length) {
+      setCurrentIndex(index); 
+      Speech.speak(content[index].text, {voice: 'en-us-x-iol-local',
+        rate: .9,
+        volume: 1.0, onDone: () => speakNext(index + 1) });
+    } else {
+      setIsSpeaking(false);
+      setCurrentIndex(-1);
+    }
+  };
   return (
-    <View style={styles.container}>
-      <Text style={styles.subtitle}>Parts of Divison</Text>
-      <Text style={styles.sectiontititle}>Divison Formula</Text>
-      <Text style={styles.text}>The division formula is expressed as, </Text>
-      <Text style={[styles.textcenter,styles.text]}>
-          <Text style={styles.highlight}>Dividend</Text> 
-          <Text> ÷ </Text>
-          <Text style={styles.highlight}>Divisor</Text>
-        <Text> = </Text>
-        <Text style={styles.highlight}>Quotient</Text>
-      </Text>
-      <Text style={styles.text}>where: </Text>
-      <Text style={[styles.textcenter,styles.text]}>
-          <Text style={styles.highlight}>8</Text> 
-          <Text> ÷ </Text>
-          <Text>4</Text>
-        <Text> = </Text>
-        <Text>2</Text>
-      </Text>
-      <Text style={styles.text}><Text>Dividend:</Text> The dividend is the number that will be divided.</Text>
-      <Text style={[styles.textcenter,styles.text]}>
-          <Text >8</Text> 
-          <Text> ÷ </Text>
-          <Text style={styles.highlight}>4</Text>
-        <Text> = </Text>
-        <Text>2</Text>
-      </Text>
-      <Text style={styles.text}><Text>Divisor:</Text> A number by which another number is to be divided.</Text>
-      <Text style={[styles.textcenter,styles.text]}>
-          <Text >8</Text> 
-          <Text> ÷ </Text>
-          <Text >4</Text>
-        <Text> = </Text>
-        <Text style={styles.highlight}>2</Text>
-      </Text>
-      <Text style={styles.text}><Text>Quotient:</Text> A result obtained by dividing one quantity by another.</Text>
-      <Text style={[styles.textcenter,styles.text]}>
-          <Text >7</Text> 
-          <Text style={styles.highlight}> ÷ </Text>
-          <Text >5</Text>
-        <Text> = </Text>
-        <Text >35</Text>
-      </Text>
-      <Text style={styles.text}><Text>Divison symbol:</Text> '÷' (which connects the entire expression)</Text>
-    <Image
-            style={{
-              width: "100%",
-              resizeMode: "contain",
-              height: 135,
-              marginVertical: 10,
-            }}
-            source={require("../../../../assets/images/divpic.png")}
-          />
+    <View>
+      <ImageBackground style={styles.playnav}>
+        <TouchableOpacity
+  style={{ width: "50%", borderColor: "#38bfe7" }}
+  onPress={() => {
+    stopSpeaking(); // stop speech first
+    router.push("/content/content"); // then navigate
+  }}
+>
+  <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+    <AntDesign name="home" size={50} color="#fff" />
+  </Text>
+</TouchableOpacity>
+
+
+        <TouchableOpacity onPress={handleSpeechToggle}>
+          {isSpeaking ? (
+            <AntDesign name="pausecircle" size={50} color="#fff" />
+          ) : (
+            <AntDesign name="play" size={50} color="#fff" />
+          )}
+        </TouchableOpacity>
+      </ImageBackground>
+      <View style={styles.container}>
+        {content.map((line, index) => (
+          <View key={index}>
+            <Text
+              style={[
+                line.styling,
+                index === currentIndex
+                  ? { marginBottom: 10, color: "#FDDA0D" }
+                  : { marginBottom: 10 },
+              ]}
+            >
+              {line.text}
+            </Text>
+          </View>
+        ))}
+      </View>
+      <Image
+        contentFit="contain"
+        source={require("../../../../assets/images/DIV.png")}
+        style={[styles.image, { height: 200 }]}
+      />
     </View>
   );
-};
+});
 export default Parts;

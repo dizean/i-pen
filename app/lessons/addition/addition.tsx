@@ -76,14 +76,14 @@ export default function Addition() {
           {currentSection === 11 && <Test subject="addition" stop={stopAll} />}
         </ScrollView>
       </ImageBackground>
-      <ImageBackground style={[styles.fixedButtonContainer, { backgroundColor: "white" }]}>
+      <ImageBackground style={[styles.fixedButtonContainer, { backgroundColor: "#FDDA0D" }]}>
         {currentSection !== 1 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handlePrev}
             disabled={currentSection === 1}
           >
-            <AntDesign name="doubleleft" size={30} color="#38bfe7" />
+            <AntDesign name="doubleleft" size={30} color="#FFF" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity disabled style={styles.button} onPress={handleReturnHome}>
@@ -96,7 +96,7 @@ export default function Addition() {
             onPress={handleNext}
             disabled={currentSection === 5 && !isPracticeComplete}
           >
-            <AntDesign name="doubleright" size={30} color="#38bfe7" />
+            <AntDesign name="doubleright" size={30} color="#fff" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.button} onPress={handleReturnHome}>

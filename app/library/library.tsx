@@ -30,21 +30,19 @@ export default function Library() {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text style={{ fontSize: RFPercentage(8), marginBottom: 10 }}>
+    <View style={{  backgroundColor: "#38bfe7" }}>
+      <Text style={{ fontSize: RFPercentage(8), color: "white", marginBottom: 10 , padding: 10, backgroundColor: "#FDDA0D"}}>
         Student List
       </Text>
-
       {/* Table Header */}
-      <View style={{ flexDirection: "row", alignItems:'center', borderBottomWidth: 1, padding: 2 }}>
-        <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>Grade</Text>
-        <Text style={{ flex: 3, fontSize: RFPercentage(3) }}>Name</Text>
-        <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>Pre Test Score</Text>
-        <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>Post Test Score</Text>
+      <View style={{ flexDirection: "row", alignItems:'center', borderBottomWidth: 2, padding: 10, borderColor: "#FDDA0D" }}>
+        <Text style={{ flex: 1, fontSize: RFPercentage(3), color: "white" }}>Grade</Text>
+        <Text style={{ flex: 3, fontSize: RFPercentage(3), color: "white" }}>Name</Text>
+        <Text style={{ flex: 1, fontSize: RFPercentage(3), color: "white" }}>Pre Test Score</Text>
+        <Text style={{ flex: 1, fontSize: RFPercentage(3), color: "white" }}>Post Test Score</Text>
       </View>
-
       {/* Table Content */}
-      <ScrollView style={{ height: 500 }}>
+      <ScrollView style={{ height: 500 ,padding: 10 }}>
         {users.length > 0 ? (
           users.map((user, index) => (
             <TouchableOpacity
@@ -53,20 +51,21 @@ export default function Library() {
                 flexDirection: "row",
                 padding: 10,
                 borderBottomWidth: 0.5,
+                borderColor: "#FDDA0D",
                 alignItems: "center",
               }}
               onPress={() => gotoContent(user.username, user.grade, user.pretestDone)}
             >
-              <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>
+              <Text style={{ flex: 1, fontSize: RFPercentage(3), color: "white" }}>
                 {user.grade}
               </Text>
-              <Text style={{ flex: 3, fontSize: RFPercentage(3) }}>
+              <Text style={{ flex: 3, fontSize: RFPercentage(3), color: "white" }}>
                 {user.username}
               </Text>
-              <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>
+              <Text style={{ flex: 1, fontSize: RFPercentage(3), color: "white" }}>
                 {user.pretestscore}
               </Text>
-              <Text style={{ flex: 1, fontSize: RFPercentage(3) }}>
+              <Text style={{ flex: 1, fontSize: RFPercentage(3), color: "white" }}>
                 {user.posttestscore}
               </Text>
             </TouchableOpacity>
@@ -79,13 +78,12 @@ export default function Library() {
           </View>
         )}
       </ScrollView>
-
       <TouchableOpacity
-        style={{ marginTop: 10 }}
+        style={{  backgroundColor: "#FDDA0D", height: 200 }}
         onPress={() => router.push("/selection/selection")}
       >
         <Text
-          style={{ fontSize: RFPercentage(3), color: "blue", textAlign: "center" }}
+          style={{ fontSize: RFPercentage(3), color: "#fff", textAlign: "center", padding: 5 }}
         >
           Is your name not on the list? {"\n"}Create an account.
         </Text>

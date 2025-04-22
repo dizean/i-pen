@@ -1,4 +1,9 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { View, TouchableOpacity, ImageBackground } from "react-native";
 import * as Speech from "expo-speech";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -23,13 +28,13 @@ const Introduction = forwardRef((props, ref) => {
     toggleSpeech: () => handleSpeechToggle(),
     stopSpeech: () => stopSpeaking(),
   }));
-  
+
   useEffect(() => {
     return () => {
-      Speech.stop(); 
+      Speech.stop();
     };
   }, []);
-  
+
   const handleSpeechToggle = () => {
     if (isSpeaking) {
       stopSpeaking();
@@ -37,54 +42,57 @@ const Introduction = forwardRef((props, ref) => {
       startSpeaking();
     }
   };
- const startSpeaking = () => {
-     setIsSpeaking(true);
-     setCurrentIndex(0); 
-     Speech.speak(content[0].text, {voice: 'en-us-x-iol-local',
-       rate: .9,
-       volume: 1.0, onDone: () => speakNext(1) });
-   };
- 
-   const stopSpeaking = () => {
-     Speech.stop();
-     setIsSpeaking(false);
-     setCurrentIndex(-1); 
-   };
- 
-   const speakNext = (index: number) => {
-     if (index < content.length) {
-       setCurrentIndex(index); 
-       Speech.speak(content[index].text, {voice: 'en-us-x-iol-local',
-         rate: .9,
-         volume: 1.0, onDone: () => speakNext(index + 1) });
-     } else {
-       setIsSpeaking(false);
-       setCurrentIndex(-1);
-     }
-   };
+  const startSpeaking = () => {
+    setIsSpeaking(true);
+    setCurrentIndex(0);
+    Speech.speak(content[0].text, {
+      voice: "en-us-x-iol-local",
+      rate: 0.9,
+      volume: 1.0,
+      onDone: () => speakNext(1),
+    });
+  };
+
+  const stopSpeaking = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+    setCurrentIndex(-1);
+  };
+
+  const speakNext = (index: number) => {
+    if (index < content.length) {
+      setCurrentIndex(index);
+      Speech.speak(content[index].text, {
+        voice: "en-us-x-iol-local",
+        rate: 0.9,
+        volume: 1.0,
+        onDone: () => speakNext(index + 1),
+      });
+    } else {
+      setIsSpeaking(false);
+      setCurrentIndex(-1);
+    }
+  };
   return (
     <View>
-      <ImageBackground
-        style={styles.playnav}
-      >
+      <ImageBackground style={styles.playnav}>
         <TouchableOpacity
-  style={{ width: "50%", borderColor: "#38bfe7" }}
-  onPress={() => {
-    stopSpeaking(); // stop speech first
-    router.push("/content/content"); // then navigate
-  }}
->
-  <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
-  </Text>
-</TouchableOpacity>
-
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => {
+            stopSpeaking(); // stop speech first
+            router.push("/content/content"); // then navigate
+          }}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={50} color="#fff" />
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -95,7 +103,7 @@ const Introduction = forwardRef((props, ref) => {
             style={[
               line.styling,
               index === currentIndex
-                ? { marginBottom: 10, color: "#FFA500", }
+                ? { marginBottom: 10, color: "#FDDA0D" }
                 : { marginBottom: 10 },
             ]}
           >
@@ -103,10 +111,10 @@ const Introduction = forwardRef((props, ref) => {
           </Text>
         ))}
         <Image
-        contentFit='contain'
-        source={require("../../../../assets/images/plus.png")}
-        style={[styles.image, {height:100}]}
-      />
+          contentFit="contain"
+          source={require("../../../../assets/images/plus.png")}
+          style={[styles.image, { height: 100 }]}
+        />
       </View>
     </View>
   );

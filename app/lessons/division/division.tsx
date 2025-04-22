@@ -68,7 +68,7 @@ export default function Subtraction() {
         </ScrollView>
       </ImageBackground>
       <ImageBackground
-        style={[styles.fixedButtonContainer, { backgroundColor: "white" }]}
+        style={[styles.fixedButtonContainer, { backgroundColor: "#FDDA0D" }]}
       >
         {currentSection !== 1 ? (
           <TouchableOpacity
@@ -76,25 +76,25 @@ export default function Subtraction() {
             onPress={handlePrev}
             disabled={currentSection === 1}
           >
-            <AntDesign name="doubleleft" size={30} color="#38bfe7" />
+            <AntDesign name="doubleleft" size={30} color="#fff" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity disabled style={styles.button} onPress={handleReturnHome}>
             {/* <AntDesign name="home" size={30} color="#38bfe7" /> */}
           </TouchableOpacity>
         )}
-        <SpeechComponent currentSection={currentSection} ref={speechRef} />
+        {/* <SpeechComponent currentSection={currentSection} ref={speechRef} /> */}
         {currentSection !== 7 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handleNext}
             // disabled={currentSection === 5 && !isPracticeComplete}
           >
-            <AntDesign name="doubleright" size={30} color="#38bfe7" />
+            <AntDesign name="doubleright" size={30} color="#fff" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
-            <AntDesign name="home" size={30} color="#38bfe7" />
+            <AntDesign name="home" size={30} color="#fff" />
           </TouchableOpacity>
         )}
       </ImageBackground>

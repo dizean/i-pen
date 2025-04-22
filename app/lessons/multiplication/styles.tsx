@@ -4,7 +4,6 @@ import { RFPercentage } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
-    padding: 20,
     paddingBottom: 100,
   },
   buttonContainer: {
@@ -21,7 +20,7 @@ const styles = StyleSheet.create({
     bottom: 0, 
     paddingVertical: 10,
     borderTopWidth: 1, 
-    borderColor: "#38bfe7", 
+    borderColor: "#fff", 
   },
   button: {
     padding: 15,
@@ -34,37 +33,35 @@ const styles = StyleSheet.create({
     color: "#1a237e",
   },
   container: {
+    padding: "5%",
     gap: 5
   },
   playnav:{
-    paddingBottom: "5%",
+    padding: "5%",
     borderBottomWidth: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    backgroundColor: "white",
+    borderColor: "#fff",
+    backgroundColor: "#FDDA0D",
     top: 0, 
     zIndex: 9999
   },
   title: {
     fontSize: 50,
-    paddingVertical: 5
   },
   subtitle: {
     fontSize: RFPercentage(10),
-    paddingVertical: 5,
     color: '#38bfe7'
   },
   sectiontititle: {
     fontSize: RFPercentage(8),
     color: '#38bfe7',
-    paddingVertical: 10
   },
   text: {
     fontSize: RFPercentage(6),
-    paddingVertical: 5,
-    color: '#4f4f4f',
+    color: '#2e4053',
   },
   image: {
     width: '100%',
@@ -117,6 +114,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: "#F57F17",
   },
+  steps:{
+    fontSize: RFPercentage(7),
+    color: "#6497b1"
+  },
+  formula:{
+    fontSize: RFPercentage(8),
+    textAlign: "center",
+    color:"#38bfe7"
+  }
 });
 
 export default styles;

@@ -13,13 +13,14 @@ const styles = StyleSheet.create({
     marginTop: 25,
     paddingHorizontal: 10,
   },playnav:{
-    paddingBottom: "5%",
+    padding: "5%",
     borderBottomWidth: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#FDDA0D",
+    borderColor: "#fff",
     top: 0, 
     zIndex: 9999
   },
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     color: "#1a237e",
   },
   container: {
+    padding: "5%"
   },
   title: {
     fontSize: RFPercentage(10),
@@ -54,20 +56,20 @@ const styles = StyleSheet.create({
     // textShadowRadius: 5
   },
   subtitle: {
-    fontSize: RFPercentage(8),
+    fontSize: RFPercentage(10),
     paddingVertical: '5%',
     color: '#38bfe7',
   },
   sectiontititle: {
-    fontSize: RFPercentage(6),
+    fontSize: RFPercentage(8),
     paddingVertical: '5%',
     color: '#38bfe7'
   },
   text: {
-    fontSize: RFPercentage(5.5),
+    fontSize: RFPercentage(6),
     lineHeight: 35,
     paddingVertical: '5%',
-    color: '#38bfe7'
+    color: '#2e4053'
   },
   image: {
     width: '100%',

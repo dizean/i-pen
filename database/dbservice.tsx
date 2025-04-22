@@ -75,7 +75,6 @@ export const getUserByName = (username: string, grade: number): Promise<User | n
 // Function to update pretest or posttest scores
 export const updateScores = (username: string, pretest: number, posttest: number, grade: number) => {
   return new Promise((resolve, reject) => {
-    console.log(username,pretest,posttest)
     db.transaction((tx) => {
       tx.executeSql(
         `UPDATE Users SET pretestDone = ?, pretestscore = ?, posttestscore = ? WHERE username = ? AND grade = ?;`,

@@ -21,10 +21,10 @@ const Properties = forwardRef((props, ref) => {
     { id: 1, text: "Properties of Addition", styling: styles.subtitle },
     { id: 2, text: "Commutative Property", styling: styles.sectiontititle },
     { id: 3, text: "According to this property, the sum of two or more addends remains the same irrespective of the order of the addends.", styling: styles.text },
-    { id: 4, text: "Example :", styling: styles.text },
+    { id: 4, text: "Example :", styling: [styles.text, styles.steps] },
     { id: 5, text: "Associative Property", styling: styles.sectiontititle },
     { id: 6, text: "According to this property, the sum of three or more addends remains the same irrespective of the grouping of the addends.", styling: styles.text },
-    { id: 7, text: "Example :", styling: styles.text },
+    { id: 7, text: "Example :", styling: [styles.text, styles.steps] },
     { id: 8, text: "Additive Identity Property", styling: styles.sectiontititle },
     { id: 9, text: "According to this property of addition, if we add 0 to any number, the resultant sum is always the actual number.", styling: styles.text },
     { id: 10, text: "Example :", styling: styles.text }
@@ -81,16 +81,16 @@ const Properties = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -102,7 +102,7 @@ const Properties = forwardRef((props, ref) => {
               style={[
                 line.styling,
                 index === currentIndex
-                  ? { marginBottom: 10, color: "#FFA500" }
+                  ? { marginBottom: 10, color: "#FDDA0D" }
                   : { marginBottom: 10 },
               ]}
             >

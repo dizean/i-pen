@@ -21,13 +21,14 @@ const WordProblem = forwardRef((props, ref) => {
     { id: 1, text: "Word Problems in Subtraction", styling: styles.subtitle },
     { id: 2, text: "The concept of subtraction is often used in our day-to-day activities.", styling: styles.text },
     { id: 3, text: "Let us understand how to solve action word problems with the help of an interesting example.", styling: styles.text },
-    { id: 4, text: "Example :", styling: styles.text },
+    { id: 4, text: "Example :", styling: [styles.text, styles.steps] },
     { id: 5, text: "A soccer match had a total of 4535 spectators. After the first innings, 2332 spectators left the stadium. Find the number of remaining spectators.", styling: styles.text },
-    { id: 6, text: "Solution :", styling: styles.text },
+    { id: 6, text: "Solution :", styling: [styles.text, styles.steps] },
     { id: 7, text: "The total number of spectators present in the first innings is 4535", styling: styles.text },
     { id: 8, text: "The number of spectators who left the stadium after the first innings is 2332", styling: styles.text },
     { id: 9, text: "Here, 4535 is the minuend and 2332 is the subtrahend.", styling: styles.text },
-    { id: 10, text: "Therefore, the number of remaining spectators = 2203.", styling: styles.text },
+    { id: 10, text: "Therefore, the number of remaining spectators is", styling: styles.text },
+    { id: 10, text: "2203", styling: [styles.text, styles.formula] },
   ];  
   useImperativeHandle(ref, () => ({
     toggleSpeech: () => handleSpeechToggle(),
@@ -81,16 +82,16 @@ const WordProblem = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -101,7 +102,7 @@ const WordProblem = forwardRef((props, ref) => {
               style={[
                 line.styling,
                 index === currentIndex
-                  ? { marginBottom: 10, color: "#FFA500" }
+                  ? { marginBottom: 10, color: "#FDDA0D" }
                   : { marginBottom: 10 },
               ]}
             >

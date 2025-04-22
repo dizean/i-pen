@@ -16,7 +16,7 @@ const Line = forwardRef((props, ref) => {
     { id: 2, text: "Line Multiplication", styling: styles.sectiontititle },
     { id: 3, text: "Multiplication on a number line means to apply the multiplication operation on a given set of numbers through a number line.", styling: styles.text },
     { id: 4, text: "Example:", styling: styles.text },
-    { id: 5, text: "Multiply 3 by 5 using a number line.", styling: styles.text },
+    { id: 5, text: "Multiply 3 by 5 using a number line.",styling: [styles.text, styles.formula] },
     { id: 6, text: "Solution:", styling: styles.text },
     { id: 7, text: "Observe the following number line to see the working of 3 ×  5 = 15. ", styling: styles.text },
     { id: 8, text: "We will start from 0 and move towards the right of the number line, we will form 3 groups of 5 equal intervals.", styling: styles.text },
@@ -25,7 +25,7 @@ const Line = forwardRef((props, ref) => {
     { id: 11, text: "The representation can also be written as 5 + 5 + 5 = 15.", styling: styles.text },
     { id: 12, text: "The multiplication statement is expressed as, 3 × 5 = 15.", styling: styles.text }
   ];
-  const imageIndexes = [5, 7, 10, 11];
+  const imageIndexes = [6, 7, 10, 11];
   useImperativeHandle(ref, () => ({
     toggleSpeech: () => handleSpeechToggle(),
     stopSpeech: () => stopSpeaking(),
@@ -78,16 +78,16 @@ const Line = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -98,7 +98,7 @@ const Line = forwardRef((props, ref) => {
             style={[
               line.styling,
               index === currentIndex
-                ? { marginBottom: 10, color: "#FFA500", }
+                ? { marginBottom: 10, color: "#FDDA0D", }
                 : { marginBottom: 10 },
             ]}
           >

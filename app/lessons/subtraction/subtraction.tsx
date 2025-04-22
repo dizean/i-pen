@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import styles from "./styles";
 import Objectives from "../objectives/objectives";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import SpeechComponent from "./speech/speech";
 import VideoPlayer from "../video/video";
 import Introduction from "./introduction/introduction";
 import Parts from "./parts/parts";
@@ -13,9 +12,6 @@ import WoRegroup from "./methods/woregroup/woregroup";
 import WRegroup from "./methods/wregroup/wregroup";
 import Line from "./methods/line/line";
 import WordProblem from "./wordproblems/wordproblems";
-// import Test from "./practice/practice";
-import { Text } from "@/context/FontContent";
-import { RFPercentage } from "react-native-responsive-fontsize";
 import Test from "@/app/practice/practice";
 export default function Subtraction() {
   const [currentSection, setCurrentSection] = useState(1);
@@ -79,14 +75,14 @@ export default function Subtraction() {
           )}
         </ScrollView>
       </ImageBackground>
-      <ImageBackground style={[styles.fixedButtonContainer, { backgroundColor: "white" }]}>
+      <ImageBackground style={[styles.fixedButtonContainer, { backgroundColor: "#FDDA0D" }]}>
         {currentSection !== 1 ? (
           <TouchableOpacity
             style={styles.button}
             onPress={handlePrev}
             disabled={currentSection === 1}
           >
-            <AntDesign name="doubleleft" size={30} color="#38bfe7" />
+            <AntDesign name="doubleleft" size={30} color="#fff" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity disabled style={styles.button} onPress={handleReturnHome}>
@@ -99,11 +95,11 @@ export default function Subtraction() {
             onPress={handleNext}
             disabled={currentSection === 5 && !isPracticeComplete}
           >
-            <AntDesign name="doubleright" size={30} color="#38bfe7" />
+            <AntDesign name="doubleright" size={30} color="#fff" />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity style={styles.button} onPress={handleReturnHome}>
-            <AntDesign name="home" size={30} color="#38bfe7" />
+            <AntDesign name="home" size={30} color="#fff" />
           </TouchableOpacity>
         )}
       </ImageBackground>

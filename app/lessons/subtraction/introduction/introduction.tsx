@@ -39,20 +39,30 @@ const Introduction = forwardRef((props, ref) => {
   };
   const startSpeaking = () => {
     setIsSpeaking(true);
-    setCurrentIndex(0); 
-    Speech.speak(content[0].text, { onDone: () => speakNext(1) });
+    setCurrentIndex(0);
+    Speech.speak(content[0].text, {
+      voice: "en-us-x-iol-local",
+      rate: 0.9,
+      volume: 1.0,
+      onDone: () => speakNext(1),
+    });
   };
 
   const stopSpeaking = () => {
     Speech.stop();
     setIsSpeaking(false);
-    setCurrentIndex(-1); 
+    setCurrentIndex(-1);
   };
 
   const speakNext = (index: number) => {
     if (index < content.length) {
-      setCurrentIndex(index); 
-      Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
+      setCurrentIndex(index);
+      Speech.speak(content[index].text, {
+        voice: "en-us-x-iol-local",
+        rate: 0.9,
+        volume: 1.0,
+        onDone: () => speakNext(index + 1),
+      });
     } else {
       setIsSpeaking(false);
       setCurrentIndex(-1);
@@ -71,16 +81,16 @@ const Introduction = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -91,7 +101,7 @@ const Introduction = forwardRef((props, ref) => {
             style={[
               line.styling,
               index === currentIndex
-                ? { marginBottom: 10, color: "#FFA500", }
+                ? { marginBottom: 10, color: "#FDDA0D", }
                 : { marginBottom: 10 },
             ]}
           >

@@ -1,4 +1,9 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { View, TouchableOpacity, ImageBackground } from "react-native";
 import * as Speech from "expo-speech";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -15,39 +20,40 @@ const WoRegroup = forwardRef((props, ref) => {
     { id: 1, text: "Methods in Solving Subtraction Problems", styling: styles.subtitle },
     { id: 2, text: "Subtraction Without Regrouping", styling: styles.sectiontititle },
     { id: 3, text: "Example:", styling: styles.text },
-    { id: 4, text: "Subtract 25632 from 48756", styling: styles.text },
+    { id: 4, text: "Subtract 25632 from 48756", styling: [styles.text, styles.formula] },
     { id: 5, text: "Solution:", styling: styles.text },
     { id: 6, text: "Follow the given steps and try to relate them with the following figure.", styling: styles.text },
-    { id: 7, text: "Step 1:", styling: styles.text },
+    { id: 7, text: "Step 1:", styling: [styles.text, styles.steps] },
     { id: 8, text: "Start with the digits in the ones (O) column.", styling: styles.text },
-    { id: 9, text: "(6 − 2 = 4)", styling: styles.text },
-    { id: 10, text: "Step 2:", styling: styles.text },
+    { id: 9, text: "6 − 2 = 4",styling: [styles.text, styles.formula] },
+    { id: 10, text: "Step 2:", styling: [styles.text, styles.steps] },
     { id: 11, text: "Move to the digits in the tens (T) column.", styling: styles.text },
-    { id: 12, text: "(5 − 3 = 2)", styling: styles.text },
-    { id: 13, text: "Step 3:", styling: styles.text },
+    { id: 12, text: "5 − 3 = 2",styling: [styles.text, styles.formula] },
+    { id: 13, text: "Step 3:", styling: [styles.text, styles.steps] },
     { id: 14, text: "Now subtract the digits in the hundreds (H) column.", styling: styles.text },
-    { id: 15, text: "(7 − 6 = 1)", styling: styles.text },
-    { id: 16, text: "Step 4:", styling: styles.text },
+    { id: 15, text: "7 − 6 = 1",styling: [styles.text, styles.formula] },
+    { id: 16, text: "Step 4:", styling: [styles.text, styles.steps] },
     { id: 17, text: "After this, subtract the digits in the thousands (Th) column.", styling: styles.text },
-    { id: 18, text: "(8 − 5 = 3).", styling: styles.text },
-    { id: 19, text: "Step 5:", styling: styles.text },
+    { id: 18, text: "8 − 5 = 3.", styling: [styles.text, styles.formula] },
+    { id: 19, text: "Step 5", styling: [styles.text, styles.steps] },
     { id: 20, text: "Finally, subtract the digits in the ten thousands (T-th) column.", styling: styles.text },
-    { id: 21, text: "(4 − 2 = 2)", styling: styles.text },
-    { id: 22, text: "Step 6:", styling: styles.text },
+    { id: 21, text: "4 − 2 = 2",styling: [styles.text, styles.formula] },
+    { id: 22, text: "Step 6", styling: [styles.text, styles.steps] },
     { id: 23, text: "Therefore, the difference between the two given numbers is:", styling: styles.text },
-    { id: 24, text: "48756 − 25632 = 23124.", styling: styles.text }
-  ];  
+    { id: 24, text: "48756 − 25632 = 23124.", styling: [styles.text, styles.formula] },
+  ]; 
+  const imageIndexes = [5, 7, 10, 13, 16, 19, 23];
   useImperativeHandle(ref, () => ({
     toggleSpeech: () => handleSpeechToggle(),
     stopSpeech: () => stopSpeaking(),
   }));
-  
+
   useEffect(() => {
     return () => {
-      Speech.stop(); 
+      Speech.stop();
     };
   }, []);
-  
+
   const handleSpeechToggle = () => {
     if (isSpeaking) {
       stopSpeaking();
@@ -57,19 +63,19 @@ const WoRegroup = forwardRef((props, ref) => {
   };
   const startSpeaking = () => {
     setIsSpeaking(true);
-    setCurrentIndex(0); 
+    setCurrentIndex(0);
     Speech.speak(content[0].text, { onDone: () => speakNext(1) });
   };
 
   const stopSpeaking = () => {
     Speech.stop();
     setIsSpeaking(false);
-    setCurrentIndex(-1); 
+    setCurrentIndex(-1);
   };
 
   const speakNext = (index: number) => {
     if (index < content.length) {
-      setCurrentIndex(index); 
+      setCurrentIndex(index);
       Speech.speak(content[index].text, { onDone: () => speakNext(index + 1) });
     } else {
       setIsSpeaking(false);
@@ -78,48 +84,49 @@ const WoRegroup = forwardRef((props, ref) => {
   };
   return (
     <View>
-      <ImageBackground
-        style={styles.playnav}
-      >
+      <ImageBackground style={styles.playnav}>
         <TouchableOpacity
-  style={{ width: "50%", borderColor: "#38bfe7" }}
-  onPress={() => {
-    stopSpeaking(); // stop speech first
-    router.push("/content/content"); // then navigate
-  }}
->
-  <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
-  </Text>
-</TouchableOpacity>
-
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => {
+            stopSpeaking(); // stop speech first
+            router.push("/content/content"); // then navigate
+          }}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={50} color="#fff" />
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
-      <View style={styles.container}>
-        {content.map((line, index) => (
+      {content.map((line, index) => (
+        <View style={styles.container}>
           <Text
             key={index}
             style={[
               line.styling,
               index === currentIndex
-                ? { marginBottom: 10, color: "#FFA500", }
+                ? { marginBottom: 10, color: "#FDDA0D" }
                 : { marginBottom: 10 },
             ]}
           >
             {line.text}
           </Text>
-        ))}
-        <Image source={require('../../../../../assets/images/subworegrp.png')}
-        style={[styles.image, {height:200}]}
-      />
-      </View>
+          {imageIndexes.includes(index) && (
+            <Image
+              source={require("../../../../../assets/images/subworegrp.png")}
+              style={{ height: 200, width: "100%" }}
+              contentFit="contain"
+            />
+          )}
+        </View>
+      ))}
     </View>
   );
 });

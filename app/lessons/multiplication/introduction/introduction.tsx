@@ -74,16 +74,16 @@ const Introduction = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -94,7 +94,7 @@ const Introduction = forwardRef((props, ref) => {
             style={[
               line.styling,
               index === currentIndex
-                ? { marginBottom: 10, color: "#FFA500", }
+                ? { marginBottom: 10, color: "#FDDA0D", }
                 : { marginBottom: 10 },
             ]}
           >

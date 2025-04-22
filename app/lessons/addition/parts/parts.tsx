@@ -19,12 +19,24 @@ const Parts = forwardRef((props, ref) => {
   const content = [
     { id: 1, text: "Parts of Addition", styling: styles.subtitle },
     { id: 2, text: "Addends", styling: styles.sectiontititle },
-    { id: 3, text: "The numbers that are added together are known as the addends.", styling: styles.text },
+    {
+      id: 3,
+      text: "The numbers that are added together are known as the addends.",
+      styling: styles.text,
+    },
     { id: 4, text: "Addition Symbol", styling: styles.sectiontititle },
-    { id: 5, text: "The addition symbol (+) is placed between the addends", styling: styles.text },
+    {
+      id: 5,
+      text: "The addition symbol (+) is placed between the addends",
+      styling: styles.text,
+    },
     { id: 6, text: "The Sum", styling: styles.sectiontititle },
-    { id: 7, text: "The final result obtained after adding the addends is known as the sum.", styling: styles.text },
-  ];  
+    {
+      id: 7,
+      text: "The final result obtained after adding the addends is known as the sum.",
+      styling: styles.text,
+    },
+  ];
   useImperativeHandle(ref, () => ({
     toggleSpeech: () => handleSpeechToggle(),
     stopSpeech: () => stopSpeaking(),
@@ -43,26 +55,32 @@ const Parts = forwardRef((props, ref) => {
       startSpeaking();
     }
   };
-const startSpeaking = () => {
+  const startSpeaking = () => {
     setIsSpeaking(true);
-    setCurrentIndex(0); 
-    Speech.speak(content[0].text, {voice: 'en-us-x-iol-local',
-      rate: .9,
-      volume: 1.0, onDone: () => speakNext(1) });
+    setCurrentIndex(0);
+    Speech.speak(content[0].text, {
+      voice: "en-us-x-iol-local",
+      rate: 0.9,
+      volume: 1.0,
+      onDone: () => speakNext(1),
+    });
   };
 
   const stopSpeaking = () => {
     Speech.stop();
     setIsSpeaking(false);
-    setCurrentIndex(-1); 
+    setCurrentIndex(-1);
   };
 
   const speakNext = (index: number) => {
     if (index < content.length) {
-      setCurrentIndex(index); 
-      Speech.speak(content[index].text, {voice: 'en-us-x-iol-local',
-        rate: .9,
-        volume: 1.0, onDone: () => speakNext(index + 1) });
+      setCurrentIndex(index);
+      Speech.speak(content[index].text, {
+        voice: "en-us-x-iol-local",
+        rate: 0.9,
+        volume: 1.0,
+        onDone: () => speakNext(index + 1),
+      });
     } else {
       setIsSpeaking(false);
       setCurrentIndex(-1);
@@ -72,23 +90,21 @@ const startSpeaking = () => {
     <View>
       <ImageBackground style={styles.playnav}>
         <TouchableOpacity
-  style={{ width: "50%", borderColor: "#38bfe7" }}
-  onPress={() => {
-    stopSpeaking(); // stop speech first
-    router.push("/content/content"); // then navigate
-  }}
->
-  <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
-  </Text>
-</TouchableOpacity>
-
-
+          style={{ width: "50%", borderColor: "#38bfe7" }}
+          onPress={() => {
+            stopSpeaking(); // stop speech first
+            router.push("/content/content"); // then navigate
+          }}
+        >
+          <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
+            <AntDesign name="home" size={50} color="#fff" />
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -99,7 +115,7 @@ const startSpeaking = () => {
               style={[
                 line.styling,
                 index === currentIndex
-                  ? { marginBottom: 10, color: "#FFA500" }
+                  ? { marginBottom: 10, color: "#FDDA0D" }
                   : { marginBottom: 10 },
               ]}
             >

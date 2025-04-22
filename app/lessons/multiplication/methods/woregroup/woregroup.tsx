@@ -16,29 +16,27 @@ const WoRegroup = forwardRef((props, ref) => {
     { id: 2, text: "Multiplication Without Regrouping", styling: styles.sectiontititle },
     { id: 3, text: "Multiplication of two numbers without regrouping involves smaller numbers where there is no need to take a carry-over to the next higher place value.", styling: styles.text },
     { id: 4, text: "Example:", styling: styles.text },
-    { id: 5, text: "Multiply 3014 by 2", styling: styles.text },
+    { id: 5, text: "Multiply 3014 by 2",styling: [styles.text, styles.formula] },
     { id: 6, text: "Solution:", styling: styles.text },
     { id: 7, text: "Let us multiply 3014 by 2 using the steps given below and try to relate them with the following figure.", styling: styles.text },
-    { id: 8, text: "Step 1:", styling: styles.text },
+    { id: 8, text: "Step 1:", styling: [styles.text, styles.steps] },
     { id: 9, text: "Start with the digits in the ones (O) column.", styling: styles.text },
-    { id: 10, text: "(2 × 4 = 8).", styling: styles.text },
-    { id: 11, text: "Step 2:", styling: styles.text },
+    { id: 10, text: "2 × 4 = 8.",styling: [styles.text, styles.formula] },
+    { id: 11, text: "Step 2:", styling: [styles.text, styles.steps] },
     { id: 12, text: "Move to the digits in the tens (T) column.", styling: styles.text },
-    { id: 13, text: "(2 × 1 = 2)", styling: styles.text },
-    { id: 14, text: "Step 3:", styling: styles.text },
+    { id: 13, text: "2 × 1 = 2",styling: [styles.text, styles.formula] },
+    { id: 14, text: "Step 3:", styling: [styles.text, styles.steps] },
     { id: 15, text: "Now multiply the digits in the hundreds (H) column.", styling: styles.text },
-    { id: 16, text: "(2 × 0 = 0)", styling: styles.text },
-    { id: 17, text: "Step 4:", styling: styles.text },
+    { id: 16, text: "2 × 0 = 0",styling: [styles.text, styles.formula] },
+    { id: 17, text: "Step 4:", styling: [styles.text, styles.steps] },
     { id: 18, text: "After this, multiply the digits in the thousands (Th) column.", styling: styles.text },
-    { id: 19, text: "(2 × 3 = 6).", styling: styles.text },
-    { id: 20, text: "Step 5:", styling: styles.text },
-    { id: 21, text: "Write down the final product.", styling: styles.text },
-    { id: 22, text: "Step 6:", styling: styles.text },
-    { id: 23, text: "Hence,", styling: styles.text },
-    { id: 24, text: "3014 × 2 = 6028", styling: styles.text }
+    { id: 19, text: "2 × 3 = 6",styling: [styles.text, styles.formula] },
+    { id: 20, text: "Step 5", styling: [styles.text, styles.steps] },
+    { id: 21, text: "Hence,", styling: styles.text },
+    { id: 22, text: "3014 × 2 = 6028",styling: [styles.text, styles.formula] },
   ];
   
-    const imageIndexes = [7, 10, 13, 16, 23];
+    const imageIndexes = [7, 10, 13, 16, 21];
     useImperativeHandle(ref, () => ({
       toggleSpeech: () => handleSpeechToggle(),
       stopSpeech: () => stopSpeaking(),
@@ -95,16 +93,16 @@ const WoRegroup = forwardRef((props, ref) => {
   }}
 >
   <Text style={{ fontSize: RFPercentage(5), color: "#38bfe7" }}>
-    <AntDesign name="home" size={40} color="#38bfe7" />
+    <AntDesign name="home" size={50} color="#fff" />
   </Text>
 </TouchableOpacity>
 
 
         <TouchableOpacity onPress={handleSpeechToggle}>
           {isSpeaking ? (
-            <AntDesign name="pausecircle" size={40} color="#38bfe7" />
+            <AntDesign name="pausecircle" size={50} color="#fff" />
           ) : (
-            <AntDesign name="play" size={40} color="#38bfe7" />
+            <AntDesign name="play" size={50} color="#fff" />
           )}
         </TouchableOpacity>
       </ImageBackground>
@@ -115,7 +113,7 @@ const WoRegroup = forwardRef((props, ref) => {
             style={[
               line.styling,
               index === currentIndex
-                ? { marginBottom: 10, color: "#FFA500", }
+                ? { marginBottom: 10, color: "#FDDA0D", }
                 : { marginBottom: 10 },
             ]}
           >
@@ -123,7 +121,7 @@ const WoRegroup = forwardRef((props, ref) => {
           </Text>
           {imageIndexes.includes(index) && (
               <Image
-                source={require("../../../../../assets/images/subwregrp.png")}
+                source={require("../../../../../assets/images/woregmulti.png")}
                 style={{ height: 200, width: "100%" }}
                 contentFit="contain"
               />
