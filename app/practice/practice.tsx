@@ -283,9 +283,9 @@ export default function Test({ subject, stop }: SubjectProp) {
     setIsTimerPaused(true);
     setIsProcessing(true);
     const totalQuestions = questionss.length;
-    const passingScore = Math.ceil(totalQuestions * 0.25);
+    const passingScore = Math.ceil(totalQuestions * 0.70);
     try {
-      if (finalScore > passingScore) {
+      if (finalScore >= passingScore) {
         setTimeout(() => {
           Speech.speak(
             `Congratulations! Your final score is ${finalScore} out of ${totalQuestions}.`,
@@ -293,7 +293,7 @@ export default function Test({ subject, stop }: SubjectProp) {
               voice: "en-us-x-iol-local",
             }
           );
-        }, 3000);
+        }, 1000);
       } else {
         setTimeout(() => {
           Speech.speak(
@@ -302,7 +302,7 @@ export default function Test({ subject, stop }: SubjectProp) {
               voice: "en-us-x-iol-local",
             }
           );
-        }, 3000);
+        }, 1000);
       }
     } catch (error) {
       console.error("Error playing correct sound:", error);

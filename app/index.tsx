@@ -27,10 +27,12 @@ export default function App() {
     const options = {
       voice: "en-us-x-iol-local",
       rate: 0.9,
-      onDone: () => setDone(true),
+      onDone: () => setDone(true), // this stays the same
     };
+    setDone(false); // Moved here
     Speech.speak(welcomeMessage, options);
   };
+  
 
   const stopSpeaking = () => {
     Speech.stop();
@@ -38,17 +40,16 @@ export default function App() {
     route.push("/selection/selection");
   };
 
-  // Ensure fonts are loaded before running useEffect
   useEffect(() => {
-    if (fontsLoaded) {
+    if (fontsLoaded && done) {
+      setDone(false); // prevent multiple triggers
       speak();
     }
   }, [fontsLoaded]);
-
+  
   if (!fontsLoaded) {
     return <ActivityIndicator size="large" />;
   }
-
   return (
     <View style={styles.background}>
       <SafeAreaView style={styles.safeArea}>
@@ -83,7 +84,7 @@ export default function App() {
             />
           </View>
           <TouchableOpacity
-            style={[styles.button, !done && { backgroundColor: "gray" }]}
+            style={[styles.button]}
             // disabled={!done}
             onPress={() => {
               stopSpeaking();

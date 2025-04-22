@@ -314,10 +314,10 @@ export default function Test() {
     setIsTimerPaused(true);
     setIsProcessing(true);
     const totalQuestions = questions.length;
-    const passingScore = Math.ceil(totalQuestions * 0.25);
+    const passingScore = Math.ceil(totalQuestions * 0.70);
     try {
       setShowResultsModal(true);
-      if (finalScore > passingScore) {
+      if (finalScore >= passingScore) {
         setTimeout(() => {
           Speech.speak(
             `Congratulations! Your final score is ${finalScore} out of ${questions.length}.`,
@@ -332,7 +332,7 @@ export default function Test() {
               },
             }
           );
-        }, 3000);
+        }, 1000);
       } else {
         setTimeout(() => {
           Speech.speak(
@@ -348,7 +348,7 @@ export default function Test() {
               },
             }
           );
-        }, 3000);
+        }, 1000);
       }
     } catch (error) {
       console.error("Error playing correct sound:", error);
