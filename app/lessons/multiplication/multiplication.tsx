@@ -55,7 +55,7 @@ export default function Subtraction() {
 
   return (
     <>
-      <ImageBackground style={{ flex: 1, backgroundColor: "#fff" }}>
+      <ImageBackground style={{ flex: 1, backgroundColor: "#fff" }} source={require('../../../assets/images/multbg.png')}>
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {currentSection === 1 && <Objectives />}
           {currentSection === 2 && <VideoPlayer />}
